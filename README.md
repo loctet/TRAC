@@ -2,7 +2,7 @@
 
 ## Introduction to TRAC
 
-TRAC (Transition Role Analysis Checker) is an innovative tool designed to enhance the development and verification of smart contracts. It focuses on analyzing the well-formedness of smart contract transitions, ensuring that only one transition within a group can be satisfied at a time. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency and role correctness within smart contract systems. TRAC's flexibility across different operating systems makes it accessible for a wide range of users, promoting best practices in smart contract development and verification.
+TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring that only one transition within a group can be satisfied at a time. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol. TRAC's flexibility across different operating systems makes.
 
 ## Installation Instructions
 
@@ -12,7 +12,7 @@ Before installing TRAC, ensure Python 3.6 or later is installed on your system. 
 pip install z3-solver
 pip install matplotlib
 pip install numpy
-# Add any additional packages as required by TRAC
+pip install plotly
 ```
 
 These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for numerical computations, which are essential for TRAC's functionality. Ensure all commands are executed successfully to avoid any issues while running TRAC.
@@ -33,9 +33,9 @@ To run the "simplemarket_place" example with TRAC:
 
 Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
 The result of this should be 
-```
+`
 (!) Verdict: Well Formed
-```
+`
 5. **Execute the Example**:
 Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
 
@@ -58,7 +58,7 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
 1. **Navigate to TRAC Directory**: Ensure you're in the root directory of TRAC.
 2. **Run Generate_examples.py**: Use the command below, adjusting parameters as needed.
    ```bash
-   python Generate_examples.py --directory your_directory_name --num_tests 100
+   python3 Generate_examples.py --directory your_directory_name --num_tests 100
    ```
    Replace `your_directory_name` with the desired directory to store test files and adjust `--num_tests` to the number of examples you wish to generate.
 
@@ -87,7 +87,7 @@ This process allows for the automated generation and analysis of DAFSM examples,
 
 To execute multiple examples with `Random_exec.py`, the command format and parameters are as follows:
 ```bash
-python Random_exec.py --directory <subdir> --merge_csv --add_path --number_test_per_cpu <num> --number_runs_per_each <runs> --time_out <nanoseconds>
+python3 Random_exec.py --directory <subdir> --merge_csv --add_path --number_test_per_cpu <num> --number_runs_per_each <runs> --time_out <nanoseconds>
 ```
 
 - `--directory`: Specifies a subdirectory in `Examples/random_txt` where the examples and `list_of_files_info.csv` are located.
@@ -104,7 +104,7 @@ The process splits tests for parallel execution, outputs results to CSV files, a
 To plot results using `Plot_data.py`, follow these command-line instructions, customizing them based on your needs:
 
 ```bash
-python Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
+python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
 ```
 
 - `<directory>`: The directory where the test data CSV is located, relative to `./examples/random_txt/` where the `merged_list_of_files_info.csv` is.
