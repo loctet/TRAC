@@ -1,146 +1,121 @@
-# Readme.md - Running the Code for Z3 Temporal Logic Solver
+# TRAC Tool README
 
-This README file provides instructions on how to run the code that uses the Z3 Temporal Logic Solver. The code you provided is designed to check the satisfiability of temporal logic properties for a given Finite State Machine (FSM) described in a JSON file. To run the code successfully, follow these steps:
+## Introduction to TRAC
 
-## Prerequisites
+TRAC (Transition Role Analysis Checker) is an innovative tool designed to enhance the development and verification of smart contracts. It focuses on analyzing the well-formedness of smart contract transitions, ensuring that only one transition within a group can be satisfied at a time. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency and role correctness within smart contract systems. TRAC's flexibility across different operating systems makes it accessible for a wide range of users, promoting best practices in smart contract development and verification.
 
-Before you can run the code, make sure you have the following prerequisites installed:
+## Installation Instructions
 
-1. Python: The code is written in Python. You need Python installed on your system. You can download Python from [python.org](https://www.python.org/downloads/).
+Before installing TRAC, ensure Python 3.6 or later is installed on your system. TRAC relies on several Python packages for its operation. Use the following pip commands to install the necessary dependencies:
 
-2. Z3: The code relies on the Z3 SMT solver. You can install Z3 using the following command:
-
-   ```bash
-   pip install z3-solver
-   ```
-
-## Running the Code
-
-1. **Download the Code:** Ensure you have downloaded the code and saved it in a directory on your local machine.
-
-2. **Input JSON File:** The code expects an input JSON file that describes the FSM and its properties. Make sure you have an input file in the same directory as the code. In your code, the `input_path` variable is set to `"./examples/simplemarket_place.json"`. You can either use this path or modify it to point to your input JSON file.
-
-3. **Execute the Code:** Open a terminal or command prompt and navigate to the directory where you have saved the code and the input JSON file. Run the Python script using the following command:
-
-   ```bash
-   python .\Z3\Chercker.py
-   ```
-
-   Replace `Chercker.py` with the name of the Python script that contains the provided code. This will execute the code and attempt to check the satisfiability of temporal logic properties.
-
-4. **Check the Result:** The code will generate solver code based on the input JSON file and execute it. If the `check_resut` variable is `True`, it means that the temporal logic properties are satisfiable. You will see the message "satisfiable" printed to the console. If `check_resut` is not `True`, it means that the properties are not satisfiable.
-
-## Understanding the Output
-
-The code generates solver code dynamically based on the input JSON file. If you are interested in the details of the solver code or the specific properties that were checked, you can inspect the printed `str_code` variable. This code is executed to check the properties.
-
-## Troubleshooting
-
-- If you encounter any errors or issues while running the code, ensure that your Python and Z3 installations are correct. Check for any syntax errors or missing dependencies.
-
-- Make sure the input JSON file is correctly formatted and contains the FSM and property information.
-
-- If you need help or have questions about specific properties or how the code works, feel free to reach out for assistance.
-
-## Additional Information
-
-Please refer to the specific FSM and property definitions in your input JSON file for more details on the properties being checked. If you have any questions or need further assistance related to this code, don't hesitate to contact me.
-
-# JSON File Description for Finite State Machine (FSM)
-
-Here is a description of the JSON file that defines the Finite State Machine (FSM) used in the provided code:
-
-```json
-{
-    "id" : "c",
-    "initialState" : "S0",
-    "statesDeclaration" : "int a := 10 ; bool c := True; set B := 0; set M ",
-    "states" : [ "S0", "S1", "S2" ],
-    "finalStates" : [ "S1" ],
-    "transitions" : [ {
-      "from" : "_",
-      "to" : "S1",
-      "actionLabel" : "starts",
-      "newParts" : [ {
-        "role" : "O",
-        "participants" : [ "o" ]
-      } ],
-      "existantParts" : {
-        "role" : "",
-        "participants" : [ ]
-      },
-      "preCondition" : "True",
-      "postCondition" : "And(Or(False,True),True)",
-      "input" : "",
-      "varUpdate": "",
-      "internal" : false,
-      "externalCall" : true
-    }, {
-      "from" : "S1",
-      "to" : "_",
-      "actionLabel" : "f1",
-      "newParts" : [ {
-        "role" : "O",
-        "participants" : [ "o" ]
-      } ],
-      "existantParts" : {
-        "role" : "",
-        "participants" : [ ]
-      },
-      "preCondition" : "And(Or(False,True),True)",
-      "postCondition" : "",
-      "input" : "",
-      "varUpdate": "",
-      "internal" : false,
-      "externalCall" : false
-    }, {
-      "from" : "S1",
-      "to" : "S2",
-      "actionLabel" : "OK",
-      "newParts" : [ {
-        "role" : "O",
-        "participants" : [ "o" ]
-      } ],
-      "existantParts" : {
-        "role" : "",
-        "participants" : [ ]
-      },
-      "preCondition" : "And(Or(False,True),a >= 10)",
-      "postCondition" : "True",
-      "input" : "",
-      "varUpdate": "",
-      "internal" : false,
-      "externalCall" : false
-    }],
-    "rPAssociation" : [ {
-        "role" : "O",
-        "participants" : [ "o" ]
-      }, {
-        "role" : "B",
-        "participants" : [ "b" ]
-      }, {
-        "role" : "D",
-        "participants" : [ "d" ]
-      } ]
-}
+```bash
+pip install z3-solver
+pip install matplotlib
+pip install numpy
+# Add any additional packages as required by TRAC
 ```
 
-**Description:**
+These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for numerical computations, which are essential for TRAC's functionality. Ensure all commands are executed successfully to avoid any issues while running TRAC.
 
-- `"id"`: This is an identifier for the FSM, which is labeled as "c."
+## Running a Predefined Example: "simplemarketplace"
 
-- `"initialState"`: The initial state of the FSM is "S0."
+To run the "simplemarket_place" example with TRAC:
 
-- `"statesDeclaration"`: This field contains variable declarations, including "int a := 10," "bool c := True," "set B := 0," and "set M." These variables are used to define the states of the FSM.
+1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
+2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where TRAC is located.
+3. **Locate the Example**: The "simplemarket_place" example is already within designated examples directory, typically named `Examples/java` where all manually executed examples should be kept.
+4. **Execute the Example**:
+   - Use `Main.py` to run the example. The command syntax is:
+     ```bash
+     python3 Main.py --filetype txt simplemarket_place
+     ```
+   This command tells TRAC to process and verify the "simplemarket_place" example.
 
-- `"states"`: The list of states in the FSM includes "S0," "S1," and "S2."
+Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
+The result of this should be 
+```
+(!) Verdict: Well Formed
+```
+5. **Execute the Example**:
+Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
 
-- `"finalStates"`: The final state is "S1."
+The `Main.py`, can take some configurations as follows:
 
-- `"transitions"`: This section defines the transitions in the FSM. It includes transitions from the initial state to "S1" labeled as "starts," a self-transition in "S1" labeled as "f1," and a transition from "S1" to "S2" labeled as "OK." Each transition specifies preconditions, postconditions, and other details.
+- `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for TRAC to analyze.
+- `check_type`: Optional. Defines the type of check to perform on the input file. It can be one of four options:
+  - `1` for Well-Formedness Check,
+  - `2` for solate Function Check, // on progress
+  - `3` for runing from Path Check, // On progress
+  - `fsm` for printing the Finite State Machine (FSM). The default is `1`.
+- `--filetype`: Optional. Indicates the type of the input file, either `json` or `txt`. The default is `json`.
+- `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
+- `--time_out`: Optional. Sets a timeout for the operation in seconds. The default is `0`, meaning no timeout.
+This detailed explanation provides a comprehensive guide on how to utilize `Main.py` for different operations within the TRAC tool.
 
-- `"rPAssociation"`: This section defines role-participant associations, including the roles "O," "B," and "D" associated with participants "o," "b," and "d," respectively.
+## Generating Examples
+To generate DAFSM examples with `Generate_examples.py`, follow these steps:
 
-- `"varUpdate"` : This is where to add how a function changes the state of vaiables
+1. **Navigate to TRAC Directory**: Ensure you're in the root directory of TRAC.
+2. **Run Generate_examples.py**: Use the command below, adjusting parameters as needed.
+   ```bash
+   python Generate_examples.py --directory your_directory_name --num_tests 100
+   ```
+   Replace `your_directory_name` with the desired directory to store test files and adjust `--num_tests` to the number of examples you wish to generate.
 
-The JSON file provides the necessary information for the FSM and its properties, which is used by the code to check the satisfiability of temporal logic properties associated with the transitions in the FSM.
+3. **Parameters**:
+    The parameters for `Generate_examples.py` enable customization of the DAFSM example generation process. If not specified, values for these parameters are generated randomly:
+
+    - `--directory`: Specifies the directory to save generated examples.
+    - `--num_tests`: The number of tests to generate.
+    - `--num_states`: The number of states per test.
+    - `--num_actions`: The number of actions.
+    - `--num_vars`: The number of variables.
+    - `--max_num_transitions`: The maximum number of transitions.
+    - `--max_branching_factor`: The maximum branching factor.
+    - `--num_participants`: The number of participants.
+    - `--incremental_gen`: Enables incremental generation.
+    - `--merge_only_csv`: Merges results into a single CSV without generating new tests.
+    - `--steps`: The increment steps for generating tests.
+    - `--num_example_for_each`: The number of examples to generate for each configuration.
+
+4. **Output**: Examples are created in a subdirectory within `Examples/random_txt`. A CSV at the root of this directory contains metadata for each generated example, including paths, number of states, actions, variables, branching factors, and timings.
+
+This process allows for the automated generation and analysis of DAFSM examples, facilitating comprehensive testing and verification of DAFSMs with TRAC.
+
+
+## Running Sets of Examples
+
+To execute multiple examples with `Random_exec.py`, the command format and parameters are as follows:
+```bash
+python Random_exec.py --directory <subdir> --merge_csv --add_path --number_test_per_cpu <num> --number_runs_per_each <runs> --time_out <nanoseconds>
+```
+
+- `--directory`: Specifies a subdirectory in `Examples/random_txt` where the examples and `list_of_files_info.csv` are located.
+- `--merge_csv`: Merges individual CSV results into `merged_list_of_files_info.csv`.
+- `--add_path`: Just count the number_path to each test in the CSV.
+- `--number_test_per_cpu`: Determines how many tests are run in parallel per CPU.
+- `--number_runs_per_each`: Specifies how many times to run each test.
+- `--time_out`: Sets a timeout limit for each test.
+
+The process splits tests for parallel execution, outputs results to CSV files, and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<subdir>` to preserve data. Execution time varies with the test suite size.
+
+## Plotting Results
+
+To plot results using `Plot_data.py`, follow these command-line instructions, customizing them based on your needs:
+
+```bash
+python Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
+```
+
+- `<directory>`: The directory where the test data CSV is located, relative to `./examples/random_txt/` where the `merged_list_of_files_info.csv` is.
+- `--shape`: Choose the plot shape: `lines`, `3d`, or `4d`.
+- `--file`: Specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`.
+- `--fields`: Set the column(s) to plot against time, default is `num_states`.
+- `--pl_lines`: Define which time metric to plot, with defaults including participants time, non-determinism time and a-consistency-time.
+- `--type_plot`: Choose the type of 2D plot, with `line` as the default.
+
+This command allows for versatile plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved the directory directly.
+
+## Reminder
+
+All commands provided, such as running tests, generating examples, executing multiple examples, and plotting results with various scripts like `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py`, come equipped with a `--help` option. Utilizing `--help` will display detailed usage instructions and available options for each command, aiding users in understanding and effectively utilizing the tool's features.
