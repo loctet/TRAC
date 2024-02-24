@@ -1,0 +1,3 @@
+_ {True} ar:AirRep > starts(c, participant FL f, int _reward) {rewardPerMiles := _reward & totalR := 0 & indexCal:=0} {array Int miles; int rewardPerMiles; int totalR; int indexCal} S0
+S0 {True} f > c.addMiles(array Int _miles, int _size) {indexCal := indexCal_old + 1 & totalR := totalR_old + sum(_miles, _size)} S1+
+S1 {True} f > c.addMiles(array Int _miles, int _size) {indexCal := indexCal_old + 1 & totalR := totalR_old + sum(_miles, _size)} S1+

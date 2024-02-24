@@ -1,0 +1,3 @@
+_ {True} p:P > starts(c) {} {int x} S0
+S0 {True} p > c.f(int _x) {} S1
+S1 {True} p > c.f() {x := _x} S2+

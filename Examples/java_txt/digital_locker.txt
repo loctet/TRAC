@@ -1,0 +1,17 @@
+_ {True} o:O > starts(c, participant Banker ba, string _lock_id) {lock_id := _lock_id} {string image, string lock_id} S0
+S0 {True} ba > c.BeginReview() {} S1 
+S0 {True} any ba:Banker > c.BeginReview() {} S1 
+S1 {True} ba > c.UploadDocument(string _lock_id, string _image) {image := _image & lock_id := _lock_id} S2
+
+S2 {True} tpr:TrdParty > c.RequesLockAccess() {} S4
+S2 {True} any ba:Banker > c.Terminate() {} S5+
+
+S3 {True} o > c.RevokeAccessLockFr3rdP() {} S2 
+S3 {True} cau > c.ReleaseLockAccess() {} S2 
+S3 {True} any ba:Banker > c.Terminate() {} S5+
+
+S4 {True} o > c.RejectSharingLock() {} S2
+S4 {True} o > c.AcceptSharingLock(participant CAU cau) {} S3P
+S4 {True} any ba:Banker > c.Terminate() {} S5+
+
+S3P {True} o > c.ShareW3rdP() {} S3

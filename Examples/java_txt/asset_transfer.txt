@@ -1,0 +1,46 @@
+#a comment line 
+_ {True} o:O > starts(c,int _price) {AskingPrice := _price} {int OfferPrice, int AskingPrice, string description} S0
+S0 {True} b:B > c.makeOffer(participant I i, participant A a, int _price) {OfferPrice := _price} S1
+S0 {True} o > c.terminate() {} S9+
+S0 {True} o > c.modify(string _description, int _price) { AskingPrice := _price, description := _description} S0
+
+S01 {True} b:B > c.makeOffer(participant I i, participant A a, int _price) {OfferPrice := _price} S1
+S01 {True} any b:B > c.makeOffer(participant I i, participant A a, int _price) {OfferPrice := _price} S1
+S01 {True} o > c.terminate() {} S9+
+S01 {True} o > c.modify(string _description, int _price) { AskingPrice := _price, description := _description} S01
+
+S1 {True} b > c.modifyOffer(int _price) {OfferPrice := _price} S1
+S1 {True} o > c.reject() {} S01
+S1 {True} o > c.acceptOffer() {} S2
+S1 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S1 {True} o > c.terminate() {} S9+
+
+S2 {True} o > c.reject() {} S01
+S2 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S2 {True} o > c.terminate() {} S9+
+S2 {True} i > c.inspect() {} S3
+S2 {True} a > c.MarkAppraised() {} S7
+
+S3 {True} o > c.reject() {} S01
+S3 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S3 {True} o > c.terminate() {} S9+
+S3 {True} a > c.MarkAppraised() {} S4
+
+S4 {True} o > c.reject() {} S01
+S4 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S4 {True} o > c.terminate() {} S9+
+S4 {True} any o:O > c.accept() {} S5
+S4 {True} b > c.accept() {} S8
+#another comment line 
+S5 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S5 {True} b > c.accept() {} S6+
+
+
+S7 {True} o > c.reject() {} S01
+S7 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S7 {True} o > c.terminate() {} S9+
+S7 {True} i > c.inspect() {} S4
+
+S8 {True} o > c.accept() {} S6+
+S8 {True} b > c.RescindOffer() {OfferPrice := 0} S01
+S8 {True} o > c.terminate() {} S9+

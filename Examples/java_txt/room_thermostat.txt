@@ -1,0 +1,4 @@
+_ {True} o:O > starts(c, participant I i, participant U u) {targetTemp := 70} {int mode; int targetTemp} S0
+S0 {True} i > c.startThermostat() {} S1
+S1 {_temp > 0} u > c.setTargetTemperature(int _temp) {targetTemp := _temp} S1
+S1 {True} u > c.setMode(int _mode) {mode := _mode} S1

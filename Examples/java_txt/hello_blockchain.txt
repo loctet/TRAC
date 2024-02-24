@@ -1,0 +1,3 @@
+_ {True} RqT:Resquester > starts(c, string _message) {message := _message} {string message; string response} S0
+S1 {True} RqT > c.SendRequest(string _message) {message := _message} S0
+S0 {True} RpD:Responder > c.SendResponse(string _response) {response := _response} S1

@@ -1,0 +1,4 @@
+_ {True} o:O > starts(c) {} {} S0
+S0 {True} p:P > c.f1() {} S1
+S0 {True} o > c.f1() {} S1
+S1 {True} p > c.f2() {} S2+

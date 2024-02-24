@@ -1,0 +1,2 @@
+_ {True} o:O > starts(c) {n := 0} {int n} S0
+S0 {n <= 10} o > c.f() {n := n_old + 1} S0

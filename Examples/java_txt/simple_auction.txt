@@ -1,0 +1,10 @@
+_ {True} o:Owner > starts(au) {} {int highestBid; string highestBidder; bool isActive; string owner} S0
+S0 {isActive} b1:Bidder > au.placeBid(int _bid) {highestBid := _bid & highestBidder := 'b1'} S1
+S1 {highestBid < _bid} b1 > au.updateBid(int _bid) {highestBid := _bid} S1
+S1 {isActive} b2:Bidder > au.setAutoBid(int _maxBid) {highestBid := _maxBid & highestBidder := 'b2'} S1
+S1 {highestBid < _bid} b3:Bidder > au.placeBid(int _bid) {highestBid := _bid & highestBidder := 'b3'} S1
+S1 {True} o > au.acceptBid() {isActive := False} S2+
+S0 {True} o > au.close() {} S3+
+S2 {highestBid > 0} o > au.finalize() {} S4+
+S1 {highestBidder == 'b1'} b1 > au.withdrawBid() {highestBidder := ''} S1
+S1 {True} o > au.cancel() {} S3+

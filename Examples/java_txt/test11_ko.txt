@@ -1,0 +1,1 @@
+_ {True} p:P > starts(c) {x := "ciao"} {int x} S0+

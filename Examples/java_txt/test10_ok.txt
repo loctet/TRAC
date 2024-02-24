@@ -1,0 +1,4 @@
+_ {True} p:P > starts(c) {} {} S3
+S3 {True} p:Q > c.f() {} S0
+S0 {True} any p1:P > c.f1() {} S1+
+S0 {True} any p1:Q > c.f1() {} S2+

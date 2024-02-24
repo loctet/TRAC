@@ -1,0 +1,3 @@
+_ {True} m:M > starts(c, array Int _defectives) {defectives := _defectives} {array Int defectives; int total} S0
+S0 {True} m > c.computeTotal() {total := sum(defectives, 12)} S1+
+

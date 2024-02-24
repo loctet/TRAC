@@ -1,0 +1,6 @@
+_ {True} o:O > starts(c, int _time) {time := _time} {int time} S0
+S0 {True} b:B > c.startTrip() {} S1
+S0 {True} p:P > c.initRefund() {} S2
+S1 {True} b > c.selectFlies() {} S3
+S2 {True} p > c.setRefundParams() {} S3
+S3 {True} b > c.print() {} S4+

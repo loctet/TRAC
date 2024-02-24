@@ -1,0 +1,4 @@
+_ {True} cp:Conterparty > starts(c, participant SupplyOwner so) {} {} S0
+S0 {True} cp > c.TransferResponsibility(participant Conterparty cp) {} S1
+S1 {True} any cp:Conterparty > c.TransferResponsibility(participant Conterparty cp) {} S1
+S1 {True} so > c.Complete() {} S2+
