@@ -23,8 +23,8 @@ These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for
 To run the "simplemarket_place" example with TRAC:
 
 1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
-2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where TRAC is located.
-3. **Locate the Example**: The "simplemarket_place" example is already within designated examples directory, typically named `Examples/dafsms_txt`. All manually executed examples should be kept in the folder `Examples` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
+2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where `TRAC/src` is located.
+3. **Locate the Example**: The `simplemarket_place` example is already within designated examples directory, typically named `Examples/dafsms_txt`. All manually executed examples should be kept in the folder `Examples` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
 4. **Execute the Example**:
    - Use `Main.py` to run the example. The command syntax is:
      ```bash
