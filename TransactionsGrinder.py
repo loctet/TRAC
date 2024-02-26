@@ -78,8 +78,7 @@ class TransactionsGrinder(Logger):
         return transitions_by_to_state
 
     def get_json_from_file(self):
-        input_path = self.get_full_json_path()
-        with open(input_path, 'r') as file:
+        with open(self.get_full_json_path(), 'r') as file:
             input_text = file.readlines()
         self.fsm = json.loads(''.join(input_text))
         return input_text
