@@ -4,6 +4,24 @@
 
 TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring that only one transition within a group can be satisfied at a time. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol. TRAC's flexibility across different operating systems makes.
 
+## Docker Installation and Running Instructions
+
+To install and run TRAC using Docker:
+
+1. Pull the Docker image:
+   ```bash
+   docker pull loctet/trac_dafsms:v1
+   ```
+2. Run the container:
+   ```bash
+   docker run -it loctet/trac_dafsms:v1
+   ```
+This command downloads the TRAC Docker image and starts a container with an interactive terminal. Replace `/path/to/your/app` with the actual path to your TRAC application files if necessary.
+
+If Docker is not installed on your system, follow the official Docker installation instructions for Ubuntu at [Docker's official documentation](https://docs.docker.com/engine/install/ubuntu/). This guide provides a comprehensive step-by-step process to get Docker set up and running on your machine.
+
+TRAC can also be cloned directly from its GitHub repository for those who prefer working with the source code. Visit [TRAC's GitHub page](https://github.com/loctet/TRAC) and follow the instructions in the README for setup and usage. This method is ideal for users looking for the latest version or interested in contributing to the project.
+
 ## Installation Instructions
 
 Before installing TRAC, ensure Python 3.6 or later is installed on your system. TRAC relies on several Python packages for its operation. Use the following pip commands to install the necessary dependencies:
