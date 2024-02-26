@@ -1,0 +1,43 @@
+_ {True} p1:2 > starts(c, int _wq, int _r, int _tr) {} {int a_s; int m_g; int f_u; int y_l} S0
+S0 {And(a_s > 55 , a_s > 15)} p4 > c.a8(int _r, int _lt) {a_s := 64 + a_s_old & m_g := 58 + m_g_old & f_u := 19 - f_u_old & y_l := 72 + y_l_old} S1
+S1 {And(_hd > 48 , a_s > 35)} p1 > c.a15(int _fk, int _hd, int _jy) {a_s := 17 - a_s_old & m_g := 60 + m_g_old & f_u := 63 - f_u_old & y_l := 87 - y_l_old} S2
+S2 {And(y_l > 87 , f_u > 41 , _el > 6 , f_u > 44 , _d > 50 , _yp > 39 , m_g > 35 , y_l > 65 , _z > 44 , y_l > 91 , _el > 99 , _d > 76 , y_l > 92 , _yp > 18 , _el > 31 , a_s > 12 , _d > 83 , m_g > 10 , a_s > 23)} p2 > c.a9(int _yp, int _el, int _d, int _z) {a_s := 76 + a_s_old + a_s_old & m_g := 96 - m_g_old - m_g_old & f_u := 72 - f_u_old + f_u_old & y_l := 39 - y_l_old + y_l_old} S3
+S3 {And(m_g > 22 , f_u > 3 , a_s > 21)} p4 > c.a18(int _l, int _kd, int _ro) {a_s := 18 + a_s_old + a_s_old & m_g := 2 - m_g_old + m_g_old & f_u := 64 - f_u_old - f_u_old & y_l := 89 + y_l_old + y_l_old} S4+
+S4 {And(_o > 71 , _o > 43 , m_g > 12)} p4 > c.a6(int _dd, int _o) {a_s := 97 - a_s_old + a_s_old & m_g := 48 + m_g_old - m_g_old & f_u := 26 - f_u_old + f_u_old & y_l := 24 - y_l_old - y_l_old} S5
+S5 {And(_pw > 44 , _u > 37 , f_u > 28 , m_g > 14 , _j > 66 , a_s > 49)} p4 > c.a16(int _u, int _pw, int _q, int _j) {a_s := 83 + a_s_old + a_s_old & m_g := 62 + m_g_old + m_g_old & f_u := 92 - f_u_old - f_u_old & y_l := 2 - y_l_old - y_l_old} S6
+S6 {And(y_l > 9 , y_l > 7 , f_u > 38 , a_s > 12 , m_g > 82 , y_l > 69)} p3 > c.a17(int _ce) {a_s := 14 - a_s_old & m_g := 4 - m_g_old & f_u := 97 - f_u_old & y_l := 47 - y_l_old} S7
+S7 {And(m_g > 40 , f_u > 69 , _p > 9 , y_l > 24 , f_u > 7 , _p > 37 , a_s > 11 , _p > 89 , f_u > 66 , f_u > 95 , _o > 80 , y_l > 93 , y_l > 37 , _o > 57)} p5 > c.a6(int _p, int _o) {a_s := 67 + a_s_old - a_s_old & m_g := 78 + m_g_old - m_g_old & f_u := 67 + f_u_old + f_u_old & y_l := 55 - y_l_old + y_l_old} S8
+S8 {And(y_l > 25 , m_g > 16 , a_s > 42 , a_s > 52 , _p > 3)} p1:R1 > c.a7(int _p) {a_s := 96 - a_s_old + a_s_old & m_g := 95 - m_g_old + m_g_old & f_u := 51 + f_u_old - f_u_old & y_l := 75 - y_l_old - y_l_old} S9
+S9 {And(_u > 89 , _m > 27)} p4 > c.a17(int _u, int _l, int _m) {a_s := 23 - a_s_old & m_g := 63 - m_g_old & f_u := 92 - f_u_old & y_l := 31 + y_l_old} S10
+S10 {And(a_s > 99 , m_g > 13 , y_l > 81 , y_l > 88 , f_u > 31)} p1 > c.a12(int _o, int _mm) {a_s := 5 - a_s_old + a_s_old & m_g := 22 - m_g_old + m_g_old & f_u := 10 - f_u_old - f_u_old & y_l := 28 - y_l_old + y_l_old} S11+
+S11 {And(y_l > 91 , y_l > 26)} p5 > c.a14(int _co) {a_s := 37 + a_s_old & m_g := 32 - m_g_old & f_u := 57 + f_u_old & y_l := 75 - y_l_old} S12
+S12 {And(a_s > 4 , y_l > 81)} p1 > c.a5(int _mq, int _ra, int _k) {a_s := 28 + a_s_old & m_g := 53 - m_g_old & f_u := 12 + f_u_old & y_l := 78 - y_l_old} S13
+S13 {And(y_l > 96 , _l > 1 , m_g > 95 , m_g > 70 , y_l > 13 , _s > 77)} p4 > c.a10(int _br, int _s, int _l, int _gk) {a_s := 99 - a_s_old + a_s_old & m_g := 40 + m_g_old + m_g_old & f_u := 55 + f_u_old - f_u_old & y_l := 44 + y_l_old + y_l_old} S14
+S14 {And(f_u > 43 , _i > 43 , m_g > 67 , _qg > 21)} p3 > c.a18(int _qg, int _i) {a_s := 100 + a_s_old & m_g := 69 - m_g_old & f_u := 1 + f_u_old & y_l := 98 + y_l_old} S15
+S15 {And(_ud > 24 , _kf > 29 , _ud > 52 , _to > 58 , _kf > 18 , _kf > 23)} any p2:R4 > c.a3(int _ud, int _zc, int _to, int _kf) {a_s := 18 + a_s_old & m_g := 94 + m_g_old & f_u := 42 + f_u_old & y_l := 58 - y_l_old} S16
+S16 {And(_zb > 65 , a_s > 29 , _m > 70 , f_u > 68)} p4 > c.a17(int _m, int _fn, int _zb, int _av) {a_s := 70 - a_s_old & m_g := 46 - m_g_old & f_u := 39 + f_u_old & y_l := 84 - y_l_old} S17
+S17 {_n > 30} p4 > c.a13(int _n, int _nb) {a_s := 24 & m_g := 66 & f_u := 40 & y_l := 33} S18
+S18 {And(_i > 93 , y_l > 12 , a_s > 0)} p5 > c.a18(int _bx, int _i, int _c, int _wj) {a_s := 80 + a_s_old - a_s_old & m_g := 16 - m_g_old - m_g_old & f_u := 53 + f_u_old + f_u_old & y_l := 54 - y_l_old - y_l_old} S19
+S0 {_yb > 86} p3 > c.a17(int _yb) {a_s := 88 & m_g := 79 & f_u := 32 & y_l := 4} S15
+S0 {_z > 10} p4 > c.a5(int _gn, int _mt, int _z) {a_s := 67 & m_g := 26 & f_u := 52 & y_l := 68} S7
+S0 {And(f_u > 42 , f_u > 70 , y_l > 16)} p2 > c.a1(int _m) {a_s := 93 - a_s_old & m_g := 20 - m_g_old & f_u := 82 + f_u_old & y_l := 55 - y_l_old} S18
+S15 {And(_g > 27 , _g > 17 , y_l > 28 , _hz > 54 , _g > 84 , y_l > 13 , y_l > 35 , m_g > 23 , y_l > 35 , _hz > 82)} p3 > c.a11(int _hz, int _g, int _p) {a_s := 94 + a_s_old + a_s_old & m_g := 6 - m_g_old - m_g_old & f_u := 33 - f_u_old + f_u_old & y_l := 35 - y_l_old + y_l_old} S4
+S15 {And(_jp > 64 , _h > 67 , a_s > 38 , y_l > 42 , y_l > 17)} p5 > c.a10(int _jp, int _h) {a_s := 52 - a_s_old - a_s_old & m_g := 88 - m_g_old + m_g_old & f_u := 92 - f_u_old + f_u_old & y_l := 13 + y_l_old + y_l_old} S17
+S15 {And(_gu > 9 , f_u > 83 , y_l > 62)} p1 > c.a12(int _my, int _gu) {a_s := 34 + a_s_old & m_g := 100 - m_g_old & f_u := 46 + f_u_old & y_l := 26 - y_l_old} S12
+S15 {a_s > 50} p3 > c.a6(int _q, int _w, int _m) {a_s := 96 & m_g := 85 & f_u := 81 & y_l := 46} S7+
+S4 {a_s > 93} p2 > c.a5(int _el, int _dj) {a_s := 84 & m_g := 30 & f_u := 87 & y_l := 67} S14+
+S4 {And(y_l > 50 , a_s > 51 , m_g > 62 , f_u > 34)} p2 > c.a14(int _jp, int _nr) {a_s := 23 + a_s_old - a_s_old & m_g := 37 + m_g_old - m_g_old & f_u := 68 - f_u_old + f_u_old & y_l := 30 - y_l_old - y_l_old} S11
+S4 {And(y_l > 98 , a_s > 42 , _n > 96)} p4 > c.a3(int _n) {a_s := 66 - a_s_old - a_s_old & m_g := 95 + m_g_old - m_g_old & f_u := 30 + f_u_old + f_u_old & y_l := 5 + y_l_old + y_l_old} S17+
+S18 {y_l > 7} p2 > c.a7(int _l, int _q) {a_s := 79 & m_g := 2 & f_u := 15 & y_l := 34} S6
+S18 {And(a_s > 20 , a_s > 89 , _bt > 63 , f_u > 66 , y_l > 28 , m_g > 42 , y_l > 0 , m_g > 68)} p4 > c.a18(int _d, int _bt) {a_s := 0 - a_s_old & m_g := 56 + m_g_old & f_u := 87 + f_u_old & y_l := 10 - y_l_old} S7
+S18 {And(y_l > 21 , _t > 30 , m_g > 37 , a_s > 37)} p5 > c.a18(int _t, int _b) {a_s := 99 + a_s_old & m_g := 14 - m_g_old & f_u := 64 - f_u_old & y_l := 55 + y_l_old} S11
+S18 {And(f_u > 82 , a_s > 2 , m_g > 62 , _jd > 77 , f_u > 89 , m_g > 26 , _jd > 13)} p1 > c.a1(int _xs, int _f, int _jd) {a_s := 42 + a_s_old & m_g := 30 - m_g_old & f_u := 59 + f_u_old & y_l := 17 + y_l_old} S17
+S12 {_jh > 75} p4 > c.a4(int _t, int _jh) {a_s := 94 & m_g := 25 & f_u := 85 & y_l := 98} S8+
+S12 {And(a_s > 79 , a_s > 68 , y_l > 11 , m_g > 78 , _ao > 12)} p2 > c.a11(int _ao) {a_s := 55 - a_s_old & m_g := 38 - m_g_old & f_u := 96 - f_u_old & y_l := 54 + y_l_old} S1
+S12 {And(_da > 19 , y_l > 31 , f_u > 63 , y_l > 72 , _da > 11 , _da > 74 , m_g > 27 , m_g > 96 , m_g > 23 , m_g > 5)} any p5:R3 > c.a10(int _da) {a_s := 53 - a_s_old - a_s_old & m_g := 30 + m_g_old - m_g_old & f_u := 50 + f_u_old - f_u_old & y_l := 40 + y_l_old + y_l_old} S0+
+S12 {And(_e > 63 , _e > 63 , _e > 90 , y_l > 79 , m_g > 13 , _e > 73 , a_s > 75 , f_u > 66 , f_u > 93 , f_u > 26 , m_g > 9 , m_g > 80)} p4 > c.a16(int _e) {a_s := 68 - a_s_old + a_s_old & m_g := 86 + m_g_old - m_g_old & f_u := 83 - f_u_old + f_u_old & y_l := 87 - y_l_old - y_l_old} S18
+S12 {And(y_l > 64 , _s > 78 , a_s > 94 , _s > 62)} p3 > c.a16(int _s) {a_s := 37 + a_s_old & m_g := 21 - m_g_old & f_u := 4 + f_u_old & y_l := 77 - y_l_old} S0
+S7 {_p > 99} p5 > c.a3(int _pp, int _oi, int _lm, int _p) {a_s := 20 & m_g := 1 & f_u := 32 & y_l := 80} S5
+S7 {a_s > 66} p2 > c.a5(int _li) {a_s := 88 & m_g := 62 & f_u := 52 & y_l := 52} S1
+S7 {_vs > 24} p1 > c.a13(int _vs, int _su) {a_s := 37 & m_g := 66 & f_u := 13 & y_l := 42} S4
+S7 {And(_r > 82 , a_s > 50 , a_s > 87 , _r > 22 , _wq > 39 , y_l > 3 , _tr > 29)} p4 > c.a16(int _wq, int _r, int _tr) {a_s := 15 + a_s_old & m_g := 69 - m_g_old & f_u := 26 - f_u_old & y_l := 40 + y_l_old} S4+

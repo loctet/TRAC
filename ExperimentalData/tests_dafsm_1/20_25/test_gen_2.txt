@@ -1,0 +1,27 @@
+_ {True} p1:R > starts(c, int _f) {} {int y_q; int m_i; int r_q; int u_f} S0
+S0 {And(_d > 71 , y_q > 72)} p1 > c.a11(int _cv, int _t, int _d, int _dz) {y_q := 41 + y_q_old & m_i := 14 + m_i_old & r_q := 77 + r_q_old & u_f := 39 + u_f_old} S1
+S1 {And(r_q > 87 , _g > 16 , y_q > 89 , _g > 100)} p1 > c.a1(int _g) {y_q := 56 - y_q_old + y_q_old & m_i := 48 + m_i_old - m_i_old & r_q := 7 - r_q_old + r_q_old & u_f := 16 + u_f_old + u_f_old} S2
+S2 {And(_gi > 40 , _hu > 40 , r_q > 36 , m_i > 15 , r_q > 83 , m_i > 68 , _hu > 48 , _hu > 73 , _rv > 96)} p1 > c.a8(int _gi, int _hu, int _u, int _rv) {y_q := 29 - y_q_old & m_i := 32 + m_i_old & r_q := 0 - r_q_old & u_f := 93 - u_f_old} S3+
+S3 {m_i > 7} p1 > c.a5(int _og, int _ag, int _ke) {y_q := 90 & m_i := 16 & r_q := 69 & u_f := 4} S4
+S4 {r_q > 6} p1 > c.a6(int _ds) {y_q := 10 & m_i := 51 & r_q := 91 & u_f := 84} S5
+S5 {m_i > 98} p1 > c.a11(int _n, int _fo, int _d) {y_q := 45 & m_i := 9 & r_q := 96 & u_f := 64} S6
+S6 {And(u_f > 43 , m_i > 62)} any p1:R1 > c.a5(int _r) {y_q := 95 - y_q_old & m_i := 66 + m_i_old & r_q := 34 - r_q_old & u_f := 38 + u_f_old} S7
+S7 {y_q > 49} p1 > c.a3(int _nn, int _s) {y_q := 84 & m_i := 60 & r_q := 63 & u_f := 46} S8
+S8 {_r > 4} p1:R1 > c.a6(int _r, int _o) {y_q := 62 & m_i := 72 & r_q := 92 & u_f := 61} S9
+S9 {And(_q > 51 , _wb > 12 , _l > 35 , y_q > 36 , _q > 2 , r_q > 50 , m_i > 6 , y_q > 5 , _q > 83 , y_q > 73 , m_i > 12)} p1 > c.a5(int _wb, int _l, int _q, int _v) {y_q := 62 + y_q_old + y_q_old & m_i := 95 + m_i_old - m_i_old & r_q := 80 - r_q_old + r_q_old & u_f := 24 - u_f_old + u_f_old} S10+
+S10 {_fi > 15} p1 > c.a3(int _x, int _bp, int _fi) {y_q := 84 & m_i := 9 & r_q := 63 & u_f := 11} S11
+S11 {u_f > 25} p1 > c.a9(int _iz, int _t) {y_q := 48 & m_i := 44 & r_q := 28 & u_f := 6} S12
+S12 {_d > 32} p1 > c.a7(int _l, int _d, int _kb, int _x) {y_q := 93 & m_i := 81 & r_q := 50 & u_f := 57} S13
+S13 {And(r_q > 47 , _l > 32)} p1 > c.a7(int _t, int _l) {y_q := 32 - y_q_old & m_i := 61 + m_i_old & r_q := 9 + r_q_old & u_f := 8 - u_f_old} S14
+S14 {m_i > 40} p1 > c.a6(int _nt) {y_q := 60 & m_i := 88 & r_q := 40 & u_f := 30} S15
+S15 {_j > 59} any p1:R1 > c.a5(int _j, int _f) {y_q := 62 & m_i := 14 & r_q := 81 & u_f := 21} S16
+S16 {And(m_i > 15 , m_i > 70 , u_f > 14 , _d > 16 , m_i > 88 , y_q > 22)} p1 > c.a8(int _d) {y_q := 72 + y_q_old & m_i := 46 - m_i_old & r_q := 80 - r_q_old & u_f := 7 + u_f_old} S17
+S17 {And(m_i > 3 , m_i > 66 , y_q > 21 , u_f > 11 , y_q > 55 , _zx > 67 , m_i > 47 , m_i > 4)} p1 > c.a7(int _zx, int _a) {y_q := 14 - y_q_old + y_q_old & m_i := 30 - m_i_old - m_i_old & r_q := 96 + r_q_old - r_q_old & u_f := 82 + u_f_old - u_f_old} S18
+S18 {r_q > 66} p1 > c.a1(int _b, int _xw, int _v, int _m) {y_q := 49 & m_i := 28 & r_q := 98 & u_f := 46} S19
+S0 {And(_ul > 60 , m_i > 86 , y_q > 74 , y_q > 43 , y_q > 80)} p1 > c.a2(int _ul, int _d, int _nb) {y_q := 83 - y_q_old + y_q_old & m_i := 4 + m_i_old - m_i_old & r_q := 63 + r_q_old - r_q_old & u_f := 15 - u_f_old + u_f_old} S14
+S0 {And(_cn > 63 , u_f > 91 , _cn > 69)} p1 > c.a2(int _w, int _cn) {y_q := 18 + y_q_old & m_i := 2 + m_i_old & r_q := 46 - r_q_old & u_f := 19 - u_f_old} S6+
+S0 {And(_j > 77 , _e > 78 , _j > 70 , _j > 27 , y_q > 4 , _j > 37 , _e > 64 , y_q > 79 , _e > 63)} p1 > c.a3(int _j, int _e, int _d, int _n) {y_q := 53 - y_q_old + y_q_old & m_i := 23 + m_i_old - m_i_old & r_q := 65 + r_q_old - r_q_old & u_f := 4 + u_f_old + u_f_old} S17
+S0 {And(m_i > 72 , u_f > 39 , u_f > 45 , u_f > 26 , _b > 71 , _t > 100 , _a > 45 , m_i > 6 , r_q > 2)} p1 > c.a8(int _t, int _a, int _w, int _b) {y_q := 52 - y_q_old & m_i := 23 - m_i_old & r_q := 37 - r_q_old & u_f := 85 + u_f_old} S15+
+S15 {m_i > 62} p1 > c.a11(int _ar, int _vn) {y_q := 54 & m_i := 100 & r_q := 49 & u_f := 62} S0
+S15 {And(y_q > 70 , _mg > 85 , y_q > 45 , r_q > 51 , r_q > 46)} p1 > c.a6(int _mg, int _nj, int _mk, int _c) {y_q := 1 + y_q_old + y_q_old & m_i := 48 + m_i_old - m_i_old & r_q := 88 + r_q_old + r_q_old & u_f := 27 - u_f_old + u_f_old} S1+
+S14 {m_i > 41} p1 > c.a5(int _f) {y_q := 13 & m_i := 22 & r_q := 27 & u_f := 84} S19
