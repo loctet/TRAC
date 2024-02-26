@@ -16,7 +16,7 @@ To install and run TRAC using Docker:
    ```bash
    docker run -it loctet/trac_dafsms:v1
    ```
-This command downloads the TRAC Docker image and starts a container with an interactive terminal. Replace `/path/to/your/app` with the actual path to your TRAC application files if necessary.
+This command downloads the TRAC Docker image and starts a container with an interactive terminal. 
 
 If Docker is not installed on your system, follow the official Docker installation instructions for Ubuntu at [Docker's official documentation](https://docs.docker.com/engine/install/ubuntu/). This guide provides a comprehensive step-by-step process to get Docker set up and running on your machine.
 
