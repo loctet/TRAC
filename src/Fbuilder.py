@@ -57,4 +57,4 @@ class Fbuilder :
 
         # Open the file for writing and write the code
         with open(file_name, "w") as file:
-            file.write(f"from z3 import * \n# setting path\nsys.path.append('../') \nfrom TRAC.Extension import *\n\n{str_code}")
+            file.write(f"from z3 import * \n# setting path\nsys.path.append('../../') \nfrom TRAC.src.Extension import *\n\n{str_code}")
