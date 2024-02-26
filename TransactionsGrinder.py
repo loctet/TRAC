@@ -19,6 +19,12 @@ class TransactionsGrinder(Logger):
                  logTime = False, non_stop = True, time_out = 0) -> None:
         
         Logger.__init__(self, log, non_stop)
+        if '/' in file_name or '\\' in file_name:
+            path, file_name = os.path.split(file_name)
+            txt_path = os.path.join(txt_path, path)
+            json_path = os.path.join(json_path, path)
+            z3model_path = os.path.join(z3model_path, path)
+
         self.z3model_path = z3model_path
         self.txt_path = txt_path
         self.json_path = json_path
@@ -52,13 +58,13 @@ class TransactionsGrinder(Logger):
             self.fsm['transitions'][key]['newParticipants_from_param'] = results[3] 
             
     def get_full_json_path(self):
-        return f"{self.json_path}{self.file_name}.json"
+        return os.path.join(self.json_path, f"{self.file_name}.json")
     
     def get_full_txt_path(self):
-        return f"{self.txt_path}{self.file_name}.txt"
+        return os.path.join(self.txt_path, f"{self.file_name}.txt")
     
     def get_full_z3model_path(self, check = "_formness"):
-        return f"{self.z3model_path}{self.file_name}{check}.py"
+        return os.path.join(self.z3model_path, f"{self.file_name}{check}.py")
     
     def group_transactions(self, transitions):
         # Create a dictionary to store transitions grouped by "to" state
@@ -72,7 +78,7 @@ class TransactionsGrinder(Logger):
         return transitions_by_to_state
 
     def get_json_from_file(self):
-        input_path = f"{self.json_path}{self.file_name}.json"
+        input_path = self.get_full_json_path()
         with open(input_path, 'r') as file:
             input_text = file.readlines()
         self.fsm = json.loads(''.join(input_text))

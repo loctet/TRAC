@@ -18,7 +18,7 @@ s_labels = {
 s_well_formed_message = "(!) Verdict: Well Formed"
 
 s_z3model_path = "./Z3_models/"
-s_txt_path = "./Examples/java_txt/"
+s_txt_path = "./Examples/dafsm_txt/"
 s_json_path = "./Examples/jsons/"
 
 s_non_stop = 1

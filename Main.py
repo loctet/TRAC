@@ -71,8 +71,8 @@ def main():
     elif args.check_type == '3':
         trGrinder.check_path_sat()
     elif args.check_type == 'fsm':
-        print("--Generating the visual JAVA FSM")
-        os.system(f"java -jar ./Java_parser/javaParser.jar -i {trGrinder.get_full_json_path()} -visualize ")
+        print("--Generating the visual FSM")
+        os.system(f"java -jar ./GraphGen/GraphGen.jar -i {trGrinder.get_full_json_path()} -visualize ")
             
     else:
         # Perform all checks if no specific check type is provided

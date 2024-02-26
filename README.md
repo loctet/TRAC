@@ -14,30 +14,28 @@ pip install matplotlib
 pip install numpy
 pip install plotly
 ```
+Also make sure the java JDK is installed to run the java command. This is used to hava a visual view of the DAFSMs
 
 These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for numerical computations, which are essential for TRAC's functionality. Ensure all commands are executed successfully to avoid any issues while running TRAC.
 
-## Running a Predefined Example: "simplemarketplace"
+## Running a Predefined Example: "Simple Market Place"
 
 To run the "simplemarket_place" example with TRAC:
 
 1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
 2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where TRAC is located.
-3. **Locate the Example**: The "simplemarket_place" example is already within designated examples directory, typically named `Examples/java` where all manually executed examples should be kept.
+3. **Locate the Example**: The "simplemarket_place" example is already within designated examples directory, typically named `Examples/dafsms_txt` where all manually executed examples should be kept.
 4. **Execute the Example**:
    - Use `Main.py` to run the example. The command syntax is:
      ```bash
-     python3 Main.py --filetype txt simplemarket_place
+     python3 Main.py --filetype txt "azure/simplemarket_place"
      ```
    This command tells TRAC to process and verify the "simplemarket_place" example.
 
-Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
-The result of this should be 
-`
-(!) Verdict: Well Formed
-`
+    Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
+    The result of this should be `(!) Verdict: Well Formed`
 5. **Execute the Example**:
-Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
+    Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
 
 The `Main.py`, can take some configurations as follows:
 
