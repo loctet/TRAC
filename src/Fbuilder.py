@@ -8,7 +8,19 @@ class Fbuilder :
         str_code = trGrinder.transition_processor.str_code
         #create formulas functions
         str_code += generateFuntionsFormulas() + "\n"
-          
+        with_log = False
+        
+        
+        if trGrinder.non_stop:
+            if not only_latest and trGrinder.log:
+               with_log = True 
+
+        elif trGrinder.log: 
+            with_log = True
+        else:
+            with_log = True
+        
+        
         checks = []
         solvers = trGrinder.transition_processor.solvers
         if only_latest:
@@ -18,33 +30,12 @@ class Fbuilder :
            str_code += "\n\n"
            for item in solvers[s]:
                 str_code += MessagesTemplates.getFunctionActionDefinition(item) + "\n"
-                checks.append(f"{item['snameF']}()")
-                
+                checks.append(f"{item['snameF']}({with_log})")
                 
         str_code += f"try:\n    check_resut = (" + " and ".join(checks) + ")" + "\n"
         str_code += MessagesTemplates.getResultCheckPart() + "\n"
-
-        code = f"\n    if not check_resut : \n        print('\\nFunctions simplified formula and satisfiability results :')"
-        solvers = trGrinder.transition_processor.solvers
-        if only_latest:
-            solvers = {"latest":[trGrinder.transition_processor.latest]}
-
-        for s in solvers:
-           for item in solvers[s]:
-                code += f"\n        {item['snameF']}(True)"
-        exceptV = "\nexcept Exception as e:\n    print(f\"Error in Z3 runner, could be state variable non declared, types not matching in assignment....: {e}\")"
-        code += exceptV
+        str_code += "\nexcept Exception as e:\n    print(f\"Error in Z3 runner, could be state variable non declared, types not matching in assignment....: {e}\")"
         
-        if trGrinder.non_stop:
-            if only_latest:
-                str_code += exceptV 
-            else :
-               str_code += code 
-        elif trGrinder.log:
-            str_code += code 
-        else :
-            str_code += code
-    
         Fbuilder.save_infile(str_code, file_name)
         
         return file_name

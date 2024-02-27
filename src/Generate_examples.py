@@ -87,7 +87,7 @@ def generate_a_transition(state_variables, params, participant, role, to_state, 
             
         elif var_type == 'bool':
             if complexity == 1:
-                post_conditions.append(f"{var_name} := {choice(["True", "False"])}")
+                post_conditions.append(f"{var_name} := {choice(['True', 'False'])}")
             else :
                 post_conditions.append(f"{var_name} := {randint(0, 100)} {f'> {randint(0, 100)}' if randint(0,1) == 0 else f'< {randint(0, 100)}'}")  # Example update, could be more complex
             

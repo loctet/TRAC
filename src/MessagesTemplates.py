@@ -55,7 +55,7 @@ def {item['snameF']}(infos = False):
     @staticmethod
     def getResultCheckPart():
         return f"""
-    print("(!) Verdict: "+ ("Well Formed" if  check_resut == True else "Not Well Formed"))
+    print("\\n(!) Verdict: "+ ("Well Formed" if  check_resut == True else "Not Well Formed"))
         """
         
     @staticmethod

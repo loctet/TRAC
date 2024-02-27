@@ -45,13 +45,14 @@ class TransitionProcessor(MiniTimer):
                 exit()
         return inputs
 
-    def get_a_consistency_formula(self, pre, _postC_A, otherPrecs, inputs):
-        hypothesis = f"And({pre},{_postC_A})"
+    # AConsistencyCheck formula gen
+    def get_a_consistency_formula(self, preC, _postC_A, otherPrecs, inputs):
+        hypothesis = f"And({preC},{_postC_A})"
         thesis = f'Or({",".join([self.quantifier_closure(otherPrecs[i], self.get_vars_names_from_input(inputs[1][i]), "Exists") for i in range(len(otherPrecs))])})' if len(otherPrecs) > 0 else "True"
-        sformula = f'Not(Implies({hypothesis}, {thesis}))'
-        
-        return sformula
     
+        return f'Not(Implies({hypothesis}, {thesis}))'
+    
+    #NDetCheck formula gen
     def get_formula_for_determinism_at_stage(self, curent_transition, other_transitions, processed_data):
         other_precs, inputs = processed_data
         to_state = curent_transition['to']
@@ -109,19 +110,7 @@ class TransitionProcessor(MiniTimer):
             else: 
                 exit()
     
-    """
-    Add an assertion to the solvers data structure based on provided conditions and inputs.
-
-    Parameters:
-    - current transition
-    - list of out going transitions
-
-    Returns:
-    dict: A dictionary containing information about the added assertion.
-
-    The function processes the given conditions and inputs, replaces variables with "_old" versions, and generates Z3-compatible formulas for the assertion. It also handles the addition of the assertion to the solvers data structure.
-
-    """
+   
     def process(self, transition, outgoingTransitions):
         # Select the first action (currect transition's action)
         preC = transition['preCondition']
@@ -131,6 +120,7 @@ class TransitionProcessor(MiniTimer):
         postC = transition['postCondition']
         
         self.start_time()
+        # CallerCheck
         formula_for_participant_check = self.fsmGraph.is_caller_introduced(transition)
         self.infos["participants"] = self.get_ellapsed_time()
         self.infos['nb_path'] = self.fsmGraph.nb_path
@@ -174,11 +164,12 @@ class TransitionProcessor(MiniTimer):
         converted_declarations = VarDefConv.convert_to_z3_declarations(";".join([x for x in (inputs[1]+[inputs[0]]) if x != ""]))
 
         self.start_time()
+        # NDetCheck
         thesis_non_eps = self.get_formula_for_determinism_at_stage(transition, outgoingTransitions, [otherPrecs, inputs[1]])
         self.infos["non_determinism"] = self.get_ellapsed_time()
 
         self.start_time()
-        # Create the hypothesis and thesis for the assertion
+        # AConsistencyCheck
         sformula = self.get_a_consistency_formula(preC, _postC_A, otherPrecs, inputs)
         self.infos["a_consistency"] = self.get_ellapsed_time()
 
@@ -198,5 +189,3 @@ class TransitionProcessor(MiniTimer):
         }
         self.solvers[action].append(result)
         self.latest = result
-        
-        return result
