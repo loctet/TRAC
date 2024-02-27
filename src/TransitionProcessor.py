@@ -112,71 +112,71 @@ class TransitionProcessor(MiniTimer):
     
    
     def process(self, transition, outgoingTransitions):
-        # Select the first action (currect transition's action)
+        # Initialize necessary variables from the current transition and collect inputs and preconditions from all outgoing transitions.
         preC = transition['preCondition']
         action = transition['actionLabel']
         otherPrecs = [item['preCondition'] for item in outgoingTransitions]
         inputs = [transition["input"], [item['input'] for item in outgoingTransitions]]
         postC = transition['postCondition']
         
+        # Start timing for performance metrics.
         self.start_time()
-        # CallerCheck
+        
+        # Perform a check to ensure the caller of the transition is allowed, #CALLERCHECK
         formula_for_participant_check = self.fsmGraph.is_caller_introduced(transition)
         self.infos["participants"] = self.get_ellapsed_time()
         self.infos['nb_path'] = self.fsmGraph.nb_path
         self.infos["is_time_out"] = self.fsmGraph.timed_out
+        # Decision point to potentially halt execution based on participant verification.
         self.should_stop(formula_for_participant_check, transition, transition["caller"])
 
-        # Check and handle special cases in the pre and post conditions
+        # Handling of special cases in pre and post conditions to ensure no outdated variables are used and to append '_old' to variables.
         PatternChecker.pre_condition_not_having_old_vars(preC, postC)
-
         postC = PatternChecker.append_old_to_vars_and_return_updated(postC, self.var_names)
 
-        # Extract Z3-compatible post conditions
+        # Extracting and preparing post conditions for Z3 solver compatibility.
         _postC_A, _post_variable = PatternChecker.z3_post_condition(postC, self.var_names)
 
-
-        # Replace variables in pre with their "_old" versions
+        # Update preconditions with "_old" versions of variables for state consistency.
         data = PatternChecker.replace_var_with_old_in_pre(preC, _post_variable, self.var_names)
-        # change the precondition to the updatd one
         preC = data[0]
 
-        # Update the inputs with the new "_old" variables
+        # Update inputs to include "_old" versions of variables where applicable.
         inputs = (";".join(inputs[0].split(';') + data[1]), inputs[1])
         inputs = (
             self.add_old_var_from_precs_and_inputs([postC], [inputs[0]])[0],
             self.add_old_var_from_precs_and_inputs(otherPrecs, inputs[1])
         )
 
-        # Initialize or get the data associated with the current action
+        # Initialize or retrieve solver data for the current action.
         data = self.solvers.get(action, [])
         if not data:
             self.solvers[action] = []
 
-        # Replace assertion in pre
+        # Replace assertions within preconditions to ensure correctness and safety.
         preC = replace_assertion(preC)
-        otherPrecs = [ replace_assertion(otherPrecs[i]) for i in range(len(otherPrecs))]
+        otherPrecs = [replace_assertion(otherPrecs[i]) for i in range(len(otherPrecs))]
 
-        # Generate safe variable updates and global variables
-        _ , global_vars = SafeVars.safe_variable_assignment(postC, f'solver__{action}_{len(self.solvers[action])}')
+        # Generate variable assignments ensuring they are safe and declare global variables for use within the solver.
+        _, global_vars = SafeVars.safe_variable_assignment(postC, f'solver__{action}_{len(self.solvers[action])}')
 
-        # Convert variables and declarations to Z3 format
+        # Convert variable declarations to Z3-compatible format.
         converted_declarations = VarDefConv.convert_to_z3_declarations(";".join([x for x in (inputs[1]+[inputs[0]]) if x != ""]))
 
+        # Timing and checking for non-determinism within the transitions. # NDETCHECK
         self.start_time()
-        # NDetCheck
         thesis_non_eps = self.get_formula_for_determinism_at_stage(transition, outgoingTransitions, [otherPrecs, inputs[1]])
         self.infos["non_determinism"] = self.get_ellapsed_time()
 
+        # Timing and checking for action consistency within the transitions.  # AConsistencyCheck
         self.start_time()
-        # AConsistencyCheck
         sformula = self.get_a_consistency_formula(preC, _postC_A, otherPrecs, inputs)
         self.infos["a_consistency"] = self.get_ellapsed_time()
 
-
-        # Create a unique name for the function
+        # Generate a unique identifier for the function related to the current action and solver iteration.
         name_func = f'_{action}_{len(self.solvers[action])}'
-        # Prepare the result 
+        
+        # Prepare the final result with all necessary information for the solver to process.
         result = {
             'sname': f'solver_{action}',
             'snameF': name_func,
@@ -187,5 +187,6 @@ class TransitionProcessor(MiniTimer):
             'sparticipants': formula_for_participant_check,
             'epsformula': thesis_non_eps
         }
+        # Append the result to the solvers dictionary for the current action, and update the latest processed transition.
         self.solvers[action].append(result)
         self.latest = result
