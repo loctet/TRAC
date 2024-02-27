@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir z3-solver matplotlib numpy plotly
+RUN pip install --no-cache-dir z3-solver matplotlib numpy plotly networkx pandas
 
 # Install OpenJDK-11
 RUN apt-get update && \

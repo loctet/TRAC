@@ -31,6 +31,9 @@ pip install z3-solver
 pip install matplotlib
 pip install numpy
 pip install plotly
+pip install networkx
+pip install pandas 
+pip install hashlib
 ```
 Also make sure the java JDK is installed to run the java command. This is used to hava a visual view of the DAFSMs
 
