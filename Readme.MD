@@ -14,7 +14,7 @@ To install and run TRAC using Docker:
    ```
 2. Run the container:
    ```bash
-   docker run -it loctet/trac_dafsms:v1
+   docker run -it loctet/trac_dafsms:v1 
    ```
 This command downloads the TRAC Docker image and starts a container with an interactive terminal. 
 
@@ -33,7 +33,6 @@ pip install numpy
 pip install plotly
 pip install networkx
 pip install pandas 
-pip install hashlib
 ```
 Also make sure the java JDK is installed to run the java command. This is used to hava a visual view of the DAFSMs
 
