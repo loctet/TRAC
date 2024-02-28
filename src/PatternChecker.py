@@ -2,8 +2,22 @@ import re
 from Extension import replace_assertion
 
 class PatternChecker:
+    """
+    Provides utility functions for checking patterns, extracting variables,
+    and modifying assertions in strings related to smart contract verification.
+    """
+
     @staticmethod
     def follows_pattern(input_string):
+        """
+        Checks if the input string follows a specific pattern for variable assignments.
+
+        :param input_string: The string to check.
+        :type input_string: str
+        :return: True if the input string follows the pattern, False otherwise.
+        :rtype: bool
+        """
+
         input_string = input_string.strip()
         if input_string == '':
             return True
@@ -13,6 +27,15 @@ class PatternChecker:
 
     @staticmethod
     def get_all_old_variables(input_string):
+        """
+        Extracts all variables with '_old' suffix from the input string.
+
+        :param input_string: The string to search.
+        :type input_string: str
+        :return: A list of unique variable names with '_old' suffix found in the input string.
+        :rtype: list
+        """
+
         pattern = r'\b\w+_old\b'
         old_words = list(set(re.findall(pattern, input_string)))
         return old_words
@@ -21,7 +44,17 @@ class PatternChecker:
     @staticmethod
 
     def append_old_to_vars_and_return_updated(assertion, vars):
-        
+        """
+        Appends '_old' suffix to specified variables in an assertion and returns the updated assertion.
+
+        :param assertion: The assertion to process.
+        :type assertion: str
+        :param vars: A list of variable names to be updated.
+        :type vars: list
+        :return: The updated assertion with specified variables appended with '_old'.
+        :rtype: str
+        """
+
         updated_vars = []  # List to store updated variable names
         var_in_f = set()
         processed_assignments = []
@@ -50,6 +83,17 @@ class PatternChecker:
 
     @staticmethod
     def z3_post_condition(postC, var_names):
+        """
+        Processes and returns a Z3 compatible post-condition assertion.
+
+        :param postC: The post-condition assertion to process.
+        :type postC: str
+        :param var_names: A dictionary mapping variable names to their types.
+        :type var_names: dict
+        :return: A tuple containing the processed post-condition assertion and a list of variable names.
+        :rtype: tuple[str, list[str]]
+        """
+
         if  postC.strip() == "" :
             return ["True", []]
         
@@ -78,12 +122,36 @@ class PatternChecker:
     
     @staticmethod
     def pre_condition_not_having_old_vars(preC, postC):
+        """
+        Validates that a pre-condition does not contain variables with '_old' suffix.
+
+        :param preC: The pre-condition to validate.
+        :type preC: str
+
+        :param postC: The post-condition, used for context.
+        :type postC: str
+
+        :raises Exception: If '_old' variables are found in the pre-condition.
+        """
         if len(PatternChecker.get_all_old_variables(preC)) > 0:
             print(f"{preC} should not contain _old variables")
             exit() 
     
     @staticmethod        
     def replace_var_with_old_in_pre(preC, postC_vars, var_names):
+        """
+        Replaces variables in a pre-condition with their '_old' counterparts.
+
+        :param preC: The pre-condition to process.
+        :type preC: str
+        :param postC_vars: A list of variables from the post-condition.
+        :type postC_vars: list
+        :param var_names: A dictionary mapping variable names to their types.
+        :type var_names: dict
+
+        :return: A tuple containing the updated pre-condition and a list of input variables.
+        :rtype: tuple
+        """
         def replace(match):
             return match.group(0) + "_old"
 

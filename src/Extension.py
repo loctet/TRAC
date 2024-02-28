@@ -4,6 +4,15 @@ import re
 formulas = {}
 
 def is_in_set(value, set):
+  """
+  Checks if a given value is in a set using Z3 solver.
+
+  :param value: The value to be checked for presence in the set.
+  :param set: The set against which the value is checked.
+  :return: Returns True if the value is found in the set, False otherwise.
+  :rtype: bool
+  """
+
   value = str(value)
   # Create a Z3 solver.
   solver = z3.Solver()
@@ -20,6 +29,15 @@ def is_in_set(value, set):
   return solver.check() == z3.sat
   
 def exist_in_set(formula, set):
+  """
+  Checks if there exists an element in the set that satisfies a given formula using Z3 solver.
+
+  :param formula: The condition or formula each element in the set is tested against.
+  :param set: The collection of elements to be tested against the formula.
+  :return: Returns True if at least one element in the set satisfies the given formula, False otherwise.
+  :rtype: bool
+  """
+
   solver = z3.Solver()
   # Create a strins variable for each element in the set and add rule it must be equal to value in array.
   set_elements = [z3.String('set_element_%d' % i) for i in range(len(set))]
@@ -33,6 +51,15 @@ def exist_in_set(formula, set):
   return solver.check() == z3.sat
   
 def forall_in_set(formula, set):
+  """
+  Checks if all elements in the set satisfy a given formula using Z3 solver.
+
+  :param formula: The condition or formula to test against each element in the set.
+  :param set: The collection of elements to be evaluated against the formula.
+  :return: Returns True if every element in the set satisfies the given formula, False otherwise.
+  :rtype: bool
+  """
+
   solver = z3.Solver()
   # Create a strins variable for each element in the set and add rule it must be equal to value in array.
   set_elements = [z3.String('set_element_%d' % i) for i in range(len(set))]
@@ -47,6 +74,15 @@ def forall_in_set(formula, set):
 
 # Function to parse and replace assertions
 def replace_assertion(assertion): 
+    """
+    Parses and replaces assertions within a given string with appropriate function calls for evaluation.
+
+    :param assertion: The assertion string to be parsed and modified.
+    :type assertion: str
+    :return: A modified version of the assertion string where assertions have been replaced with function calls suitable for evaluation.
+    :rtype: str
+    """
+
     # Define a replacement function for re.sub
 
     def replace(match):
@@ -80,6 +116,13 @@ def replace_assertion(assertion):
     return assertion
 
 def generateFuntionsFormulas():
+  """
+  Generates Python function definitions for formulas stored in a global `formulas` dictionary. Each formula is turned into a Python function that can be evaluated.
+
+  :return: A string containing Python code with generated function definitions for each formula.
+  :rtype: str
+  """
+
   code = ""
   for name in formulas:
     code += f"""\n

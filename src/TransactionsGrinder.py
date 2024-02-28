@@ -10,6 +10,12 @@ from Fbuilder import Fbuilder
 from Settings import s_json_path, s_txt_path, s_z3model_path
 
 class TransactionsGrinder(Logger):
+    """
+    Processes transactions from a JSON file to generate Z3 models, handling pre-processing,
+    grouping transactions, and executing Z3 models for verification.
+
+    Inherits from Logger for logging capabilities.
+    """
     def __init__(self, 
                  file_name, 
                  z3model_path = s_z3model_path, 
@@ -17,7 +23,27 @@ class TransactionsGrinder(Logger):
                  json_path = s_json_path, 
                  log = True, 
                  logTime = False, non_stop = True, time_out = 0) -> None:
-        
+        """
+        Initializes the TransactionsGrinder with file paths and logging settings.
+
+        :param file_name: The name of the file to process.
+        :type file_name: str
+        :param z3model_path: Path to save the generated Z3 model files.
+        :type z3model_path: str
+        :param txt_path: Path to save text outputs.
+        :type txt_path: str
+        :param json_path: Path to JSON input files.
+        :type json_path: str
+        :param log: Enables logging if True.
+        :type log: bool
+        :param logTime: Enables timing logging if True.
+        :type logTime: bool
+        :param non_stop: Continues processing on errors if True.
+        :type non_stop: bool
+        :param time_out: Timeout limit for processing.
+        :type time_out: int
+        """
+
         Logger.__init__(self, log, non_stop)
         if '/' in file_name or '\\' in file_name:
             path, file_name = os.path.split(file_name)
@@ -49,24 +75,66 @@ class TransactionsGrinder(Logger):
         os.makedirs(z3model_path, exist_ok=True)
         
     def set_fsm_data(self, fsm):
+        """
+        Sets the finite state machine data for processing.
+
+        :param fsm: The finite state machine data as a dictionary.
+        :type fsm: dict
+        """
+
         self.fsm = fsm
 
     def pre_process_fsm(self):
+        """
+        Pre-processes the FSM by converting variable declarations to Z3 declarations
+        and updating transitions with new participants.
+        """
         for key in range(len(self.fsm['transitions'])):
             results = VariableDeclarationConverter.convert_to_z3_declarations(self.fsm['transitions'][key]['input'], [], {}, False)
             self.fsm['transitions'][key]['newParticipants'].update(results[3])
             self.fsm['transitions'][key]['newParticipants_from_param'] = results[3] 
             
     def get_full_json_path(self):
+        """
+        Constructs the full path to the JSON file based on the base JSON path and file name.
+
+        :return: The full path to the JSON file.
+        :rtype: str
+        """
         return os.path.join(self.json_path, f"{self.file_name}.json")
     
     def get_full_txt_path(self):
+        """
+        Constructs the full path to the TXT file based on the base TXT path and file name.
+
+        :return: The full path to the TXT file.
+        :rtype: str
+        """
         return os.path.join(self.txt_path, f"{self.file_name}.txt")
     
     def get_full_z3model_path(self, check = "_formness"):
+        """
+        Constructs the full path to the Z3 model file based on the base Z3 model path, file name,
+        and an optional suffix for the file name.
+
+        :param check: Optional suffix for the Z3 model file name.
+        :type check: str
+        :return: The full path to the Z3 model file.
+        :rtype: str
+        """
+
         return os.path.join(self.z3model_path, f"{self.file_name}{check}.py")
     
     def group_transactions(self, transitions):
+        """
+        Groups transactions by their "to" state for processing.
+
+        :param transitions: A list of transactions to group.
+        :type transitions: list
+        :return: A dictionary of transactions grouped by "to" state.
+        :rtype: dict
+        """
+
         # Create a dictionary to store transitions grouped by "to" state
         transitions_by_to_state = {}
         # Group transitions by "to" state
@@ -78,23 +146,52 @@ class TransactionsGrinder(Logger):
         return transitions_by_to_state
 
     def get_json_from_file(self):
+        """
+        Loads Finite State Machine (FSM) data from a JSON file specified by the constructed full JSON path.
+
+        :return: The content of the JSON file as a list of strings.
+        :rtype: list
+        """
+
         with open(self.get_full_json_path(), 'r') as file:
             input_text = file.readlines()
         self.fsm = json.loads(''.join(input_text))
         return input_text
 
     def get_grouped_transaction(self, transitions):
+        """
+        Groups transactions and creates a copy for processing.
+
+        :param transitions: A list of transactions to group.
+        :type transitions: list
+        :return: A tuple containing the grouped transactions and a copy of them.
+        :rtype: tuple
+        """
+
         grouped_transitions = self.group_transactions(transitions)
         grouped_transitions_copy = grouped_transitions.copy()
         return [grouped_transitions, grouped_transitions_copy ]   
 
     def get_transition_processor(self)->TransitionProcessor:
+        """
+        Gets or creates a TransitionProcessor instance for processing Finite State Machine (FSM) transitions.
+
+        :return: An instance of TransitionProcessor.
+        :rtype: TransitionProcessor
+        """
+
         if self.transition_processor is None:
             self.transition_processor = TransitionProcessor(self.fsm, self.log, self.non_stop, self.time_out)
     
         return self.transition_processor
     
     def update_data(self, data):
+        """
+        Updates processing information with data from the transition processor.
+
+        :param data: Data to update the processing information with.
+        """
+
         self.info["t_participants"] += self.transition_processor.infos["participants"] 
         self.info["t_non_determinism"] += self.transition_processor.infos["non_determinism"] 
         self.info["t_a_consistency"] += self.transition_processor.infos["a_consistency"] 
@@ -103,6 +200,13 @@ class TransactionsGrinder(Logger):
         self.info["is_time_out"] = self.transition_processor.infos["is_time_out"]
     
     def tr_grinding(self, run = True):
+        """
+        Main method for processing transactions, building Z3 model files, and optionally running Z3 verification.
+
+        :param run: If True, runs Z3 verification after processing.
+        :type run: bool
+        """
+
         try:
             self.start_time()
             fsm = self.fsm 
@@ -155,6 +259,9 @@ class TransactionsGrinder(Logger):
 
 
     def check_independant_sat(self):
+        """
+        Checks the independent satisfiability of the model by verifying each transaction separately.
+        """
         try:
             fsm = self.fsm 
             transitions = fsm['transitions']
@@ -186,6 +293,9 @@ class TransactionsGrinder(Logger):
             raise Exception(f"Error in check_independant_sat : {e}")
 
     def check_path_sat(self):
+        """
+        Checks path satisfiability of the model by verifying the satisfiability of different paths through the FSM.
+        """
         fsm = self.fsm 
         self.logIt("Checking Path statisfiability of the model----\n\n")
         PathGenerator.check_path_satisfiability(fsm, self.file_name)

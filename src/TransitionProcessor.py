@@ -10,7 +10,27 @@ from MiniTimer import *
   
   
 class TransitionProcessor(MiniTimer):
+    """
+    Processes transitions for a finite state machine, including checking for determinism,
+    action consistency, and transforming FSM transitions into Z3 solver format.
+
+    Inherits from MiniTimer for performance measurement.
+    """
+
     def __init__(self, data, log = True, non_stop = True, time_out = 0):
+        """
+        Initializes the transition processor with FSM data and configuration settings.
+
+        :param data: FSM data to be processed.
+        :type data: dict
+        :param log: If logging is enabled.
+        :type log: bool
+        :param non_stop: If the processor should stop on errors.
+        :type non_stop: bool
+        :param time_out: Timeout limit for processing.
+        :type time_out: int
+        """
+
         self.str_code = ""
         self.solvers = {}
         self.deploy_init_var_val = {}
@@ -26,17 +46,57 @@ class TransitionProcessor(MiniTimer):
         
     #Append to the global Code Model
     def append(self, str):
+       """
+        Appends a string to the internal code model, helping to start building the Z3 model progressively.
+
+        :param str: The string to append.
+        :type str: str
+        """
+
        self.str_code += str + "\n"
        
     def quantifier_closure(self, formula, variables = [], quantifier = "ForAll"):
+        """
+        Applies a quantifier to a formula with specified variables.
+
+        :param formula: The logical formula to apply the quantifier to.
+        :type formula: str
+        :param variables: List of variables to include in the quantification.
+        :type variables: list
+        :param quantifier: The type of quantifier ('ForAll' or 'Exists').
+        :type quantifier: str
+        :return: The formula with the quantifier applied.
+        :rtype: str
+        """
+
         return f"{quantifier}([{','.join(variables)}], {formula})" if len(variables) > 0 else formula
     
     
     def get_vars_names_from_input(self, input_c):
+        """
+        Extracts variable names from the input condition.
+
+        :param input_c: The input condition string.
+        :type input_c: str
+        :return: A dictionary of variable names extracted.
+        :rtype: dict
+        """
+
         resuls  = VarDefConv.convert_to_z3_declarations(input_c)
         return resuls[2]
     
     def add_old_var_from_precs_and_inputs(self, otherPrecs, inputs): 
+        """
+        Adds '_old' suffix to variables based on preconditions and inputs.
+
+        :param otherPrecs: List of precondition strings.
+        :type otherPrecs: list
+        :param inputs: List of input strings.
+        :type inputs: list
+        :return: Updated list of input strings with '_old' variables added.
+        :rtype: list
+        """
+
         for i in range(len(otherPrecs)):
             try:
                 inputs[i] = ";".join([ item for item in inputs[i].split(";") if item.strip() != ""] + [ f"{self.var_names[item.replace('_old', '')]} {item}"  for item in PatternChecker.get_all_old_variables(otherPrecs[i])])
@@ -47,6 +107,21 @@ class TransitionProcessor(MiniTimer):
 
     # AConsistencyCheck formula gen
     def get_a_consistency_formula(self, preC, _postC_A, otherPrecs, inputs):
+        """
+        Generates a formula for action consistency check (AConsistencyCheck formula generation).
+
+        :param preC: The precondition string.
+        :type preC: str
+        :param _postC_A: The postcondition string after processing.
+        :type _postC_A: str
+        :param otherPrecs: List of other preconditions.
+        :type otherPrecs: list
+        :param inputs: List of input strings.
+        :type inputs: list
+        :return: The generated consistency check formula.
+        :rtype: str
+        """
+
         hypothesis = f"And({preC},{_postC_A})"
         thesis = f'Or({",".join([self.quantifier_closure(otherPrecs[i], self.get_vars_names_from_input(inputs[1][i]), "Exists") for i in range(len(otherPrecs))])})' if len(otherPrecs) > 0 else "True"
     
@@ -54,6 +129,19 @@ class TransitionProcessor(MiniTimer):
     
     #NDetCheck formula gen
     def get_formula_for_determinism_at_stage(self, curent_transition, other_transitions, processed_data):
+        """
+        Generates a formula to check for determinism at a specific stage (NDetCheck formula generation).
+
+        :param current_transition: The current transition being processed.
+        :type current_transition: dict
+        :param other_transitions: List of other transitions.
+        :type other_transitions: list
+        :param processed_data: Processed data for determinism check.
+        :type processed_data: tuple
+        :return: The generated determinism check formula.
+        :rtype: str
+        """
+
         other_precs, inputs = processed_data
         to_state = curent_transition['to']
 
@@ -102,6 +190,19 @@ class TransitionProcessor(MiniTimer):
         return self.non_det_formula[to_state]
 
     def should_stop(self, formula, transition, participant):
+        """
+        Determines whether processing should stop based on the given formula.
+
+        :param formula: The formula to evaluate.
+        :type formula: str
+        :param transition: The current transition data.
+        :type transition: dict
+        :param participant: The participant involved.
+        :type participant: str
+        :return: True if processing should stop, False otherwise.
+        :rtype: bool
+        """
+
         if formula == "False":
             print(f"Error from this transitions:{transition['from']}_{transition['actionLabel']}({transition['input']})_{transition['to']}")
             print(f"Participant: {participant} not introduced")
@@ -112,6 +213,15 @@ class TransitionProcessor(MiniTimer):
     
    
     def process(self, transition, outgoingTransitions):
+        """
+        Processes a transition and outgoing transitions for solver compatibility.
+
+        :param transition: The current transition to process.
+        :type transition: dict
+        :param outgoingTransitions: List of outgoing transitions.
+        :type outgoingTransitions: list
+        """
+
         # Initialize necessary variables from the current transition and collect inputs and preconditions from all outgoing transitions.
         preC = transition['preCondition']
         action = transition['actionLabel']

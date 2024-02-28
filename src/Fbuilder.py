@@ -3,8 +3,23 @@ from Extension import generateFuntionsFormulas
 from MessagesTemplates import MessagesTemplates
 
 class Fbuilder :
+    """
+    Provides functionalities to build Z3 formulas models from transitions and save them into a file.
+    """
     @staticmethod
     def build_z3_formulas_model_and_save(trGrinder, file_name, only_latest = False):
+        """
+        Builds a Z3 formulas model from the transitions processed by a TransactionsGrinder instance and saves it into a file.
+
+        :param trGrinder: An instance of TransactionsGrinder containing processed transitions.
+        :type trGrinder: TransactionsGrinder
+        :param file_name: The name of the file where the Z3 model will be saved.
+        :type file_name: str
+        :param only_latest: If True, only the latest transition formula is included in the model, defaults to False.
+        :type only_latest: bool, optional
+        :return: The name of the file where the model is saved.
+        :rtype: str
+        """
         str_code = trGrinder.transition_processor.str_code
         #create formulas functions
         str_code += generateFuntionsFormulas() + "\n"
@@ -43,6 +58,14 @@ class Fbuilder :
     
     @staticmethod
     def save_infile(str_code, file_name = "str_code"):
+        """
+        Saves the given string code into a file.
+
+        :param str_code: The string code to be saved.
+        :type str_code: str
+        :param file_name: The name of the file to save the code into, defaults to "str_code".
+        :type file_name: str, optional
+        """
         # Specify the file name with a .py extension
         file_name = f"{file_name}"
 

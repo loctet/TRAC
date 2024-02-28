@@ -6,27 +6,23 @@ from VariableDeclarationConverter import VariableDeclarationConverter
 from The_Validator import *
 from Settings import s_non_stop
 
-def well_formedness_check(file_name):
-    try:
-        with open(file_name, 'r') as file:
-            json.load(file)
-        print("JSON is well-formed.")
-    except json.JSONDecodeError as e:
-        print(f"JSON is not well-formed: {e}")
-
-def individual_function_check(file_name):
-    # Placeholder for actual function check
-    print(f"Performing individual function check on {file_name}.")
-
-def path_check(file_name):
-    # Placeholder for actual path check
-    print(f"Performing path check on {file_name}.")
-
 def exitWithMessage(message):
+    """
+    Prints a message and exits the program.
+
+    Parameters:
+    - message (str): The message to print before exiting.
+    """
     print(f"\n /!\\ {message} \n")
     exit()
 
 def main():
+    """
+    Processes a given JSON or TXT file based on the specified check type and other command-line arguments.
+
+    This script supports performing well-formedness checks, individual function checks, path checks on the specified file,
+    and generating a visual representation of the FSM (Finite State Machine) defined in the file.
+    """
     parser = argparse.ArgumentParser(description="""Process a JSON or TXT file.\n
     Examples:\n
     python main.py examplefile - Performs a Well-Formedness Check on examplefile.json.\n

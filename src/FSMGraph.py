@@ -5,12 +5,20 @@ import hashlib
 from MiniTimer import MiniTimer
 
 class FSMGraph(MiniTimer):
+    """
+    Represents a Finite State Machine (FSM) as a directed graph, providing functionalities for analyzing and manipulating FSM data.
+
+    :param data: FSM data including states and transitions.
+    :type data: dict
+    :param log: Indicates if logging is enabled. Defaults to True.
+    :type log: bool, optional
+    :param time_out: Timeout for operations in seconds. Defaults to 0.
+    :type time_out: int, optional
+    """
 
     def __init__(self, data, log = True, time_out = 0 ):
         """
-        Initializes the FSM graph with given JSON data.
-
-        :param data: A dictionary containing FSM definitions, including states and transitions.
+        Initializes the FSMGraph with given data, logging preference, and timeout value.
         """
         self.data = data
         self.graph = nx.MultiDiGraph()  # Using MultiDiGraph to support multiple edges between the same nodes
@@ -37,7 +45,8 @@ class FSMGraph(MiniTimer):
         """
         Adds a transition to the graph as an edge with metadata.
 
-        :param transition: A dictionary containing transition details.
+        :param transition: Contains transition details.
+        :type transition: dict
         """
         # Define a unique key for each transition to distinguish between multiple edges between the same nodes
         transition_key = f"{transition['actionLabel']}_{time.time_ns()}"
@@ -47,10 +56,12 @@ class FSMGraph(MiniTimer):
 
     def get_outgoing_transitions(self, state):
         """
-        Returns all outgoing transitions from a given state.
+        Retrieves all outgoing transitions from a given state.
 
-        :param state: The state from which to get the outgoing transitions.
-        :return: A list of dictionaries, each representing an outgoing transition with its metadata.
+        :param state: State from which to retrieve outgoing transitions.
+        :type state: str
+        :return: List of outgoing transitions.
+        :rtype: list
         """
         outgoing_transitions = []
         for _, v, data in self.graph.out_edges(state, data=True):
@@ -61,10 +72,12 @@ class FSMGraph(MiniTimer):
 
     def get_number_of_paths(self, target_state):
         """
-        Lists all paths from the "_" state to a given target state, considering each transition separately.
+        Calculates the number of paths from the initial state to a target state.
 
-        :param target_state: The target state to find paths to.
-        :return: A list of all possible paths, considering each transition separately.
+        :param target_state: Target state for path calculation.
+        :type target_state: str
+        :return: Number of paths.
+        :rtype: int
         """
         
         all_simple_paths = list(nx.all_simple_paths(self.graph, source="_", target=target_state))
@@ -72,12 +85,12 @@ class FSMGraph(MiniTimer):
     
     def is_caller_introduced(self, transition):
         """
-        Checks if the caller of a given transition is introduced in every path from the "_" state to the 
-        'from' state of the transition or in the current transition.
+        Checks if the caller of a transition is introduced in any path leading to the transition's source state.
 
-        :param fsm_graph: An instance of the FSMGraph class.
-        :param transition: A dictionary representing the transition to check.
-        :return: True if the caller is introduced in every path or in the current transition, False otherwise.
+        :param transition: Transition to check.
+        :type transition: dict
+        :return: Whether the caller is correctly introduced.
+        :rtype: bool
         """
         self.start_time()
         self.nb_path = 1
@@ -104,7 +117,18 @@ class FSMGraph(MiniTimer):
 
 
     def is_in_all_paths(self, target_state, caller, callerRoles) :
+        """
+        Verifies if a caller is introduced in all paths leading to a target state.
 
+        :param target_state: Target state to check.
+        :type target_state: str
+        :param caller: Caller to be verified.
+        :type caller: str
+        :param callerRoles: Roles associated with the caller.
+        :type callerRoles: list
+        :return: Whether the caller is introduced in all paths.
+        :rtype: bool
+        """
         # Directly iterate over each simple path without collecting them all at once
         for path in nx.all_simple_paths(self.graph, source="_", target=target_state):
             self.nb_path += 1
@@ -129,6 +153,18 @@ class FSMGraph(MiniTimer):
         return True  # Caller was introduced in every path or in the current transition
 
     def is_in_a_path(self, path, caller, callerRoles):
+        """
+        Determines if a caller with specific roles is introduced in a single path.
+
+        :param path: Path to check.
+        :type path: list
+        :param caller: Caller to be verified.
+        :type caller: str
+        :param callerRoles: Roles associated with the caller.
+        :type callerRoles: list
+        :return: Whether the caller is introduced in the path.
+        :rtype: bool
+        """
         caller_introduced = False
         pathRoles = []
         steps = 0
@@ -160,6 +196,14 @@ class FSMGraph(MiniTimer):
         return True
 
     def printPathTrace(self, path):
+        """
+        Constructs a string representation of a given path.
+
+        :param path: Path to be represented.
+        :type path: list
+        :return: String representation of the path.
+        :rtype: str
+        """
         result = []
         for _, _, transition in path:
             result.append(f"{transition['from']}-{transition['actionLabel']}-{transition['to']}")

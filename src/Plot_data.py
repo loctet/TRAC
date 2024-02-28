@@ -9,14 +9,37 @@ from Settings import s_labels, s_time_metrics
 
 
 def comma_separated_strings(string):
+    """
+    Splits a string into a list using commas as separators.
+
+    :param string: The input string to split (str).
+    :return: A list of strings obtained by splitting the input string. (list)
+    """
     return string.split(',')
 
 class CSVDataPlotter:
+    """
+    A class to plot data from CSV files using various types of plots including candlestick,
+    2D line, bar, scatter, 3D scatter, and 4D scatter plots.
+    """
     def __init__(self, csv_file_path):
+        """
+        Initializes the CSVDataPlotter with the path to a CSV file.
+
+        Parameters:
+        - csv_file_path (str): The path to the CSV file to plot data from.
+        """
         self.csv_file_path = csv_file_path
         self.data = pd.read_csv(csv_file_path)
 
     def plot_candle(self, fields, pl_lines):
+        """
+        Plots a candlestick chart for grouped state data from the CSV file.
+
+        Parameters:
+        - fields (list): The fields to group the data by.
+        - pl_lines (list): The lines to plot.
+        """
         # Aggregate the data to get min/max num_states and execution_time for each group
         self.data[pl_lines[0]] = self.data[pl_lines[0]] / 10000000
 
@@ -62,6 +85,18 @@ class CSVDataPlotter:
         fig.show()
 
     def plot_csv_data_2d(self, fields, pl_lines, typeP = 'line'):
+        """
+        Plots 2D data from the CSV file as line, bar, or scatter plots.
+        
+        :param fields: The fields to plot.
+        :type fields: list
+        
+        :param pl_lines: The lines to plot.
+        :type pl_lines: list
+        
+        :param typeP: The type of plot ('line', 'bar', or 'scatter').
+        :type typeP: str
+        """
         self.data = self.data[self.data["is_time_out"] == False]
         for field in fields:
             sorted_data = self.data.sort_values(field)
@@ -94,6 +129,15 @@ class CSVDataPlotter:
                 plt.show()
 
     def plot_csv_data_3d(self, fields, time_metrics):
+        """
+        Plots 3D data from the CSV file.
+
+        :param fields: The fields to plot on the x and y axes.
+        :type fields: list
+        :param time_metrics: The metrics to plot on the z-axis.
+        :type time_metrics: list
+        """
+
         if len(fields) != 2 or len(time_metrics) == 0:
             raise Exception("fields len should be 2")
 
@@ -111,6 +155,12 @@ class CSVDataPlotter:
             plt.show()
 
     def plot_csv_data_4d(self, fields):
+        """
+        Plots 4D data from the CSV file using color mapping for the fourth dimension.
+
+        Parameters:
+        - fields (list): The fields to plot on the x, y, and z axes.
+        """
         data = self.data
         _4d_data_in = data['average_bf_num']
 

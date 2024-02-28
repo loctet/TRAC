@@ -1,7 +1,21 @@
 class MessagesTemplates:
-    
+    """
+    Provides templates for generating Z3 solver function definitions, result checks,
+    global variable reset functions, and variable declaration blocks for use in
+    smart contract verification scripts.
+    """
     @staticmethod
     def getFunctionActionDefinition(funtionData):
+        """
+        Generates a Z3 solver function definition from provided function data.
+
+        :param functionData: A dictionary containing information about the function,
+            such as name, global variables, parameters, and conditions.
+        :type functionData: dict
+        :return: A string representing the complete function definition in Python code.
+        :rtype: str
+        """
+
         item = funtionData
         return f"""
 def {item['snameF']}(infos = False):
@@ -54,12 +68,31 @@ def {item['snameF']}(infos = False):
     
     @staticmethod
     def getResultCheckPart():
+        """
+        Returns a template string for printing the verification result.
+
+        :return: A string containing Python code for printing the verification verdict.
+        :rtype: str
+        """
+
+
         return f"""
     print("\\n(!) Verdict: "+ ("Well Formed" if  check_resut == True else "Not Well Formed"))
         """
         
     @staticmethod
     def getResetGlobalFunction(deploy_vars, var_names = []):
+        """
+        Generates a function for resetting global variables to their deployment values.
+
+        :param deploy_vars: A string containing the deployment variable assignments.
+        :type deploy_vars: str
+        :param var_names: A list of variable names to be declared as global.
+        :type var_names: list[str]
+        :return: A string representing the function definition in Python code.
+        :rtype: str
+        """
+
         var_names = ("global " + ", ".join(var_names)) if len(var_names) > 0 else ""
         return f"""
 def reset_deploy_vars():
@@ -70,6 +103,18 @@ def reset_deploy_vars():
 
     @staticmethod
     def getFunctionVariableDeclaration(variable_name, value,  solver_name):
+        """
+        Generates code for declaring a variable and adding it to a Z3 solver instance.
+
+        :param variable_name: The name of the variable to declare.
+        :type variable_name: str
+        :param value: The value to assign to the variable.
+        :param solver_name: The name of the Z3 solver instance.
+        :type solver_name: str
+        :return: A string containing Python code for the variable declaration and solver addition.
+        :rtype: str
+        """
+
         partern = "r'[^\[\]{}()]*[^\[\]{}()\s]'"
         return f"""
     # Define a regular expression pattern to match variable names inside brackets or parentheses
@@ -89,6 +134,17 @@ def reset_deploy_vars():
 
     @staticmethod
     def getMessageWhenVarNotGlobal(assignation_str, solver_name):
+        """
+        Generates a message indicating that a variable does not meet assignment requirements.
+
+        :param assignation_str: The assignment string that failed to meet requirements.
+        :type assignation_str: str
+        :param solver_name: The name of the Z3 solver instance.
+        :type solver_name: str
+        :return: A string containing Python code to add a false condition to the solver.
+        :rtype: str
+        """
+
         return f"""
     #{assignation_str} do not meet the assignations requirements
     {solver_name}.add(False)              

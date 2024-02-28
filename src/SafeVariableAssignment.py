@@ -2,8 +2,27 @@ from PatternChecker import *
 from MessagesTemplates import MessagesTemplates
 
 class SafeVariableAssignment:
+    """
+    Handles the safe assignment of variables for Z3 solver scripts, ensuring that variables
+    are declared and assigned in a format compatible with Z3 solvers.
+    """
+
     @staticmethod
     def safe_variable_assignment(assignation_str, solver_name):
+        """
+        Splits a string of variable assignments, ensures correct format, and prepares them
+        for inclusion in a Z3 solver script.
+
+        :param assignation_str: A string containing variable assignments separated by '&'.
+        :type assignation_str: str
+        :param solver_name: The name of the solver, used to prefix global variables.
+        :type solver_name: str
+        :return: A tuple containing two strings, the first is the Z3 compatible variable
+                declarations and assignments, the second is a list of global variable
+                declarations.
+        :rtype: tuple[str, list[str]]
+        """
+
         result = []
         global_vars = []           
         

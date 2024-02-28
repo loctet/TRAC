@@ -2,8 +2,34 @@ from PatternChecker import PatternChecker
 import re
 
 class VariableDeclarationConverter:
+    """
+    A class responsible for converting variable declarations into Z3 solver compatible format.
+
+    This class provides static methods to convert variable declarations from a custom format into
+    Z3 declarations, handling different data types including integers, strings, booleans, sets,
+    arrays, and participant types. It supports initial value assignment and checks for correct
+    syntax using a pattern checker.
+    """
+    
     @staticmethod
     def convert_to_z3_declarations(declarations_str, deploy_init_var_val = [], var_names = {},  deploy=False):
+        """
+        Converts variable declarations into Z3 declarations with optional initial values.
+
+        :param declarations_str: String containing variable declarations separated by semicolons or commas.
+        :type declarations_str: str
+        :param deploy_init_var_val: List to append initial values of variables for deployment.
+        :type deploy_init_var_val: list
+        :param var_names: Dictionary to map variable names to their types.
+        :type var_names: dict
+        :param deploy: Flag to indicate if the conversion is for deployment purposes.
+        :type deploy: bool
+        :return: A tuple containing the Z3 declarations as a string, a list of initial values for deployment,
+                    a dictionary of variable names and types, and a dictionary of participant variables.
+        :rtype: tuple[str, list, dict, dict]
+        """
+
+
         declarations = [declaration.strip() for declaration in re.split(';|,', declarations_str) if declaration.strip()]  # Split input into separate variable declarations and # Remove any empty declarations
         var_names = {}
         participants = {}
@@ -101,7 +127,18 @@ class VariableDeclarationConverter:
        
         return [result, deploy_init_var_val, var_names, participants]
     
+
     def convert_assignements_to_z3_assignment(declarations_str):
+        """
+        Converts assignment statements into Z3 assignment format.
+
+        :param declarations_str: String containing assignment declarations separated by '&' symbols.
+        :type declarations_str: str
+        :return: A string containing the converted Z3 assignment statements.
+        :rtype: str
+        """
+
+
         declarations = [declaration.strip() for declaration in declarations_str.split('&') if declaration.strip()]  # Split input into separate variable declarations and # Remove any empty declarations
         
         result = ""

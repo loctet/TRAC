@@ -15,6 +15,24 @@ from Z3Runner import Z3Runner
 
 
 def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_time_out ):
+    """ 
+    Counts the number of paths in FSMs defined in text files and updates a CSV data structure with the counts.
+    
+    :param list_: List of text file paths containing FSM definitions.
+    :type list_: list[str]
+
+    :param csv_data: Dictionary mapping text file paths to CSV data rows.
+    :type csv_data: dict[str, Any]
+
+    :param index: Index to distinguish output CSV files.
+    :type index: int
+
+    :param directory: Directory to save the output CSV file.
+    :type directory: str
+
+    :param time_out: Timeout limit for processing each FSM.
+    :type time_out: float
+    """
     sValidator = The_Validator()
     n_csv_data = []
     timer = MiniTimer()
@@ -45,6 +63,23 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
     return []
 
 def function_to_run(list_, csv_data, index, directory, number_runs_per_each, time_out = s_time_out ):
+    """
+    Processes Finite State Machines (FSMs) defined in text files, runs verification, and updates CSV data with the results.
+
+    :param list_: List of text file paths containing FSM definitions.
+    :type list_: list[str]
+    :param csv_data: Dictionary mapping text file paths to CSV data rows.
+    :type csv_data: dict
+    :param index: Index to distinguish output CSV files.
+    :type index: int
+    :param directory: Directory to save the output CSV file.
+    :type directory: str
+    :param number_runs_per_each: Number of verification runs for each FSM.
+    :type number_runs_per_each: int
+    :param time_out: Timeout limit for processing each FSM.
+    :type time_out: int
+    """
+
     sValidator = The_Validator()
     n_csv_data = []
     timer = MiniTimer()
@@ -129,9 +164,24 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
 
        
 class RandomTransitionsExecuter: 
+    """
+    Executes verification for randomly generated Finite State Machine (FSM) transitions, storing results in CSV files.
+
+    :param directory: Directory where FSM definitions and results are stored.
+    :type directory: str
+    :param merge_csv: Flag to merge individual CSV results into a single file.
+    :type merge_csv: bool
+    :param number_test_per_cpu: Number of tests to process concurrently per CPU.
+    :type number_test_per_cpu: int
+    :param number_runs_per_each: Number of verification runs for each FSM.
+    :type number_runs_per_each: int
+    :param time_out: Timeout limit for processing each FSM.
+    :type time_out: int
+    """
+
     def __init__(self, directory, merge_csv = 0, 
                  number_test_per_cpu = s_number_test_per_cpu, 
-                 number_runs_per_each = S_number_runs_per_each, time_out =  s_time_out) -> None:
+                 number_runs_per_each = s_number_runs_per_each, time_out =  s_time_out) -> None:
         self.directory = directory
         self.merge_csv = merge_csv
         self.headers = s_csv_headers
@@ -146,6 +196,9 @@ class RandomTransitionsExecuter:
         print("Init Done")
 
     def read_csv_data(self, path):
+        """
+        Reads CSV data from a given path into a dictionary.
+        """
         csv_data = {}
         with open(path, newline='') as csvfile:
             reader = csv.DictReader(csvfile, fieldnames=self.headers, delimiter=',')
@@ -158,6 +211,9 @@ class RandomTransitionsExecuter:
         return csv_data
 
     def merge_and_delete(self):
+        """
+        Merges individual CSV result files into a single file and cleans up.
+        """
         time_ = time.time()
         #create a dir to keep old csvs
         os.makedirs(os.path.join(self.base_dir, f"{time_}"), exist_ok=True)
@@ -190,6 +246,9 @@ class RandomTransitionsExecuter:
      
 
     def process_all_txt_files(self):
+        """
+        Processes all text files containing FSM definitions for verification.
+        """
         data = pd.read_csv(os.path.join(self.base_dir, 'list_of_files_info.csv'))
         sorted_data = data.sort_values(by='num_transitions', ascending=True)
         txt_files = [ item.replace("\\", "/") for item in sorted_data["path"]]
@@ -202,6 +261,9 @@ class RandomTransitionsExecuter:
         run_parallel_generations(works)
 
     def count_all_path_in_fsm(self):
+        """
+        Counts all paths in FSMs defined in text files and updates CSV data with the counts.
+        """
         self.csv_data = self.read_csv_data(self.csv_merged_file_path)
         data = pd.read_csv(os.path.join(self.base_dir, 'merged_list_of_files_info.csv'))
         sorted_data = data.sort_values(by='num_transitions', ascending=True)
@@ -221,7 +283,7 @@ if __name__ == "__main__":
     parser.add_argument('--merge_csv', type=int, default = 0, help='Merge Only Csvs in dir 1 true 0')
     parser.add_argument('--add_path', type=int, default = 0, help='add path in dir 1 true 0')
     parser.add_argument('--number_test_per_cpu', type=int, default = s_number_test_per_cpu, help='Number per cpu / thread')
-    parser.add_argument('--number_runs_per_each', type=int, default = S_number_runs_per_each, help='Number of runs per each')
+    parser.add_argument('--number_runs_per_each', type=int, default = s_number_runs_per_each, help='Number of runs per each')
     parser.add_argument('--time_out', type=int, default = s_time_out , help='Time out number')
     args = parser.parse_args()
    

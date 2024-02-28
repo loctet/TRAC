@@ -6,9 +6,25 @@ from VariableDeclarationConverter import VariableDeclarationConverter
 
 
 class PathGenerator :
-    
+    """
+    Generates and checks the satisfiability of paths within a finite state machine (FSM) based on a given JSON representation of transitions.
+    """
+
     @staticmethod
     def find_paths(graph, start, end, path=[]):
+        """
+        Recursively finds all paths from start to end node in a graph.
+
+        :param graph: The graph represented as a dictionary.
+        :type graph: dict
+        :param start: The starting node.
+        :param end: The ending node.
+        :param path: The current path (used in recursive calls).
+        :type path: list
+        :return: A list of paths, where each path is a list of nodes.
+        :rtype: list[list]
+        """
+
         path = path + [start]
         if start == end:
             return [path]
@@ -24,6 +40,15 @@ class PathGenerator :
 
     @staticmethod
     def group_transactions(transition_json):
+        """
+        Groups transitions from the JSON representation of a Finite State Machine (FSM) into paths from the initial to final states.
+
+        :param transition_json: The JSON representation of the FSM's transitions.
+        :type transition_json: dict
+        :return: A dictionary where keys are string representations of paths and values are lists of transitions for each path.
+        :rtype: dict
+        """
+
         graph = {}
         for transition in transition_json['transitions']:
             from_state = transition['from']
@@ -54,6 +79,17 @@ class PathGenerator :
 
     @staticmethod
     def find_transition(transitions, from_state, to_state):
+        """
+        Finds a transition between two states.
+
+        :param transitions: A list of all transitions.
+        :type transitions: list[dict]
+        :param from_state: The starting state of the transition.
+        :param to_state: The ending state of the transition.
+        :return: The found transition or None if not found.
+        :rtype: dict or None
+        """
+
         for transition in transitions:
             if transition['from'] == from_state and transition['to'] == to_state:
                 return transition
@@ -61,6 +97,15 @@ class PathGenerator :
 
     @staticmethod
     def format_transition(transition):
+        """
+        Formats a single transition into a string representation.
+
+        :param transition: The transition to format.
+        :type transition: dict
+        :return: The formatted string representing the transition.
+        :rtype: str
+        """
+
         pre_condition = transition['preCondition']
         input_params = transition['input']
         action_label = transition['actionLabel']
@@ -71,6 +116,15 @@ class PathGenerator :
     
     @staticmethod
     def check_path_satisfiability(fsm, file_name):
+        """
+        Checks the satisfiability of each path within the Finite State Machine (FSM) and outputs the results to a Python file for execution.
+
+        :param fsm: The finite state machine representation.
+        :type fsm: dict
+        :param file_name: The base name for the output file where Z3 code will be generated.
+        :type file_name: str
+        """
+
         file_name = f'./Z3_models/{file_name}'
         result = PathGenerator.group_transactions(fsm)
         for path, transitions in result.items():

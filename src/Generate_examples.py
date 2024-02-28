@@ -8,15 +8,30 @@ from random import choice, randint, seed
 from string import ascii_lowercase
 from Random_exec import RandomTransitionsExecuter
 from Settings import *
+from Helpers import write_csv, run_parallel_generations
 
 def generate_secure_seed() -> int:
+    """
+    Generates a secure seed for random number generation using os.urandom.
+
+    :return: A securely generated seed that can be used for initializing a random number generator.
+    :rtype: int
+    """
     # Generate a seed using 8 bytes from os.urandom
     seed = int.from_bytes(os.urandom(8), 'big')
     return seed
 
 
 def generate_random_type_variables(num_vars):
-    """Generate a list of state variables with random types."""
+    """
+    Generates a list of variables with random types, intended for use in transition generation.
+
+    :param num_vars: The number of variables to generate. Each variable will have a randomly assigned type.
+    :type num_vars: int
+    :return: A list of tuples, each containing the type and name of a generated variable.
+    :rtype: list
+    """
+
     variables = []
     for _ in range(num_vars):
         var_type = choice(['int', 'int'])
@@ -25,11 +40,25 @@ def generate_random_type_variables(num_vars):
     return variables
 
 def generate_actions(max_actions):
-    """Generate a set of unique actions."""
+    """
+    Generates a list of unique action names, up to a specified maximum number.
+
+    :param max_actions: The maximum number of unique action names to generate. The actual number of generated action names may be less than this maximum if the specified number exceeds the practical limit for unique names.
+    :type max_actions: int
+    :return: A list containing unique action names.
+    :rtype: list
+    """
     return ['a' + str(i) for i in range(1, min(max_actions, 20) + 1)]
 
 def generate_parameters(max_params):
-    """Generate a list of parameters with random types."""
+    """
+    Generates a list of action parameters with random types, up to a specified maximum number.
+
+    :param max_params: The maximum number of parameters to generate. The actual number of generated parameters may be less than this maximum.
+    :type max_params: int
+    :return: A list of tuples, each containing the type and name of a generated parameter.
+    :rtype: list
+    """
     params = []
     for i in range(randint(0 , max_params)):
         param_type = choice(['int', 'int'])
@@ -38,7 +67,18 @@ def generate_parameters(max_params):
     return params
 
 def generate_z3_condition(variables, params, complexity):
-    """Generate a z3 condition based on the provided complexity, including state variables and parameters."""
+    """
+    Generates a Z3 solver condition string based on provided variables, parameters, and specified complexity.
+
+    :param variables: A list of state variables available for generating the condition. Each element is a tuple containing the variable type and name.
+    :type variables: list
+    :param params: A list of parameters available for condition generation. Each element is a tuple containing the parameter type and name.
+    :type params: list
+    :param complexity: An integer indicating the complexity level of the generated condition. Higher values result in more complex conditions.
+    :type complexity: int
+    :return: A string representing the generated Z3 solver condition.
+    :rtype: str
+    """
     conditions = []
     all_vars = variables + params  # Combine state variables and parameters for precondition
     for i in range(randint(1, len(all_vars))):
@@ -70,6 +110,26 @@ def generate_z3_condition(variables, params, complexity):
 
 
 def generate_a_transition(state_variables, params, participant, role, to_state, from_state, action):
+    """
+    Generates a textual representation of a transition based on the specified parameters.
+
+    :param state_variables: A list of tuples representing the state variables involved in the transition, where each tuple contains the variable type and name.
+    :type state_variables: list
+    :param params: A list of tuples representing the parameters involved in the transition, where each tuple contains the parameter type and name.
+    :type params: list
+    :param participant: The name of the participant involved in the transition.
+    :type participant: str
+    :param role: The role of the participant in the transition.
+    :type role: str
+    :param to_state: The name of the destination state for the transition.
+    :type to_state: str
+    :param from_state: The name of the source state from which the transition occurs.
+    :type from_state: str
+    :param action: The name of the action associated with the transition.
+    :type action: str
+    :return: A textual representation of the generated transition.
+    :rtype: str
+    """
     params_declaration = ', '.join([f'{t} {n}' for t, n in params])
     complexity = randint(1, 3)
     pre_condition = generate_z3_condition(state_variables, params, complexity)
@@ -105,6 +165,22 @@ def generate_a_transition(state_variables, params, participant, role, to_state, 
     return f'{from_state} {{{pre_condition}}} {participantStr} > c.{action}({params_declaration}) {{{post_condition}}} {to_state}' + ("+" if randint(0, 10) == 2 else "")
 
 def get_generated_stuffs(actions, states, participants, num_vars, roles):
+    """
+    Selects random elements from provided lists to construct a transition.
+
+    :param actions: A list of available actions for transitions.
+    :type actions: list
+    :param states: A list of available states in the FSM.
+    :type states: list
+    :param participants: A list of available participants involved in the FSM.
+    :type participants: list
+    :param num_vars: The number of variables involved in transition conditions.
+    :type num_vars: int
+    :param roles: A list of available roles that participants can have.
+    :type roles: list
+    :return: A tuple containing randomly selected action, state, participant, parameters, and role for constructing a transition.
+    :rtype: tuple
+    """
     action = choice(actions)
     state = choice(states)
     participant = choice(participants)
@@ -112,7 +188,25 @@ def get_generated_stuffs(actions, states, participants, num_vars, roles):
     return (action, state, participant, params, choice(roles))
 
 def generate_transitions(num_states, num_actions, num_vars, max_branching_factor, num_participants, max_num_transitions):
-    """Generate transitions with specified requirements."""
+    """
+    Generates a list of textual transitions and associated statistical data based on specified parameters.
+
+    :param num_states: The number of states in the FSM.
+    :type num_states: int
+    :param num_actions: The number of actions available for transitions.
+    :type num_actions: int
+    :param num_vars: The number of variables involved in the FSM.
+    :type num_vars: int
+    :param max_branching_factor: The maximum number of transitions from any given state.
+    :type max_branching_factor: int
+    :param num_participants: The number of participants involved in the FSM.
+    :type num_participants: int
+    :param max_num_transitions: The maximum number of transitions to be generated.
+    :type max_num_transitions: int
+    :return: A list containing the generated transitions and statistical data about the generation process.
+    :rtype: list
+    """
+
     seed_num = generate_secure_seed()
     seed(seed_num)  # Initialize the random number generator
     states = ['S' + str(i) for i in range(num_states)]
@@ -168,17 +262,20 @@ def generate_transitions(num_states, num_actions, num_vars, max_branching_factor
     return [transitions, num_states, seed_num, min_p_num, average_p_num / len(transitions), max_p_num, min_bf_num, len(transitions) / num_states, max_bf_num] 
 
 def write_file(path, transitions):
+    """
+    Writes the generated transitions to a specified file.
+
+    :param path: The file path where the transitions will be written.
+    :type path: str
+    :param transitions: A list of transitions to be written to the file.
+    :type transitions: list
+    """
+
     with open(path, 'w') as file:
         for transition in transitions:
             file.write(transition + "\n")
     print(f"Transitions have been written to {path}")
-
-def write_csv(path, paramsList):
-    with open(os.path.join(path, "list_of_files_info.csv"), 'w', newline='') as f:
-        write = csv.writer(f)
-        write.writerow(s_csv_headers)
-        write.writerows(paramsList)
-    print(f"All Data saved in {path}/list_of_files_info.csv")
+    
 
 def genFile(directory, subdir_num, max_tests, num_states, num_actions, num_vars, max_branching_factor, num_participants, max_num_transitions):
     # make sure we create all needed sub dirs
@@ -194,26 +291,44 @@ def genFile(directory, subdir_num, max_tests, num_states, num_actions, num_vars,
         paramsList.append([path, g_num_states, num_actions, num_vars, max_branching_factor, num_participants, len(transitions), seed_num, min_p_num, average_p_num, max_p_num, min_bf_num, average_bf_num, max_bf_num])
         write_file(path, transitions)
 
-    write_csv(p_sud_dir,  paramsList)
+    write_csv(p_sud_dir+"/list_of_files_info.csv",  paramsList)
     return []
 
-def run_parallel_generations(works):
-    # Determine the number of workers based on available CPUs minus 3
-    num_workers = max(1, os.cpu_count() - 3)
-
-    # Create a list to hold the results
-    paramsList = []
-
-    with concurrent.futures.ProcessPoolExecutor(max_workers=num_workers) as executor:
-        # Schedule the function to be executed in parallel
-        futures = [executor.submit(*args) for args in works]
-        for future in concurrent.futures.as_completed(futures):
-            # Collect results as they become available
-            future.result()
-    return [paramsList]
-
 class RandomTransitionsGenerator:
+    """
+    Generates random transitions for FSM testing and stores them in files.
+    
+    Initialization parameters define the configuration for transition generation.
+    """
     def __init__(self, num_tests, directory, num_states=None, num_actions=None, num_vars=None, max_branching_factor=None, num_participants=None, max_num_transitions = None, steps = s_steps, num_example_for_each = s_num_example_for_each):
+        """
+        Generates random transitions for Finite State Machine (FSM) testing and stores them in files.
+
+        :param num_tests: The number of tests to generate.
+        :type num_tests: int
+        :param directory: The directory where the generated transitions will be stored.
+        :type directory: str
+        :param num_states: (Optional) The number of states in the FSM. Defaults to None.
+        :type num_states: int or None
+        :param num_actions: (Optional) The number of actions in the FSM. Defaults to None.
+        :type num_actions: int or None
+        :param num_vars: (Optional) The number of variables in the FSM. Defaults to None.
+        :type num_vars: int or None
+        :param max_branching_factor: (Optional) The maximum branching factor for transitions. Defaults to None.
+        :type max_branching_factor: int or None
+        :param num_participants: (Optional) The number of participants in the FSM. Defaults to None.
+        :type num_participants: int or None
+        :param max_num_transitions: (Optional) The maximum number of transitions. Defaults to None.
+        :type max_num_transitions: int or None
+        :param steps: (Optional) Steps for transition generation. Defaults to s_steps.
+        :type steps: unknown_type or None
+        :param num_example_for_each: (Optional) Number of examples for each step. Defaults to s_num_example_for_each.
+        :type num_example_for_each: unknown_type or None
+
+        :returns: None
+        :rtype: NoneType
+        """
+
         self.num_tests = num_tests if num_tests is not None else 1000
         self.directory = directory
         self.base_dir =  os.path.join('./examples/random_txt/', self.directory)
@@ -228,6 +343,9 @@ class RandomTransitionsGenerator:
         self.num_example_for_each = num_example_for_each
 
     def appendToWork(self, works, i, number_elt):
+        """
+        Appends work items to the list for parallel execution.
+        """
         # Select parameters randomly if not provided
         num_states = randint(2, 100) if self.num_states is None else self.num_states
         num_actions = randint(10, 20) if self.num_actions is None else self.num_actions
@@ -244,6 +362,9 @@ class RandomTransitionsGenerator:
     
     
     def merge_and_delete(self):
+        """
+        Merges individual CSV files into one and cleans up the directory.
+        """
                 # Define the final CSV where the merged data will be stored
         merged_csv = os.path.join(self.base_dir, 'list_of_files_info.csv')
 
@@ -259,7 +380,9 @@ class RandomTransitionsGenerator:
 
     # Running mode where we need to set parameters from command line
     def run(self):
-        
+        """
+        Executes the transition generation process.
+        """
         works = []
         number_elt = self.num_example_for_each
         for i in range(self.num_tests // number_elt):
@@ -272,6 +395,9 @@ class RandomTransitionsGenerator:
 
     # Running mode where fixed param
     def run2(self):
+        """
+        An alternative execution mode for generating transitions.
+        """
         works = []
         number_elt = self.num_example_for_each
         for s in range(10, self.num_tests, 10): # stages eancreases
@@ -286,6 +412,9 @@ class RandomTransitionsGenerator:
 
 
 def main():
+    """
+    Main function to parse command-line arguments and trigger transition generation.
+    """
     parser = argparse.ArgumentParser(description='Generate Random Transitions and Store Them in Files')
     parser.add_argument('--directory', type=str, required=True, help='Directory to store the test files')
     parser.add_argument('--num_tests', default= s_num_tests, type=int, help='Number of tests to generate')

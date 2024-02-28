@@ -2,8 +2,16 @@ import json
 import re
 
 class The_Validator:
-    def __init__(self):
+    """
+    Validates and converts textual representations of transitions into a structured JSON format.
+    This class specifically handles parsing of deploy and action transitions defined in a textual
+    format and constructs a corresponding JSON object that represents the contract structure.
+    """
 
+    def __init__(self):
+        """
+        Initializes The_Validator with regex patterns for deploy and action transitions.
+        """
         self.contract_id = ""
         self.initialStage = ""
         # Define the regex patterns for each type of transition
@@ -17,6 +25,16 @@ class The_Validator:
         )
 
     def parse_transition(self, line):
+        """
+        Parses a single line of text representing a transition into a structured dictionary.
+
+        :param line: A line of text representing a transition.
+        :type line: str
+        :return: A tuple containing a dictionary representation of the transition and an
+                optional string of state variables declarations (if present).
+        :rtype: tuple[dict, str]
+        """
+
         
         # Check for deploy transition
         match = self.deploy_pattern.match(line)
@@ -63,6 +81,20 @@ class The_Validator:
 
     # Main function to convert the transitions text to JSON format
     def transitions_to_json(self, transitions_txt_path, json_output_path):
+        """
+        Converts a text file containing transitions into a structured JSON format.
+
+        :param transitions_txt_path: The file path for the text file containing transitions.
+        :type transitions_txt_path: str
+        :param json_output_path: The output file path for the resulting JSON.
+        :type json_output_path: str
+
+        This method reads transitions from a text file, parses them, and constructs a JSON
+        object that represents the entire contract structure including transitions, states,
+        and participants.
+        """
+
+
         contract_structure = {
             "id": "",  
             "initialState": "",  # Update as necessary

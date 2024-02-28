@@ -1,3 +1,9 @@
+def _():
+    """
+    This block of code defines various settings and labels for reporting and analyzing the performance and characteristics of finite state machines (FSMs) or similar computational models. It includes configurations for CSV headers to structure output data, time metrics to measure different phases of processing or verification, labels for more human-readable reporting, and default values for generating or testing FSMs. Additionally, it specifies paths for model storage and example directories, along with parameters to control the generation and testing process, such as the number of tests, states, actions, variables, and the branching factor. This setup is essential for systematic analysis, benchmarking, and documentation of FSM behaviors, performance, and verification outcomes.
+    """
+    pass
+
 s_csv_headers = ["path", "num_states", "num_actions", "num_vars", "max_branching_factor", "num_participants", "num_transitions", "seed_num", "min_param_num", "average_param_num", "max_param_num", "min_bf_num", "average_bf_num", "max_bf_num", "num_paths",  "verdict", "participants_time", "non_determinism_time", "a_consistency_time", "f_building_time", "building_time", "z3_running_time", "total", "is_time_out"]
 
 s_time_metrics = ['participants_time', 'non_determinism_time', 'a_consistency_time', 'z3_running_time']
@@ -37,9 +43,9 @@ s_merge_only_csv = None
 s_steps = None
 
 # we rewrite to have some minimu settings
-S_number_per_bacth = 5
-S_steps = 5
-S_number_runs_per_each = 10
+s_number_per_bacth = 5
+s_steps = 5
+s_number_runs_per_each = 10
 s_max_branching_factor = 5
 s_num_example_for_each = 5
 s_number_test_per_cpu = 5

@@ -3,8 +3,18 @@ import re
 import networkx as nx
 import matplotlib.pyplot as plt
 
-
 def generate_fsm_graph(fsmTextJson):
+    """
+    Generates a finite state machine (FSM) graph from a given JSON string.
+
+    :param fsmTextJson: A JSON-formatted string containing the definition of the FSM,
+                        including states, initial state, final states, and transitions.
+    :type fsmTextJson: str
+    :return: A directed graph (DiGraph) instance from NetworkX representing the FSM,
+            where nodes correspond to states and edges to transitions.
+    :rtype: nx.DiGraph
+    """
+
     fsm = json.loads(fsmTextJson)
 
     states = fsm['states']
@@ -15,7 +25,7 @@ def generate_fsm_graph(fsmTextJson):
     # Create a directed graph
     graph = nx.DiGraph()
 
-    # Add states as nodes
+    # Add states as nodes with attributes based on their roles
     for state in states:
         node_attributes = {}
 
@@ -43,6 +53,16 @@ def generate_fsm_graph(fsmTextJson):
     return graph
 
 def draw_fsm_graph(graph):
+    """
+    Draws the finite state machine (FSM) graph using matplotlib.
+
+    :param graph: The directed graph representing the FSM to be drawn.
+    :type graph: nx.DiGraph
+
+    This function does not return anything but visualizes the FSM graph using matplotlib,
+    with different colors for initial, final, and normal states, and labels for transitions.
+    """
+
     # Set node positions using Kamada-Kawai layout
     pos = nx.kamada_kawai_layout(graph)
 
