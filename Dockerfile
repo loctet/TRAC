@@ -17,9 +17,6 @@ RUN apt-get update && \
     apt-get install -y nano && \
     apt-get clean;
 
-# Install gedit
-RUN apt-get update && apt-get install -y gedit
-
 # Set up the 'll' command alias
 RUN echo 'alias ll="ls -l"' >> ~/.bashrc
 
