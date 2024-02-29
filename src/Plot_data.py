@@ -195,18 +195,18 @@ class CSVDataPlotter:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate Plots')
     parser.add_argument('directory', type=str, help='Dir where tests data CSV is located')
-    parser.add_argument('--shape', type=str, default = 'lines', choices= ['lines', '3d', '4d'], help='Type of shape')
+    parser.add_argument('--shape', type=str, default = '2d', choices= ['2d', '3d', '4d'], help='Type of shape')
     parser.add_argument('--file', type=str, default = 'merged_list_of_files_info', help='Csv File Name without "csv"')
     parser.add_argument('--fields', type=comma_separated_strings, default = ['num_states'], help='collumn to plot agains time num_state is the defalt')
     parser.add_argument('--pl_lines', type=comma_separated_strings, default=['participants_time', 'non_determinism_time', 'a_consistency_time', 'z3_running_time'], help='Lines to plot')
-    parser.add_argument('--type_plot', type=str, default= 'line', help='Type of 2D to plot')
+    parser.add_argument('--type_plot', type=str, default= 'line',  choices= ['line', 'scatter', 'bar'], help='Type of 2D to plot')
     
     args = parser.parse_args()
     
     path = os.path.join('./examples/random_txt/', args.directory, f"{args.file}.csv")
     plotter = CSVDataPlotter(path)
 
-    if args.shape == 'lines':
+    if args.shape == '2d':
         plotter.plot_csv_data_2d(args.fields, args.pl_lines, args.type_plot)
     elif args.shape == "3d":
         plotter.plot_csv_data_3d(args.fields, args.pl_lines)

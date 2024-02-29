@@ -151,11 +151,6 @@ This detailed explanation provides a comprehensive guide on how to utilize `Main
 |[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| ICI : ➖ <br/>BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 <br/>|➖<br/>✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>✅ participant Banker ba (Line 1)<br/>🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>🔽 `AcceptSharingLock` we directly pass the new participant so there is not a role changing but introducing new one<br/> |
 
 
-| Feature | Details |
-|---------|---------|
-| Feature 1 | <table><tr><td>Detail 1.1</td></tr><tr><td>Detail 1.2</td></tr></table> |
-| Feature 2 | <table><tr><td>Detail 2.1</td></tr><tr><td>Detail 2.2</td></tr></table> |
-
 
 ## Generating Examples
 To generate DAFSM examples with `Generate_examples.py`, follow these steps:
@@ -166,6 +161,23 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    python3 Generate_examples.py --directory your_directory_name --num_tests 100
    ```
    Replace `your_directory_name` with the desired directory to store test files and adjust `--num_tests` to the number of examples you wish to generate.
+
+   *Generate examples of the TRAC tool paper*
+   ```bash
+   python3 Generate_examples.py --directory examples_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
+   ```
+   This will generate 135 random DAFSMs in the folder `Examples/random_txt/examples_1` with subfolders each folder having 5 tests and a csv file(`list_of_files_info.csv`) containing metadata of the 5 examples. All these csv are then combined into a main csv `list_of_files_info.csv`
+   This will then run the check and further csv files will be generated and merged (to `merged_list_of_files_info`) when done.
+   *Now you can plot the data to visualize different running time*
+   ```
+   python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape lines --type_plot scatter
+   ```
+   This will plot these plots 
+   ![Evaluation path participant time](./images/evaluation_path_participant_time.png)
+   ![Evaluation transitions a_consitency time](./images/evaluation_transitions_a_consitency_time.png)
+   ![Evaluation transitions non determinism time](./images/evaluation_transitions_non_determinism_time.png)
+   ![Evaluation transitions participant time](./images/evaluation_transitions_participant_time.png)
+
 
 3. **Parameters**:
     The parameters for `Generate_examples.py` enable customization of the DAFSM example generation process. If not specified, values for these parameters are generated randomly:
@@ -213,11 +225,11 @@ python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fi
 ```
 
 - `<directory>`: The directory where the test data CSV is located, relative to `./examples/random_txt/` where the `merged_list_of_files_info.csv` is.
-- `--shape`: Choose the plot shape: `lines`, `3d`, or `4d`.
+- `--shape`: Choose the plot shape: `2d`, `3d`, or `4d`.
 - `--file`: Specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`.
 - `--fields`: Set the column(s) to plot against time, default is `num_states`.
 - `--pl_lines`: Define which time metric to plot, with defaults including participants time, non-determinism time and a-consistency-time.
-- `--type_plot`: Choose the type of 2D plot, with `line` as the default.
+- `--type_plot`: Choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default.
 
 This command allows for versatile plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved the directory directly.
 

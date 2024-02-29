@@ -240,7 +240,7 @@ class RandomTransitionsExecuter:
         # Move all original CSV files except 'list_of_files_info.csv' to a new dir, to keep old onces
         for file in csv_files:
             if 'list_of_files_info.csv' not in file:
-                f_name = basename = os.path.basename(file)
+                f_name = os.path.basename(file)
                 os.rename(file, file.replace(f_name, f"/{time_}/{f_name}"))
 
      
