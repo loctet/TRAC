@@ -1,4 +1,4 @@
-_ {True} o:O > starts(c, participant D d, participant SC sc, participant obs OBS, int _MinHum, int _MaxHum, int _MinTem, int _MaxTem, int hum, int tem) {MaxHum := _MaxHum & MinHum := _MinHum & MaxTem := _MaxTem & MinTem := _MinTem} {int MaxHum; int MinHum; int MaxTem; int MinTem; int hum; int tem} S0
+_ {True} o:O > starts(c, participant D d, participant SC sc, participant OBS obs, int _MinHum, int _MaxHum, int _MinTem, int _MaxTem, int hum, int tem) {MaxHum := _MaxHum & MinHum := _MinHum & MaxTem := _MaxTem & MinTem := _MinTem} {int MaxHum; int MinHum; int MaxTem; int MinTem; int hum; int tem} S0
 
 S0 {And(_hum <= MaxHum, _hum >= MinHum, _tem <= MaxTem, _tem >= MinTem)} d > c.ingestTelemetry(int _hum; int _tem) {tem := _tem & hum := _hum} S0
 S0 {Not(And(_hum <= MaxHum, _hum >= MinHum, _tem <= MaxTem, _tem >= MinTem))} d > c.ingestTelemetry(int _hum; int _tem) {hum := _hum & tem := _tem} SFail+
