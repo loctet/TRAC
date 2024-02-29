@@ -138,17 +138,7 @@ This detailed explanation provides a comprehensive guide on how to utilize `Main
 
 |Example| Line in Code for the feature | How TRAC handle it |
 |---|---|---|
-|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|ICI : ➖ <br/>
-BI : ✅ L44   <br/>
-PP : ➖ <br/>
-RR : ➖ <br/>
-MRP : ➖ <br/>
-|
-<br/>
-✅ b:B > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt))<br/>
-<br/>
-<br/>
-<br/> |
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|ICI : ➖ <br/>BI : ✅ L44   <br/>PP : ➖ <br/>RR : ➖ <br/>MRP : ➖ <br/>|<br/>✅ b:B > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt))<br/><br/><br/><br/> |
 |[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)|   |  |
 |[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing)|  |  |
 |[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game) | | |
