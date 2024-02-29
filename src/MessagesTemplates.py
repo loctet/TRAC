@@ -48,18 +48,18 @@ def {item['snameF']}(infos = False):
     if infos :
         if not result:
             print()
-            print("--For {item['snameF']}: ", ({item['sformula']}), " :: ", result)
+            print("--For {item['snameF']}: "," Check result :: ", result)
 
         if not part_result :
-            print(f"--- Participants       : {{part_result}}", "({item['sparticipants']})")
+            print(f"--- Participants       : {{part_result}}")
 
         if  not eps_result :
             print ("--- Non Determinism  : ", ({item['epsformula']}))
             
         if not post_result: 
-            print(f"--- Sat of Prec-Conds: {{post_result}}")
+            print(f"--- A-Consistency: {{post_result}}")
             solver_{item['snameF']}2.add(Not({item['sformula']}))
-            print("\\nSimplify of the Not Formula: ", simplify(Not({item['sformula']})), " :: ", solver_{item['snameF']}2.check() == z3.sat)
+            print("\\nSimplify of the of the negation of formula: ", simplify(Not({item['sformula']})), " :: ", solver_{item['snameF']}2.check() == z3.sat)
             
           
                    
