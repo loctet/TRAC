@@ -83,15 +83,6 @@ To run the "simplemarket_place" example with TRAC:
     - `S1 {True} o > c.acceptOffer() {} S2+` can be invoque by the previously introduced `o` to accepte the offer and move to a final state `S2` it has the signe `+` after
     - `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`
     ![Simplemarket_place TRACT DAFSMs](./images/fsm_simplemarke_place.png)
-
-    stateDiagram
-      direction LR
-      [*] --> S0 starts
-      S0 --> S1 makeOffer
-      S1 --> S01 rejecttOffer
-      S01 --> S01 makeOffer
-      S11 --> S01 makeOffer
-      S1 --> S2 acceptOffer
     
     - The result of the check should be `(!) Verdict: Well Formed`
 
@@ -142,6 +133,21 @@ The `Main.py`, can take some configurations as follows:
 - `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
 - `--time_out`: Optional. Sets a timeout for the operation in seconds. The default is `0`, meaning no timeout.
 This detailed explanation provides a comprehensive guide on how to utilize `Main.py` for different operations within the TRAC tool.
+
+## Azure Examples 
+
+|Example| Line in Code for the feature | How TRAC handle it |
+|---|---|---|
+|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)|   |  |
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)|   |  |
+|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)|   |  |
+|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker)|   |  |
+|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation)|   |  |
+|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer)|   |  |
+|[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat)|   |  |
+|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter)|   |  |
+|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator)|   |  |
+
 
 ## Generating Examples
 To generate DAFSM examples with `Generate_examples.py`, follow these steps:
