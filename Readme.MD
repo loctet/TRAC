@@ -68,6 +68,7 @@ To run the "simplemarket_place" example with TRAC:
     ____________________
    - The structer of DAFSMs is defined in `section 2 of the paper`. 
     For the Simplemarket_place example, here is the structure of the TXT file given
+
     ```
     _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
     S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
@@ -77,25 +78,65 @@ To run the "simplemarket_place" example with TRAC:
     S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
     ```
     Deploy transition `starts` the coodinator `c` by passing passing a description and a price these values are assigned to declared `string description` and `int price, int offer`. here the precondition(guard `g`) is `True`.This transition also introduce new participant `o` of role `O` 
-    . ``` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0```
+    - ``` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0```
     The next transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` allow new participant `b` of role `B` to make and offer by passing a price `_offer` the guard requires `-offer` to be `>0` to update the value of the state variable `offer` and move the protocol to `S1`
-    . `S1 {True} o > c.acceptOffer() {} S2+` can be invoque by the previously introduced `o` to accepte the offer and move to a final state `S2` it has the signe `+` after
-    . `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`
-   ![Simplemarket_place TRACT DAFSMs](./images/fsm_simplemarke_place.png)
-    The result of the check should be `(!) Verdict: Well Formed`
+    - `S1 {True} o > c.acceptOffer() {} S2+` can be invoque by the previously introduced `o` to accepte the offer and move to a final state `S2` it has the signe `+` after
+    - `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`
+    ![Simplemarket_place TRACT DAFSMs](./images/fsm_simplemarke_place.png)
+
+    stateDiagram
+      direction LR
+      [*] --> S0 starts
+      S0 --> S1 makeOffer
+      S1 --> S01 rejecttOffer
+      S01 --> S01 makeOffer
+      S11 --> S01 makeOffer
+      S1 --> S2 acceptOffer
+    
+    - The result of the check should be `(!) Verdict: Well Formed`
 
 5. **Non Well Formed Examples**
+   Let's modify the previous simplemarket place to make it not well-formed. 
+   `S1 {True} o > c.acceptOffer() {} S2+` to `S1 {True} x > c.acceptOffer() {} S2+` now we said x can accept the offer, here, x is never introbuce and therefore the mobel DAFSMs should not be well formed. 
+
+   After running the check, we have an error: 
+   ```
+   The Path : _-starts-S0>S0-makeOffer-S1 do not contain the participant x : []
+   Error from this transitions:S1_acceptOffer()_S2
+
+   --For _acceptOffer_0:   Check result ::  False
+   --- Participants       : False
+
+   (!) Verdict: Not Well Formed
+   ```
+   This tells that the participant `x` has not been intrduced.
+   __________________
+   Let's do another modification:
+   `S1 {True} o > c.rejectOffer() {} S01` to `S1 {False} o > c.rejectOffer() {} S01`
+   and `S1 {True} o > c.acceptOffer() {} S01` to `S1 {False} o > c.acceptOffer() {} S01`
+   Here we are creating a DAFSMs where from `S1` there is no possible out going transition to progress. 
+   The Tool should spot this. 
+   After running the check, we have an error: 
+   ```
+   Error from this transitions:S01_makeOffer(int _offer)_S1
+
+   --For _makeOffer_0:   Check result ::  False
+   --- A-Consistency: False
+
+   Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True
+
+   (!) Verdict: Not Well Formed
+   ```
+   This tells that the consistency rule is violated with transition `S01_makeOffer(int _offer)_S1` reaching `S1`
 
 5. **Execute the Example**:
-    Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
+    Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command (`python3 Main.py --filetype txt "xxxxxxxxx"`)
 
 The `Main.py`, can take some configurations as follows:
 
 - `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for TRAC to analyze.
 - `check_type`: Optional. Defines the type of check to perform on the input file. It can be one of four options:
   - `1` for Well-Formedness Check,
-  - `2` for solate Function Check, // on progress
-  - `3` for runing from Path Check, // On progress
   - `fsm` for printing the Finite State Machine (FSM). The default is `1`.
 - `--filetype`: Optional. Indicates the type of the input file, either `json` or `txt`. The default is `json`.
 - `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
