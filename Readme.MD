@@ -151,6 +151,10 @@ This detailed explanation provides a comprehensive guide on how to utilize `Main
 |[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| ICI : ➖ <br/>BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 <br/>|➖<br/>✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>✅ participant Banker ba (Line 1)<br/>🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>🔽 `AcceptSharingLock` we directly pass the new participant so there is not a role changing but introducing new one<br/> |
 
 
+| Feature | Details |
+|---------|---------|
+| Feature 1 | <table><tr><td>Detail 1.1</td></tr><tr><td>Detail 1.2</td></tr></table> |
+| Feature 2 | <table><tr><td>Detail 2.1</td></tr><tr><td>Detail 2.2</td></tr></table> |
 
 
 ## Generating Examples
