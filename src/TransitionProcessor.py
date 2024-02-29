@@ -106,9 +106,10 @@ class TransitionProcessor(MiniTimer):
         return inputs
 
     # AConsistencyCheck formula gen
-    def get_a_consistency_formula(self, preC, _postC_A, otherPrecs, inputs):
+    def a_consistency_check(self, preC, _postC_A, otherPrecs, inputs):
         """
         Generates a formula for action consistency check (AConsistencyCheck formula generation).
+        AConsistency Check Implementation
 
         :param preC: The precondition string.
         :type preC: str
@@ -128,9 +129,10 @@ class TransitionProcessor(MiniTimer):
         return f'Not(Implies({hypothesis}, {thesis}))'
     
     #NDetCheck formula gen
-    def get_formula_for_determinism_at_stage(self, curent_transition, other_transitions, processed_data):
+    def n_det_check(self, curent_transition, other_transitions, processed_data):
         """
         Generates a formula to check for determinism at a specific stage (NDetCheck formula generation).
+        NdetCheck Implementation
 
         :param current_transition: The current transition being processed.
         :type current_transition: dict
@@ -233,7 +235,7 @@ class TransitionProcessor(MiniTimer):
         self.start_time()
         
         # Perform a check to ensure the caller of the transition is allowed, #CALLERCHECK
-        formula_for_participant_check = self.fsmGraph.is_caller_introduced(transition)
+        formula_for_participant_check = self.fsmGraph.caller_check(transition)
         self.infos["participants"] = self.get_ellapsed_time()
         self.infos['nb_path'] = self.fsmGraph.nb_path
         self.infos["is_time_out"] = self.fsmGraph.timed_out
@@ -275,12 +277,12 @@ class TransitionProcessor(MiniTimer):
 
         # Timing and checking for non-determinism within the transitions. # NDETCHECK
         self.start_time()
-        thesis_non_eps = self.get_formula_for_determinism_at_stage(transition, outgoingTransitions, [otherPrecs, inputs[1]])
+        thesis_non_eps = self.n_det_check(transition, outgoingTransitions, [otherPrecs, inputs[1]])
         self.infos["non_determinism"] = self.get_ellapsed_time()
 
         # Timing and checking for action consistency within the transitions.  # AConsistencyCheck
         self.start_time()
-        sformula = self.get_a_consistency_formula(preC, _postC_A, otherPrecs, inputs)
+        sformula = self.a_consistency_check(preC, _postC_A, otherPrecs, inputs)
         self.infos["a_consistency"] = self.get_ellapsed_time()
 
         # Generate a unique identifier for the function related to the current action and solver iteration.

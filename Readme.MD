@@ -34,7 +34,7 @@ pip install plotly
 pip install networkx
 pip install pandas 
 ```
-Also make sure the java JDK is installed to run the java command. This is used to hava a visual view of the DAFSMs
+Also make sure the `java JRE` is installed to run the `java` command. This is used to hava a visual view of the DAFSMs
 
 These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for numerical computations, which are essential for TRAC's functionality. Ensure all commands are executed successfully to avoid any issues while running TRAC.
 
@@ -44,16 +44,40 @@ To run the "simplemarket_place" example with TRAC:
 
 1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
 2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where `TRAC/src` is located.
-3. **Locate the Example**: The `simplemarket_place` example is already within designated examples directory, typically named `Examples/dafsms_txt`. All manually executed examples should be kept in the folder `Examples` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
+3. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designated examples (`Examples/dafsms_txt/azure`) directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) namely:
+   - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
+   - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
+   - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)
+   - [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker)
+   - [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation)
+   - [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer)
+   - [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat)
+   - [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter)
+   - [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator)
+   
+   All manually executed examples should be kept in the folder  `Examples/dafsms_txt` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
 4. **Execute the Example**:
    - Use `Main.py` to run the example. The command syntax is:
      ```bash
      python3 Main.py --filetype txt "azure/simplemarket_place"
      ```
-   This command tells TRAC to process and verify the "simplemarket_place" example.
+   - This command tells TRAC to process and verify the "simplemarket_place" example.
 
     Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
     The result of this should be `(!) Verdict: Well Formed`
+    ____________________
+   - The structered of DAFSMs is defined in section 2 of the paper. 
+    For the Simplemarket_place example, here is th structure of the TXT file given
+    ```
+    _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
+    S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+    S1 {True} o > c.acceptOffer() {} S2+
+    S1 {True} o > c.rejectOffer() {} S01
+    S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
+    S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+    ```
+5. **Non Well Formed Examples**
+
 5. **Execute the Example**:
     Now that your firt example is completed you can design some DAFSMs and play around with the command by just changing the name of the file in the previous command 
 

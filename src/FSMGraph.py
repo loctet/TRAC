@@ -83,9 +83,10 @@ class FSMGraph(MiniTimer):
         all_simple_paths = list(nx.all_simple_paths(self.graph, source="_", target=target_state))
         return len(all_simple_paths)
     
-    def is_caller_introduced(self, transition):
+    def caller_check(self, transition):
         """
         Checks if the caller of a transition is introduced in any path leading to the transition's source state.
+        CallerCheck Implementation
 
         :param transition: Transition to check.
         :type transition: dict
