@@ -66,8 +66,8 @@ To run the "simplemarket_place" example with TRAC:
     Follow these steps to successfully run and analyze the "simplemarket_place" example, utilizing TRAC's verification capabilities.
     The result of this should be `(!) Verdict: Well Formed`
     ____________________
-   - The structered of DAFSMs is defined in section 2 of the paper. 
-    For the Simplemarket_place example, here is th structure of the TXT file given
+   - The structer of DAFSMs is defined in `section 2 of the paper`. 
+    For the Simplemarket_place example, here is the structure of the TXT file given
     ```
     _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
     S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
@@ -76,6 +76,14 @@ To run the "simplemarket_place" example with TRAC:
     S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
     S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
     ```
+    Deploy transition `starts` the coodinator `c` by passing passing a description and a price these values are assigned to declared `string description` and `int price, int offer`. here the precondition(guard `g`) is `True`.This transition also introduce new participant `o` of role `O` 
+    . ``` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0```
+    The next transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` allow new participant `b` of role `B` to make and offer by passing a price `_offer` the guard requires `-offer` to be `>0` to update the value of the state variable `offer` and move the protocol to `S1`
+    . `S1 {True} o > c.acceptOffer() {} S2+` can be invoque by the previously introduced `o` to accepte the offer and move to a final state `S2` it has the signe `+` after
+    . `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`
+   ![Simplemarket_place TRACT DAFSMs](./images/fsm_simplemarke_place.png)
+    The result of the check should be `(!) Verdict: Well Formed`
+
 5. **Non Well Formed Examples**
 
 5. **Execute the Example**:
