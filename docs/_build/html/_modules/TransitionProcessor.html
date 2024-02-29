@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitionProcessor &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">TransitionProcessor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for TransitionProcessor</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">from</span> <span class="nn">PatternChecker</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Extension</span> <span class="kn">import</span> <span class="n">replace_assertion</span>
+<span class="kn">from</span> <span class="nn">SafeVariableAssignment</span> <span class="kn">import</span> <span class="n">SafeVariableAssignment</span> <span class="k">as</span> <span class="n">SafeVars</span>
+<span class="kn">from</span> <span class="nn">VariableDeclarationConverter</span> <span class="kn">import</span> <span class="n">VariableDeclarationConverter</span> <span class="k">as</span> <span class="n">VarDefConv</span>
+<span class="kn">from</span> <span class="nn">FSMGraph</span> <span class="kn">import</span> <span class="n">FSMGraph</span>
+<span class="kn">from</span> <span class="nn">MiniTimer</span> <span class="kn">import</span> <span class="o">*</span>
+  
+  
+<div class="viewcode-block" id="TransitionProcessor">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor">[docs]</a>
+<span class="k">class</span> <span class="nc">TransitionProcessor</span><span class="p">(</span><span class="n">MiniTimer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes transitions for a finite state machine, including checking for determinism,</span>
+<span class="sd">    action consistency, and transforming FSM transitions into Z3 solver format.</span>
+
+<span class="sd">    Inherits from MiniTimer for performance measurement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">non_stop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the transition processor with FSM data and configuration settings.</span>
+
+<span class="sd">        :param data: FSM data to be processed.</span>
+<span class="sd">        :type data: dict</span>
+<span class="sd">        :param log: If logging is enabled.</span>
+<span class="sd">        :type log: bool</span>
+<span class="sd">        :param non_stop: If the processor should stop on errors.</span>
+<span class="sd">        :type non_stop: bool</span>
+<span class="sd">        :param time_out: Timeout limit for processing.</span>
+<span class="sd">        :type time_out: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">str_code</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deploy_init_var_val</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="s1">&#39;starts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">fsmGraph</span> <span class="o">=</span> <span class="n">FSMGraph</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">time_out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span> <span class="o">=</span> <span class="n">non_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_det_formula</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+        
+    <span class="c1">#Append to the global Code Model</span>
+<div class="viewcode-block" id="TransitionProcessor.append">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.append">[docs]</a>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">       </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Appends a string to the internal code model, helping to start building the Z3 model progressively.</span>
+
+<span class="sd">        :param str: The string to append.</span>
+<span class="sd">        :type str: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+       <span class="bp">self</span><span class="o">.</span><span class="n">str_code</span> <span class="o">+=</span> <span class="nb">str</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+
+       
+<div class="viewcode-block" id="TransitionProcessor.quantifier_closure">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.quantifier_closure">[docs]</a>
+    <span class="k">def</span> <span class="nf">quantifier_closure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formula</span><span class="p">,</span> <span class="n">variables</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">quantifier</span> <span class="o">=</span> <span class="s2">&quot;ForAll&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies a quantifier to a formula with specified variables.</span>
+
+<span class="sd">        :param formula: The logical formula to apply the quantifier to.</span>
+<span class="sd">        :type formula: str</span>
+<span class="sd">        :param variables: List of variables to include in the quantification.</span>
+<span class="sd">        :type variables: list</span>
+<span class="sd">        :param quantifier: The type of quantifier (&#39;ForAll&#39; or &#39;Exists&#39;).</span>
+<span class="sd">        :type quantifier: str</span>
+<span class="sd">        :return: The formula with the quantifier applied.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">quantifier</span><span class="si">}</span><span class="s2">([</span><span class="si">{</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span><span class="si">}</span><span class="s2">], </span><span class="si">{</span><span class="n">formula</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">formula</span></div>
+
+    
+    
+<div class="viewcode-block" id="TransitionProcessor.get_vars_names_from_input">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.get_vars_names_from_input">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_vars_names_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extracts variable names from the input condition.</span>
+
+<span class="sd">        :param input_c: The input condition string.</span>
+<span class="sd">        :type input_c: str</span>
+<span class="sd">        :return: A dictionary of variable names extracted.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">resuls</span>  <span class="o">=</span> <span class="n">VarDefConv</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="n">input_c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resuls</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="TransitionProcessor.add_old_var_from_precs_and_inputs">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.add_old_var_from_precs_and_inputs">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_old_var_from_precs_and_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">otherPrecs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds &#39;_old&#39; suffix to variables based on preconditions and inputs.</span>
+
+<span class="sd">        :param otherPrecs: List of precondition strings.</span>
+<span class="sd">        :type otherPrecs: list</span>
+<span class="sd">        :param inputs: List of input strings.</span>
+<span class="sd">        :type inputs: list</span>
+<span class="sd">        :return: Updated list of input strings with &#39;_old&#39; variables added.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">)):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_old&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">)]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">PatternChecker</span><span class="o">.</span><span class="n">get_all_old_variables</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">[</span><span class="n">i</span><span class="p">])])</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;KeyError: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">exit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">inputs</span></div>
+
+
+    <span class="c1"># AConsistencyCheck formula gen</span>
+<div class="viewcode-block" id="TransitionProcessor.a_consistency_check">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.a_consistency_check">[docs]</a>
+    <span class="k">def</span> <span class="nf">a_consistency_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preC</span><span class="p">,</span> <span class="n">_postC_A</span><span class="p">,</span> <span class="n">otherPrecs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a formula for action consistency check (AConsistencyCheck formula generation).</span>
+<span class="sd">        AConsistency Check Implementation</span>
+
+<span class="sd">        :param preC: The precondition string.</span>
+<span class="sd">        :type preC: str</span>
+<span class="sd">        :param _postC_A: The postcondition string after processing.</span>
+<span class="sd">        :type _postC_A: str</span>
+<span class="sd">        :param otherPrecs: List of other preconditions.</span>
+<span class="sd">        :type otherPrecs: list</span>
+<span class="sd">        :param inputs: List of input strings.</span>
+<span class="sd">        :type inputs: list</span>
+<span class="sd">        :return: The generated consistency check formula.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">hypothesis</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;And(</span><span class="si">{</span><span class="n">preC</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">_postC_A</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">thesis</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Or(</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">quantifier_closure</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">get_vars_names_from_input</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]),</span><span class="w"> </span><span class="s2">&quot;Exists&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">))])</span><span class="si">}</span><span class="s1">)&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;True&quot;</span>
+    
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Not(Implies(</span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">thesis</span><span class="si">}</span><span class="s1">))&#39;</span></div>
+
+    
+    <span class="c1">#NDetCheck formula gen</span>
+<div class="viewcode-block" id="TransitionProcessor.n_det_check">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.n_det_check">[docs]</a>
+    <span class="k">def</span> <span class="nf">n_det_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curent_transition</span><span class="p">,</span> <span class="n">other_transitions</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a formula to check for determinism at a specific stage (NDetCheck formula generation).</span>
+<span class="sd">        NdetCheck Implementation</span>
+
+<span class="sd">        :param current_transition: The current transition being processed.</span>
+<span class="sd">        :type current_transition: dict</span>
+<span class="sd">        :param other_transitions: List of other transitions.</span>
+<span class="sd">        :type other_transitions: list</span>
+<span class="sd">        :param processed_data: Processed data for determinism check.</span>
+<span class="sd">        :type processed_data: tuple</span>
+<span class="sd">        :return: The generated determinism check formula.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">other_precs</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">processed_data</span>
+        <span class="n">to_state</span> <span class="o">=</span> <span class="n">curent_transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">to_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_det_formula</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_det_formula</span><span class="p">[</span><span class="n">to_state</span><span class="p">]</span>
+        
+        <span class="n">indexes</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># we group transitions by labels and participants</span>
+        <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">other_transitions</span><span class="p">:</span>
+            <span class="n">caller</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;caller&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Assuming there&#39;s a single caller for simplicity</span>
+            <span class="n">callerRoles</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;caller&#39;</span><span class="p">][</span><span class="n">caller</span><span class="p">]</span>
+
+            <span class="c1"># remove all added participant from parameter</span>
+            <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;newParticipants&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;newParticipants&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;newParticipants_from_param&#39;</span><span class="p">]}</span>
+            <span class="k">if</span> <span class="n">caller</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;newParticipants&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">callerRoles</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">:</span>
+                    <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">callerRoles</span><span class="p">[:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+                <span class="k">else</span> <span class="p">:</span>
+                    <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actions</span><span class="p">):</span>
+            <span class="n">indexes</span><span class="p">[</span><span class="n">action</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># for each groups we build the formula</span>
+        <span class="k">for</span> <span class="n">action</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">indexes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+                <span class="n">grouped</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+                <span class="n">hypothesis</span> <span class="o">=</span> <span class="n">other_precs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+                <span class="n">grouped</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">var_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_vars_names_from_input</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+                <span class="n">implication_part</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;And(Not(</span><span class="si">{</span><span class="s2">&quot;) , Not(&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">other_precs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">grouped</span><span class="p">])</span><span class="si">}</span><span class="s1">))&#39;</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not(Implies(</span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">implication_part</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_det_formula</span><span class="p">[</span><span class="n">to_state</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Or(</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s2">&quot;Not(True)&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_det_formula</span><span class="p">[</span><span class="n">to_state</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="TransitionProcessor.should_stop">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.should_stop">[docs]</a>
+    <span class="k">def</span> <span class="nf">should_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formula</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">participant</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determines whether processing should stop based on the given formula.</span>
+
+<span class="sd">        :param formula: The formula to evaluate.</span>
+<span class="sd">        :type formula: str</span>
+<span class="sd">        :param transition: The current transition data.</span>
+<span class="sd">        :type transition: dict</span>
+<span class="sd">        :param participant: The participant involved.</span>
+<span class="sd">        :type participant: str</span>
+<span class="sd">        :return: True if processing should stop, False otherwise.</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">formula</span> <span class="o">==</span> <span class="s2">&quot;False&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error from this transitions:</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)_</span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Participant: </span><span class="si">{</span><span class="n">participant</span><span class="si">}</span><span class="s2"> not introduced&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">exit</span><span class="p">()</span></div>
+
+    
+   
+<div class="viewcode-block" id="TransitionProcessor.process">
+<a class="viewcode-back" href="../TransitionProcessor.html#TransitionProcessor.TransitionProcessor.process">[docs]</a>
+    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">outgoingTransitions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a transition and outgoing transitions for solver compatibility.</span>
+
+<span class="sd">        :param transition: The current transition to process.</span>
+<span class="sd">        :type transition: dict</span>
+<span class="sd">        :param outgoingTransitions: List of outgoing transitions.</span>
+<span class="sd">        :type outgoingTransitions: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Initialize necessary variables from the current transition and collect inputs and preconditions from all outgoing transitions.</span>
+        <span class="n">preC</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;preCondition&#39;</span><span class="p">]</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span>
+        <span class="n">otherPrecs</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;preCondition&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">outgoingTransitions</span><span class="p">]</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">transition</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">outgoingTransitions</span><span class="p">]]</span>
+        <span class="n">postC</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;postCondition&#39;</span><span class="p">]</span>
+        
+        <span class="c1"># Start timing for performance metrics.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+        
+        <span class="c1"># Perform a check to ensure the caller of the transition is allowed, #CALLERCHECK</span>
+        <span class="n">formula_for_participant_check</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsmGraph</span><span class="o">.</span><span class="n">caller_check</span><span class="p">(</span><span class="n">transition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ellapsed_time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s1">&#39;nb_path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsmGraph</span><span class="o">.</span><span class="n">nb_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsmGraph</span><span class="o">.</span><span class="n">timed_out</span>
+        <span class="c1"># Decision point to potentially halt execution based on participant verification.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">should_stop</span><span class="p">(</span><span class="n">formula_for_participant_check</span><span class="p">,</span> <span class="n">transition</span><span class="p">,</span> <span class="n">transition</span><span class="p">[</span><span class="s2">&quot;caller&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Handling of special cases in pre and post conditions to ensure no outdated variables are used and to append &#39;_old&#39; to variables.</span>
+        <span class="n">PatternChecker</span><span class="o">.</span><span class="n">pre_condition_not_having_old_vars</span><span class="p">(</span><span class="n">preC</span><span class="p">,</span> <span class="n">postC</span><span class="p">)</span>
+        <span class="n">postC</span> <span class="o">=</span> <span class="n">PatternChecker</span><span class="o">.</span><span class="n">append_old_to_vars_and_return_updated</span><span class="p">(</span><span class="n">postC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
+
+        <span class="c1"># Extracting and preparing post conditions for Z3 solver compatibility.</span>
+        <span class="n">_postC_A</span><span class="p">,</span> <span class="n">_post_variable</span> <span class="o">=</span> <span class="n">PatternChecker</span><span class="o">.</span><span class="n">z3_post_condition</span><span class="p">(</span><span class="n">postC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
+
+        <span class="c1"># Update preconditions with &quot;_old&quot; versions of variables for state consistency.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">PatternChecker</span><span class="o">.</span><span class="n">replace_var_with_old_in_pre</span><span class="p">(</span><span class="n">preC</span><span class="p">,</span> <span class="n">_post_variable</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
+        <span class="n">preC</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Update inputs to include &quot;_old&quot; versions of variables where applicable.</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_old_var_from_precs_and_inputs</span><span class="p">([</span><span class="n">postC</span><span class="p">],</span> <span class="p">[</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]])[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_old_var_from_precs_and_inputs</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Initialize or retrieve solver data for the current action.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Replace assertions within preconditions to ensure correctness and safety.</span>
+        <span class="n">preC</span> <span class="o">=</span> <span class="n">replace_assertion</span><span class="p">(</span><span class="n">preC</span><span class="p">)</span>
+        <span class="n">otherPrecs</span> <span class="o">=</span> <span class="p">[</span><span class="n">replace_assertion</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">otherPrecs</span><span class="p">))]</span>
+
+        <span class="c1"># Generate variable assignments ensuring they are safe and declare global variables for use within the solver.</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">global_vars</span> <span class="o">=</span> <span class="n">SafeVars</span><span class="o">.</span><span class="n">safe_variable_assignment</span><span class="p">(</span><span class="n">postC</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;solver__</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="n">action</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Convert variable declarations to Z3-compatible format.</span>
+        <span class="n">converted_declarations</span> <span class="o">=</span> <span class="n">VarDefConv</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]))</span>
+
+        <span class="c1"># Timing and checking for non-determinism within the transitions. # NDETCHECK</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+        <span class="n">thesis_non_eps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_det_check</span><span class="p">(</span><span class="n">transition</span><span class="p">,</span> <span class="n">outgoingTransitions</span><span class="p">,</span> <span class="p">[</span><span class="n">otherPrecs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;non_determinism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ellapsed_time</span><span class="p">()</span>
+
+        <span class="c1"># Timing and checking for action consistency within the transitions.  # AConsistencyCheck</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+        <span class="n">sformula</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_consistency_check</span><span class="p">(</span><span class="n">preC</span><span class="p">,</span> <span class="n">_postC_A</span><span class="p">,</span> <span class="n">otherPrecs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;a_consistency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ellapsed_time</span><span class="p">()</span>
+
+        <span class="c1"># Generate a unique identifier for the function related to the current action and solver iteration.</span>
+        <span class="n">name_func</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;_</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="n">action</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+        
+        <span class="c1"># Prepare the final result with all necessary information for the solver to process.</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;sname&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;solver_</span><span class="si">{</span><span class="n">action</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;snameF&#39;</span><span class="p">:</span> <span class="n">name_func</span><span class="p">,</span>
+            <span class="s1">&#39;sparams&#39;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">converted_declarations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)),</span>
+            <span class="s1">&#39;spre&#39;</span><span class="p">:</span> <span class="n">preC</span><span class="p">,</span>
+            <span class="s1">&#39;sglobalVars&#39;</span><span class="p">:</span> <span class="n">global_vars</span><span class="p">,</span>
+            <span class="s1">&#39;sformula&#39;</span><span class="p">:</span> <span class="n">sformula</span><span class="p">,</span>
+            <span class="s1">&#39;sparticipants&#39;</span><span class="p">:</span> <span class="n">formula_for_participant_check</span><span class="p">,</span>
+            <span class="s1">&#39;epsformula&#39;</span><span class="p">:</span> <span class="n">thesis_non_eps</span>
+        <span class="p">}</span>
+        <span class="c1"># Append the result to the solvers dictionary for the current action, and update the latest processed transition.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solvers</span><span class="p">[</span><span class="n">action</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">latest</span> <span class="o">=</span> <span class="n">result</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

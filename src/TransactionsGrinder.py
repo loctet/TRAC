@@ -233,10 +233,7 @@ class TransactionsGrinder(Logger):
                 for transition in data:
                     outgoingTransitions = grouped_transitions.get(transition['to'], [])
                     self.transition_processor.process(transition, outgoingTransitions)
-                    s_t = self.get_time()
-                    Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), True)
-                    self.update_data([s_t])
-                    
+                    self.update_data([0])
                     if not self.non_stop and (self.should_stop_if_time_out(self) or self.should_stop(self.get_full_z3model_path(), transition, self)):  
                         return
                     
@@ -247,7 +244,9 @@ class TransactionsGrinder(Logger):
 
             if run and self.non_stop:
                 self.log = log
+                s_t = self.get_time()
                 Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), False)
+                self.info["t_building"] += self.get_time() - s_t
                 Z3Runner.execute_model(self,self.get_full_z3model_path())
             if not self.non_stop: 
                 print("(!) Verdict: Well Formed\n")

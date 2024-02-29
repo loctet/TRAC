@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random_exec module &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SafeVariableAssignment module" href="SafeVariableAssignment.html" />
+    <link rel="prev" title="Plot_data module" href="Plot_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Random_exec module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Random_exec.RandomTransitionsExecuter"><code class="docutils literal notranslate"><span class="pre">RandomTransitionsExecuter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Random_exec.RandomTransitionsExecuter.count_all_path_in_fsm"><code class="docutils literal notranslate"><span class="pre">RandomTransitionsExecuter.count_all_path_in_fsm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Random_exec.RandomTransitionsExecuter.merge_and_delete"><code class="docutils literal notranslate"><span class="pre">RandomTransitionsExecuter.merge_and_delete()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Random_exec.RandomTransitionsExecuter.process_all_txt_files"><code class="docutils literal notranslate"><span class="pre">RandomTransitionsExecuter.process_all_txt_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Random_exec.RandomTransitionsExecuter.read_csv_data"><code class="docutils literal notranslate"><span class="pre">RandomTransitionsExecuter.read_csv_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Random_exec.function_to_count_num_path"><code class="docutils literal notranslate"><span class="pre">function_to_count_num_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Random_exec.function_to_run"><code class="docutils literal notranslate"><span class="pre">function_to_run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">Random_exec module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Random_exec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Random_exec">
+<span id="random-exec-module"></span><h1>Random_exec module<a class="headerlink" href="#module-Random_exec" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Random_exec.RandomTransitionsExecuter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Random_exec.</span></span><span class="sig-name descname"><span class="pre">RandomTransitionsExecuter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_csv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_test_per_cpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_runs_per_each</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300000000000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#RandomTransitionsExecuter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.RandomTransitionsExecuter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Executes verification for randomly generated Finite State Machine (FSM) transitions, storing results in CSV files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> (<em>str</em>) – Directory where FSM definitions and results are stored.</p></li>
+<li><p><strong>merge_csv</strong> (<em>bool</em>) – Flag to merge individual CSV results into a single file.</p></li>
+<li><p><strong>number_test_per_cpu</strong> (<em>int</em>) – Number of tests to process concurrently per CPU.</p></li>
+<li><p><strong>number_runs_per_each</strong> (<em>int</em>) – Number of verification runs for each FSM.</p></li>
+<li><p><strong>time_out</strong> (<em>int</em>) – Timeout limit for processing each FSM.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Random_exec.RandomTransitionsExecuter.count_all_path_in_fsm">
+<span class="sig-name descname"><span class="pre">count_all_path_in_fsm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#RandomTransitionsExecuter.count_all_path_in_fsm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.RandomTransitionsExecuter.count_all_path_in_fsm" title="Link to this definition"></a></dt>
+<dd><p>Counts all paths in FSMs defined in text files and updates CSV data with the counts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Random_exec.RandomTransitionsExecuter.merge_and_delete">
+<span class="sig-name descname"><span class="pre">merge_and_delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#RandomTransitionsExecuter.merge_and_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.RandomTransitionsExecuter.merge_and_delete" title="Link to this definition"></a></dt>
+<dd><p>Merges individual CSV result files into a single file and cleans up.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Random_exec.RandomTransitionsExecuter.process_all_txt_files">
+<span class="sig-name descname"><span class="pre">process_all_txt_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#RandomTransitionsExecuter.process_all_txt_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.RandomTransitionsExecuter.process_all_txt_files" title="Link to this definition"></a></dt>
+<dd><p>Processes all text files containing FSM definitions for verification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Random_exec.RandomTransitionsExecuter.read_csv_data">
+<span class="sig-name descname"><span class="pre">read_csv_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#RandomTransitionsExecuter.read_csv_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.RandomTransitionsExecuter.read_csv_data" title="Link to this definition"></a></dt>
+<dd><p>Reads CSV data from a given path into a dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Random_exec.function_to_count_num_path">
+<span class="sig-prename descclassname"><span class="pre">Random_exec.</span></span><span class="sig-name descname"><span class="pre">function_to_count_num_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300000000000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#function_to_count_num_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.function_to_count_num_path" title="Link to this definition"></a></dt>
+<dd><p>Counts the number of paths in FSMs defined in text files and updates a CSV data structure with the counts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of text file paths containing FSM definitions.</p></li>
+<li><p><strong>csv_data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Dictionary mapping text file paths to CSV data rows.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Index to distinguish output CSV files.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – Directory to save the output CSV file.</p></li>
+<li><p><strong>time_out</strong> (<em>float</em>) – Timeout limit for processing each FSM.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Random_exec.function_to_run">
+<span class="sig-prename descclassname"><span class="pre">Random_exec.</span></span><span class="sig-name descname"><span class="pre">function_to_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_runs_per_each</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300000000000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Random_exec.html#function_to_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Random_exec.function_to_run" title="Link to this definition"></a></dt>
+<dd><p>Processes Finite State Machines (FSMs) defined in text files, runs verification, and updates CSV data with the results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of text file paths containing FSM definitions.</p></li>
+<li><p><strong>csv_data</strong> (<em>dict</em>) – Dictionary mapping text file paths to CSV data rows.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Index to distinguish output CSV files.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – Directory to save the output CSV file.</p></li>
+<li><p><strong>number_runs_per_each</strong> (<em>int</em>) – Number of verification runs for each FSM.</p></li>
+<li><p><strong>time_out</strong> (<em>int</em>) – Timeout limit for processing each FSM.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Plot_data.html" class="btn btn-neutral float-left" title="Plot_data module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="SafeVariableAssignment.html" class="btn btn-neutral float-right" title="SafeVariableAssignment module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

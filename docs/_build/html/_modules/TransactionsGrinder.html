@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransactionsGrinder &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">TransactionsGrinder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for TransactionsGrinder</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">PathGenerator</span> <span class="kn">import</span> <span class="n">PathGenerator</span>
+<span class="kn">from</span> <span class="nn">TransitionProcessor</span> <span class="kn">import</span> <span class="n">TransitionProcessor</span>
+<span class="kn">from</span> <span class="nn">VariableDeclarationConverter</span> <span class="kn">import</span> <span class="n">VariableDeclarationConverter</span> 
+<span class="kn">from</span> <span class="nn">Logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span> <span class="nn">Z3Runner</span> <span class="kn">import</span> <span class="n">Z3Runner</span>
+<span class="kn">from</span> <span class="nn">Fbuilder</span> <span class="kn">import</span> <span class="n">Fbuilder</span>
+<span class="kn">from</span> <span class="nn">Settings</span> <span class="kn">import</span> <span class="n">s_json_path</span><span class="p">,</span> <span class="n">s_txt_path</span><span class="p">,</span> <span class="n">s_z3model_path</span>
+
+<div class="viewcode-block" id="TransactionsGrinder">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder">[docs]</a>
+<span class="k">class</span> <span class="nc">TransactionsGrinder</span><span class="p">(</span><span class="n">Logger</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes transactions from a JSON file to generate Z3 models, handling pre-processing,</span>
+<span class="sd">    grouping transactions, and executing Z3 models for verification.</span>
+
+<span class="sd">    Inherits from Logger for logging capabilities.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">file_name</span><span class="p">,</span> 
+                 <span class="n">z3model_path</span> <span class="o">=</span> <span class="n">s_z3model_path</span><span class="p">,</span> 
+                 <span class="n">txt_path</span> <span class="o">=</span> <span class="n">s_txt_path</span><span class="p">,</span> 
+                 <span class="n">json_path</span> <span class="o">=</span> <span class="n">s_json_path</span><span class="p">,</span> 
+                 <span class="n">log</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> 
+                 <span class="n">logTime</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">non_stop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the TransactionsGrinder with file paths and logging settings.</span>
+
+<span class="sd">        :param file_name: The name of the file to process.</span>
+<span class="sd">        :type file_name: str</span>
+<span class="sd">        :param z3model_path: Path to save the generated Z3 model files.</span>
+<span class="sd">        :type z3model_path: str</span>
+<span class="sd">        :param txt_path: Path to save text outputs.</span>
+<span class="sd">        :type txt_path: str</span>
+<span class="sd">        :param json_path: Path to JSON input files.</span>
+<span class="sd">        :type json_path: str</span>
+<span class="sd">        :param log: Enables logging if True.</span>
+<span class="sd">        :type log: bool</span>
+<span class="sd">        :param logTime: Enables timing logging if True.</span>
+<span class="sd">        :type logTime: bool</span>
+<span class="sd">        :param non_stop: Continues processing on errors if True.</span>
+<span class="sd">        :type non_stop: bool</span>
+<span class="sd">        :param time_out: Timeout limit for processing.</span>
+<span class="sd">        :type time_out: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">Logger</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">non_stop</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">file_name</span> <span class="ow">or</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="n">txt_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">txt_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">json_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+            <span class="n">z3model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">z3model_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">z3model_path</span> <span class="o">=</span> <span class="n">z3model_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_path</span> <span class="o">=</span> <span class="n">txt_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_path</span> <span class="o">=</span> <span class="n">json_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span> <span class="o">=</span> <span class="n">non_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logTime</span> <span class="o">=</span> <span class="n">logTime</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;t_participants&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;t_non_determinism&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;t_a_consistency&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;t_building&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;t_total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;nb_path&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;is_time_out&quot;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">}</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">txt_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">z3model_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="TransactionsGrinder.set_fsm_data">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.set_fsm_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_fsm_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fsm</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the finite state machine data for processing.</span>
+
+<span class="sd">        :param fsm: The finite state machine data as a dictionary.</span>
+<span class="sd">        :type fsm: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span> <span class="o">=</span> <span class="n">fsm</span></div>
+
+
+<div class="viewcode-block" id="TransactionsGrinder.pre_process_fsm">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.pre_process_fsm">[docs]</a>
+    <span class="k">def</span> <span class="nf">pre_process_fsm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pre-processes the FSM by converting variable declarations to Z3 declarations</span>
+<span class="sd">        and updating transitions with new participants.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">])):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">VariableDeclarationConverter</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="p">[],</span> <span class="p">{},</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;newParticipants&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;newParticipants_from_param&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> </div>
+
+            
+<div class="viewcode-block" id="TransactionsGrinder.get_full_json_path">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_full_json_path">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_full_json_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the full path to the JSON file based on the base JSON path and file name.</span>
+
+<span class="sd">        :return: The full path to the JSON file.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">json_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="si">}</span><span class="s2">.json&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="TransactionsGrinder.get_full_txt_path">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_full_txt_path">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_full_txt_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the full path to the TXT file based on the base TXT path and file name.</span>
+
+<span class="sd">        :return: The full path to the TXT file.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="TransactionsGrinder.get_full_z3model_path">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_full_z3model_path">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_full_z3model_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span> <span class="o">=</span> <span class="s2">&quot;_formness&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the full path to the Z3 model file based on the base Z3 model path, file name,</span>
+<span class="sd">        and an optional suffix for the file name.</span>
+
+<span class="sd">        :param check: Optional suffix for the Z3 model file name.</span>
+<span class="sd">        :type check: str</span>
+<span class="sd">        :return: The full path to the Z3 model file.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z3model_path</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="si">}{</span><span class="n">check</span><span class="si">}</span><span class="s2">.py&quot;</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="TransactionsGrinder.group_transactions">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.group_transactions">[docs]</a>
+    <span class="k">def</span> <span class="nf">group_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transitions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Groups transactions by their &quot;to&quot; state for processing.</span>
+
+<span class="sd">        :param transitions: A list of transactions to group.</span>
+<span class="sd">        :type transitions: list</span>
+<span class="sd">        :return: A dictionary of transactions grouped by &quot;to&quot; state.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create a dictionary to store transitions grouped by &quot;to&quot; state</span>
+        <span class="n">transitions_by_to_state</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># Group transitions by &quot;to&quot; state</span>
+        <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+            <span class="n">to_state</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s2">&quot;from&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">to_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">transitions_by_to_state</span><span class="p">:</span>
+                <span class="n">transitions_by_to_state</span><span class="p">[</span><span class="n">to_state</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">transitions_by_to_state</span><span class="p">[</span><span class="n">to_state</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">transitions_by_to_state</span></div>
+
+
+<div class="viewcode-block" id="TransactionsGrinder.get_json_from_file">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_json_from_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_json_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads Finite State Machine (FSM) data from a JSON file specified by the constructed full JSON path.</span>
+
+<span class="sd">        :return: The content of the JSON file as a list of strings.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_full_json_path</span><span class="p">(),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">input_text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_text</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">input_text</span></div>
+
+
+<div class="viewcode-block" id="TransactionsGrinder.get_grouped_transaction">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_grouped_transaction">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_grouped_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transitions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Groups transactions and creates a copy for processing.</span>
+
+<span class="sd">        :param transitions: A list of transactions to group.</span>
+<span class="sd">        :type transitions: list</span>
+<span class="sd">        :return: A tuple containing the grouped transactions and a copy of them.</span>
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">grouped_transitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_transactions</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+        <span class="n">grouped_transitions_copy</span> <span class="o">=</span> <span class="n">grouped_transitions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">grouped_transitions</span><span class="p">,</span> <span class="n">grouped_transitions_copy</span> <span class="p">]</span>   </div>
+
+
+<div class="viewcode-block" id="TransactionsGrinder.get_transition_processor">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.get_transition_processor">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_transition_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">TransitionProcessor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets or creates a TransitionProcessor instance for processing Finite State Machine (FSM) transitions.</span>
+
+<span class="sd">        :return: An instance of TransitionProcessor.</span>
+<span class="sd">        :rtype: TransitionProcessor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span> <span class="o">=</span> <span class="n">TransitionProcessor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fsm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span><span class="p">)</span>
+    
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span></div>
+
+    
+<div class="viewcode-block" id="TransactionsGrinder.update_data">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.update_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates processing information with data from the transition processor.</span>
+
+<span class="sd">        :param data: Data to update the processing information with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_participants&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">]</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_non_determinism&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;non_determinism&quot;</span><span class="p">]</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_a_consistency&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;a_consistency&quot;</span><span class="p">]</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_building&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;nb_path&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;nb_path&quot;</span><span class="p">]</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">infos</span><span class="p">[</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="TransactionsGrinder.tr_grinding">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.tr_grinding">[docs]</a>
+    <span class="k">def</span> <span class="nf">tr_grinding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main method for processing transactions, building Z3 model files, and optionally running Z3 verification.</span>
+
+<span class="sd">        :param run: If True, runs Z3 verification after processing.</span>
+<span class="sd">        :type run: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+            <span class="n">fsm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span> 
+            <span class="n">transitions</span> <span class="o">=</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">]</span>
+            <span class="c1"># Example usage</span>
+            <span class="n">declarations_str</span> <span class="o">=</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;statesDeclaration&#39;</span><span class="p">]</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;Checking the well formness of the model----</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transition_processor</span><span class="p">()</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">result</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">VariableDeclarationConverter</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="n">declarations_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">var_names</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="p">,</span> <span class="s1">&#39;deploy_init_var_val&#39;</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="p">,</span> <span class="s1">&#39;var_names&#39;</span><span class="p">,</span> <span class="n">var_names</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="n">grouped_transitions</span><span class="p">,</span> <span class="n">grouped_transitions_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_grouped_transaction</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">grouped_transitions_copy</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+            <span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">outgoingTransitions</span> <span class="o">=</span> <span class="n">grouped_transitions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">],</span> <span class="p">[])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">transition</span><span class="p">,</span> <span class="n">outgoingTransitions</span><span class="p">)</span>
+                    <span class="n">s_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
+                    <span class="n">Fbuilder</span><span class="o">.</span><span class="n">build_z3_formulas_model_and_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">([</span><span class="n">s_t</span><span class="p">])</span>
+                    
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">should_stop_if_time_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_stop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">(),</span> <span class="n">transition</span><span class="p">,</span> <span class="bp">self</span><span class="p">)):</span>  
+                        <span class="k">return</span>
+                    
+                    <span class="k">if</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grouped_transitions</span> <span class="ow">and</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;finalStates&#39;</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: </span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not a final state but has no trasitions from </span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+                <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">grouped_transitions_copy</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grouped_transitions_copy</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">[]]</span>
+
+            <span class="k">if</span> <span class="n">run</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+                <span class="n">Fbuilder</span><span class="o">.</span><span class="n">build_z3_formulas_model_and_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="n">Z3Runner</span><span class="o">.</span><span class="n">execute_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">())</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_stop</span><span class="p">:</span> 
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(!) Verdict: Well Formed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;End----</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while grinding: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="TransactionsGrinder.check_independant_sat">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.check_independant_sat">[docs]</a>
+    <span class="k">def</span> <span class="nf">check_independant_sat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the independent satisfiability of the model by verifying each transaction separately.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fsm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span> 
+            <span class="n">transitions</span> <span class="o">=</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">]</span>
+            <span class="c1"># Example usage</span>
+            <span class="n">declarations_str</span> <span class="o">=</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;statesDeclaration&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;Checking independent statisfiability of the model----</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transition_processor</span><span class="p">()</span>
+            <span class="n">result</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">VariableDeclarationConverter</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="n">declarations_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span>
+
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="p">,</span> <span class="s1">&#39;deploy_init_var_val&#39;</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="p">,</span> <span class="s1">&#39;var_names&#39;</span><span class="p">,</span> <span class="n">var_names</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            
+            <span class="n">grouped_transitions</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_grouped_transaction</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">grouped_transitions</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">grouped_transitions</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+                    <span class="n">outgoingTransitions</span> <span class="o">=</span> <span class="n">grouped_transitions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">],</span> <span class="p">[])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">transition_processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">transition</span><span class="p">,</span> <span class="n">outgoingTransitions</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">should_stop</span><span class="p">(</span><span class="n">transition</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grouped_transitions</span> <span class="ow">and</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;finalStates&#39;</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: </span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not a final state but has no trasitions from </span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_model_and_save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="si">}</span><span class="s2">_indep_sat&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;End----</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in check_independant_sat : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransactionsGrinder.check_path_sat">
+<a class="viewcode-back" href="../TransactionsGrinder.html#TransactionsGrinder.TransactionsGrinder.check_path_sat">[docs]</a>
+    <span class="k">def</span> <span class="nf">check_path_sat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks path satisfiability of the model by verifying the satisfiability of different paths through the FSM.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fsm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsm</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;Checking Path statisfiability of the model----</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">PathGenerator</span><span class="o">.</span><span class="n">check_path_satisfiability</span><span class="p">(</span><span class="n">fsm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logIt</span><span class="p">(</span><span class="s2">&quot;End----</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

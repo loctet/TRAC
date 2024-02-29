@@ -162,15 +162,15 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    ```
    Replace `your_directory_name` with the desired directory to store test files and adjust `--num_tests` to the number of examples you wish to generate.
 
-   *Generate examples of the TRAC tool paper*
+   **Generate examples of the TRAC tool paper**
    ```bash
    python3 Generate_examples.py --directory examples_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
    ```
-   This will generate 135 random DAFSMs in the folder `Examples/random_txt/examples_1` with subfolders each folder having 5 tests and a csv file(`list_of_files_info.csv`) containing metadata of the 5 examples. All these csv are then combined into a main csv `list_of_files_info.csv`
-   This will then run the check and further csv files will be generated and merged (to `merged_list_of_files_info`) when done.
-   *Now you can plot the data to visualize different running time*
+   This will generate 135 random DAFSMs in the folder `Examples/random_txt/examples_1` with subfolders each folder having 5 tests and a csv file(`list_of_files_info.csv`) containing metadata of those 5 examples. All these csv are then combined into a main csv `list_of_files_info.csv`
+   This will then run the check and further csv files will be generated and merge (to `merged_list_of_files_info`) when done.
+   **Now you can plot the data to visualize different running time**
    ```
-   python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape lines --type_plot scatter
+   python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter
    ```
    This will plot these plots 
    ![Evaluation path participant time](./images/evaluation_path_participant_time.png)
@@ -232,6 +232,12 @@ python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fi
 - `--type_plot`: Choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default.
 
 This command allows for versatile plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved the directory directly.
+
+## Main functions 
+
+   ![Architecture of TRAC](./images/architecture.png)
+   -[Validator]()
+
 
 ## Reminder
 

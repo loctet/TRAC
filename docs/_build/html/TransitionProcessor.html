@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TransitionProcessor module &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="VariableDeclarationConverter module" href="VariableDeclarationConverter.html" />
+    <link rel="prev" title="TransactionsGrinder module" href="TransactionsGrinder.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TransitionProcessor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.a_consistency_check"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.a_consistency_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.add_old_var_from_precs_and_inputs"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.add_old_var_from_precs_and_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.append"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.get_vars_names_from_input"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.get_vars_names_from_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.n_det_check"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.n_det_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.process"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.process()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.quantifier_closure"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.quantifier_closure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#TransitionProcessor.TransitionProcessor.should_stop"><code class="docutils literal notranslate"><span class="pre">TransitionProcessor.should_stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">&lt;no title&gt;</a></li>
+      <li class="breadcrumb-item active">TransitionProcessor module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/TransitionProcessor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-TransitionProcessor">
+<span id="transitionprocessor-module"></span><h1>TransitionProcessor module<a class="headerlink" href="#module-TransitionProcessor" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TransitionProcessor.</span></span><span class="sig-name descname"><span class="pre">TransitionProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="MiniTimer.html#MiniTimer.MiniTimer" title="MiniTimer.MiniTimer"><code class="xref py py-class docutils literal notranslate"><span class="pre">MiniTimer</span></code></a></p>
+<p>Processes transitions for a finite state machine, including checking for determinism,
+action consistency, and transforming FSM transitions into Z3 solver format.</p>
+<p>Inherits from MiniTimer for performance measurement.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.a_consistency_check">
+<span class="sig-name descname"><span class="pre">a_consistency_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preC</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_postC_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">otherPrecs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.a_consistency_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.a_consistency_check" title="Link to this definition"></a></dt>
+<dd><p>Generates a formula for action consistency check (AConsistencyCheck formula generation).
+AConsistency Check Implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preC</strong> (<em>str</em>) – The precondition string.</p></li>
+<li><p><strong>_postC_A</strong> (<em>str</em>) – The postcondition string after processing.</p></li>
+<li><p><strong>otherPrecs</strong> (<em>list</em>) – List of other preconditions.</p></li>
+<li><p><strong>inputs</strong> (<em>list</em>) – List of input strings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated consistency check formula.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.add_old_var_from_precs_and_inputs">
+<span class="sig-name descname"><span class="pre">add_old_var_from_precs_and_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">otherPrecs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.add_old_var_from_precs_and_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.add_old_var_from_precs_and_inputs" title="Link to this definition"></a></dt>
+<dd><p>Adds ‘_old’ suffix to variables based on preconditions and inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>otherPrecs</strong> (<em>list</em>) – List of precondition strings.</p></li>
+<li><p><strong>inputs</strong> (<em>list</em>) – List of input strings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated list of input strings with ‘_old’ variables added.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.append" title="Link to this definition"></a></dt>
+<dd><p>Appends a string to the internal code model, helping to start building the Z3 model progressively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> (<em>str</em>) – The string to append.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.get_vars_names_from_input">
+<span class="sig-name descname"><span class="pre">get_vars_names_from_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_c</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.get_vars_names_from_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.get_vars_names_from_input" title="Link to this definition"></a></dt>
+<dd><p>Extracts variable names from the input condition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_c</strong> (<em>str</em>) – The input condition string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of variable names extracted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.n_det_check">
+<span class="sig-name descname"><span class="pre">n_det_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">curent_transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_transitions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processed_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.n_det_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.n_det_check" title="Link to this definition"></a></dt>
+<dd><p>Generates a formula to check for determinism at a specific stage (NDetCheck formula generation).
+NdetCheck Implementation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_transition</strong> (<em>dict</em>) – The current transition being processed.</p></li>
+<li><p><strong>other_transitions</strong> (<em>list</em>) – List of other transitions.</p></li>
+<li><p><strong>processed_data</strong> (<em>tuple</em>) – Processed data for determinism check.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated determinism check formula.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outgoingTransitions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.process" title="Link to this definition"></a></dt>
+<dd><p>Processes a transition and outgoing transitions for solver compatibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transition</strong> (<em>dict</em>) – The current transition to process.</p></li>
+<li><p><strong>outgoingTransitions</strong> (<em>list</em>) – List of outgoing transitions.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.quantifier_closure">
+<span class="sig-name descname"><span class="pre">quantifier_closure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ForAll'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.quantifier_closure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.quantifier_closure" title="Link to this definition"></a></dt>
+<dd><p>Applies a quantifier to a formula with specified variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>str</em>) – The logical formula to apply the quantifier to.</p></li>
+<li><p><strong>variables</strong> (<em>list</em>) – List of variables to include in the quantification.</p></li>
+<li><p><strong>quantifier</strong> (<em>str</em>) – The type of quantifier (‘ForAll’ or ‘Exists’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The formula with the quantifier applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TransitionProcessor.TransitionProcessor.should_stop">
+<span class="sig-name descname"><span class="pre">should_stop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">participant</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TransitionProcessor.html#TransitionProcessor.should_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TransitionProcessor.TransitionProcessor.should_stop" title="Link to this definition"></a></dt>
+<dd><p>Determines whether processing should stop based on the given formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formula</strong> (<em>str</em>) – The formula to evaluate.</p></li>
+<li><p><strong>transition</strong> (<em>dict</em>) – The current transition data.</p></li>
+<li><p><strong>participant</strong> (<em>str</em>) – The participant involved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if processing should stop, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="TransactionsGrinder.html" class="btn btn-neutral float-left" title="TransactionsGrinder module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="VariableDeclarationConverter.html" class="btn btn-neutral float-right" title="VariableDeclarationConverter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

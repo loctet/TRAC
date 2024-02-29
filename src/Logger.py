@@ -61,6 +61,7 @@ class Logger(MiniTimer):
         if self.non_stop:
             return False
         
+        Fbuilder.build_z3_formulas_model_and_save(trGrinder, trGrinder.get_full_z3model_path(), True)
         if not Z3Runner.execute_model(trGrinder, path):
             print(f"Error from this transitions:{item['from']}_{item['actionLabel']}({item['input']})_{item['to']}")
             print(trGrinder.output)

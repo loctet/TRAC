@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random_exec &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Random_exec</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Random_exec</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">Fbuilder</span> <span class="kn">import</span> <span class="n">Fbuilder</span>
+<span class="kn">from</span> <span class="nn">TransactionsGrinder</span> <span class="kn">import</span> <span class="n">TransactionsGrinder</span>
+<span class="kn">from</span> <span class="nn">The_Validator</span> <span class="kn">import</span> <span class="n">The_Validator</span>
+<span class="kn">from</span> <span class="nn">MiniTimer</span> <span class="kn">import</span> <span class="n">MiniTimer</span>
+<span class="kn">from</span> <span class="nn">Settings</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Helpers</span> <span class="kn">import</span> <span class="n">run_parallel_generations</span><span class="p">,</span> <span class="n">write_csv</span>
+<span class="kn">from</span> <span class="nn">Z3Runner</span> <span class="kn">import</span> <span class="n">Z3Runner</span>
+
+
+<div class="viewcode-block" id="function_to_count_num_path">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.function_to_count_num_path">[docs]</a>
+<span class="k">def</span> <span class="nf">function_to_count_num_path</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="n">csv_data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="n">s_time_out</span> <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Counts the number of paths in FSMs defined in text files and updates a CSV data structure with the counts.</span>
+<span class="sd">    </span>
+<span class="sd">    :param list_: List of text file paths containing FSM definitions.</span>
+<span class="sd">    :type list_: list[str]</span>
+
+<span class="sd">    :param csv_data: Dictionary mapping text file paths to CSV data rows.</span>
+<span class="sd">    :type csv_data: dict[str, Any]</span>
+
+<span class="sd">    :param index: Index to distinguish output CSV files.</span>
+<span class="sd">    :type index: int</span>
+
+<span class="sd">    :param directory: Directory to save the output CSV file.</span>
+<span class="sd">    :type directory: str</span>
+
+<span class="sd">    :param time_out: Timeout limit for processing each FSM.</span>
+<span class="sd">    :type time_out: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sValidator</span> <span class="o">=</span> <span class="n">The_Validator</span><span class="p">()</span>
+    <span class="n">n_csv_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="n">MiniTimer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">txt_file_path</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">txt_file_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">txt_file_path</span> <span class="o">=</span> <span class="n">txt_file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="n">folder</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">txt_file_path</span><span class="p">)</span>
+            <span class="n">file_base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">folder</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">folder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;random_txt&quot;</span><span class="p">)</span>
+            <span class="n">trGrinder</span> <span class="o">=</span> <span class="n">TransactionsGrinder</span><span class="p">(</span><span class="n">file_base_name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;./Z3_models/random_tests/&quot;</span> <span class="o">+</span> <span class="n">part</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">folder</span><span class="p">,</span> <span class="n">folder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;random_txt&#39;</span><span class="p">,</span> <span class="s1">&#39;random_json&#39;</span><span class="p">),</span> <span class="kc">False</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span><span class="p">)</span>
+            <span class="n">sValidator</span><span class="o">.</span><span class="n">transitions_to_json</span><span class="p">(</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_txt_path</span><span class="p">(),</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_json_path</span><span class="p">())</span>
+            <span class="n">trGrinder</span><span class="o">.</span><span class="n">get_json_from_file</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Counting Paths-- </span><span class="si">{</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_txt_path</span><span class="p">()</span><span class="si">}</span><span class="s2"> -----&quot;</span><span class="p">)</span>
+            <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;num_paths&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">transition_processor</span><span class="p">()</span><span class="o">.</span><span class="n">fsmGraph</span><span class="o">.</span><span class="n">get_number_of_paths</span><span class="p">(</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;states&#39;</span><span class="p">])</span>
+            <span class="n">n_csv_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="n">exit</span><span class="p">()</span>
+    
+    <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./examples/random_txt/</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/list_of_files_info_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">.csv&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Writing data in : &quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">write_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">n_csv_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="function_to_run">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.function_to_run">[docs]</a>
+<span class="k">def</span> <span class="nf">function_to_run</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="n">csv_data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">number_runs_per_each</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="n">s_time_out</span> <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes Finite State Machines (FSMs) defined in text files, runs verification, and updates CSV data with the results.</span>
+
+<span class="sd">    :param list_: List of text file paths containing FSM definitions.</span>
+<span class="sd">    :type list_: list[str]</span>
+<span class="sd">    :param csv_data: Dictionary mapping text file paths to CSV data rows.</span>
+<span class="sd">    :type csv_data: dict</span>
+<span class="sd">    :param index: Index to distinguish output CSV files.</span>
+<span class="sd">    :type index: int</span>
+<span class="sd">    :param directory: Directory to save the output CSV file.</span>
+<span class="sd">    :type directory: str</span>
+<span class="sd">    :param number_runs_per_each: Number of verification runs for each FSM.</span>
+<span class="sd">    :type number_runs_per_each: int</span>
+<span class="sd">    :param time_out: Timeout limit for processing each FSM.</span>
+<span class="sd">    :type time_out: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sValidator</span> <span class="o">=</span> <span class="n">The_Validator</span><span class="p">()</span>
+    <span class="n">n_csv_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="n">MiniTimer</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">txt_file_path</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">txt_file_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">txt_file_path</span> <span class="o">=</span> <span class="n">txt_file_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="n">folder</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">txt_file_path</span><span class="p">)</span>
+            <span class="n">file_base_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">folder</span> <span class="o">+=</span> <span class="s2">&quot;/&quot;</span>
+            <span class="n">part</span> <span class="o">=</span> <span class="n">folder</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;random_txt&quot;</span><span class="p">)</span>
+            
+            <span class="n">trGrinder</span> <span class="o">=</span> <span class="n">TransactionsGrinder</span><span class="p">(</span>
+                <span class="n">file_base_name</span><span class="p">,</span> 
+                <span class="sa">f</span><span class="s2">&quot;./Z3_models/random_tests/&quot;</span> <span class="o">+</span> <span class="n">part</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
+                <span class="n">folder</span><span class="p">,</span> 
+                <span class="n">folder</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;random_txt&#39;</span><span class="p">,</span> <span class="s1">&#39;random_json&#39;</span><span class="p">),</span> 
+                <span class="kc">False</span><span class="p">,</span> 
+                <span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+            <span class="p">)</span>
+            <span class="n">sValidator</span><span class="o">.</span><span class="n">transitions_to_json</span><span class="p">(</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_txt_path</span><span class="p">(),</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_json_path</span><span class="p">())</span>
+            <span class="n">trGrinder</span><span class="o">.</span><span class="n">get_json_from_file</span><span class="p">()</span>
+            <span class="n">trGrinder</span><span class="o">.</span><span class="n">pre_process_fsm</span><span class="p">()</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Building-- and running -- </span><span class="si">{</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">()</span><span class="si">}</span><span class="s2"> -----&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">txt_file_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">exit</span><span class="p">()</span>
+
+            <span class="n">buidingTime</span> <span class="o">=</span> <span class="n">runningTime</span> <span class="o">=</span> <span class="n">nb_time_out</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">times</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">times</span><span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;non_determinism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;a_consistency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;f_building&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nb_runs</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">verdict</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_runs_per_each</span><span class="p">):</span>
+                <span class="n">nb_runs</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">timer</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+                <span class="n">trGrinder</span><span class="o">.</span><span class="n">tr_grinding</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">buidingTime</span> <span class="o">+=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_ellapsed_time</span><span class="p">()</span>
+
+                <span class="n">times</span><span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_participants&quot;</span><span class="p">]</span>
+                <span class="n">times</span><span class="p">[</span><span class="s2">&quot;non_determinism&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_non_determinism&quot;</span><span class="p">]</span>
+                <span class="n">times</span><span class="p">[</span><span class="s2">&quot;a_consistency&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_a_consistency&quot;</span><span class="p">]</span>
+                <span class="n">times</span><span class="p">[</span><span class="s2">&quot;f_building&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;t_building&quot;</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">nb_time_out</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="k">break</span>
+
+                    <span class="n">nb_time_out</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
+                <span class="n">timer</span><span class="o">.</span><span class="n">start_time</span><span class="p">()</span>
+                <span class="n">Fbuilder</span><span class="o">.</span><span class="n">build_z3_formulas_model_and_save</span><span class="p">(</span><span class="n">trGrinder</span><span class="p">,</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="n">verdict</span> <span class="o">=</span> <span class="n">Z3Runner</span><span class="o">.</span><span class="n">execute_model</span><span class="p">(</span><span class="n">trGrinder</span><span class="p">,</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">get_full_z3model_path</span><span class="p">())</span>
+                <span class="n">runningTime</span> <span class="o">+=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_ellapsed_time</span><span class="p">()</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="n">trGrinder</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">txt_file_path</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;num_paths&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;nb_path&quot;</span><span class="p">]</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;verdict&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">verdict</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;participants_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;participants&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;non_determinism_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;non_determinism&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;a_consistency_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;a_consistency&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;f_building_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="s2">&quot;f_building&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;building_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buidingTime</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;z3_running_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">runningTime</span> <span class="o">/</span><span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">buidingTime</span> <span class="o">+</span> <span class="n">runningTime</span><span class="p">)</span> <span class="o">/</span> <span class="n">nb_runs</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trGrinder</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;is_time_out&quot;</span><span class="p">]</span>
+                <span class="n">n_csv_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">csv_data</span><span class="p">[</span><span class="n">txt_file_path</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+            <span class="nb">print</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+            <span class="n">exit</span><span class="p">()</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./examples/random_txt/</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/list_of_files_info_</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">.csv&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Writing data in : &quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">write_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">n_csv_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+       
+<div class="viewcode-block" id="RandomTransitionsExecuter">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.RandomTransitionsExecuter">[docs]</a>
+<span class="k">class</span> <span class="nc">RandomTransitionsExecuter</span><span class="p">:</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Executes verification for randomly generated Finite State Machine (FSM) transitions, storing results in CSV files.</span>
+
+<span class="sd">    :param directory: Directory where FSM definitions and results are stored.</span>
+<span class="sd">    :type directory: str</span>
+<span class="sd">    :param merge_csv: Flag to merge individual CSV results into a single file.</span>
+<span class="sd">    :type merge_csv: bool</span>
+<span class="sd">    :param number_test_per_cpu: Number of tests to process concurrently per CPU.</span>
+<span class="sd">    :type number_test_per_cpu: int</span>
+<span class="sd">    :param number_runs_per_each: Number of verification runs for each FSM.</span>
+<span class="sd">    :type number_runs_per_each: int</span>
+<span class="sd">    :param time_out: Timeout limit for processing each FSM.</span>
+<span class="sd">    :type time_out: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">merge_csv</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> 
+                 <span class="n">number_test_per_cpu</span> <span class="o">=</span> <span class="n">s_number_test_per_cpu</span><span class="p">,</span> 
+                 <span class="n">number_runs_per_each</span> <span class="o">=</span> <span class="n">s_number_runs_per_each</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span>  <span class="n">s_time_out</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">merge_csv</span> <span class="o">=</span> <span class="n">merge_csv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">s_csv_headers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_runs_per_each</span> <span class="o">=</span> <span class="n">number_runs_per_each</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_test_per_cpu</span> <span class="o">=</span> <span class="n">number_test_per_cpu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;./examples/random_txt/&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;list_of_files_info.csv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_merged_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;./examples/random_txt/&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;merged_list_of_files_info.csv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_csv_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_file_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span> <span class="o">=</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;./examples/random_txt/&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">MiniTimer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span> <span class="o">=</span> <span class="n">time_out</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Init Done&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RandomTransitionsExecuter.read_csv_data">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.RandomTransitionsExecuter.read_csv_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">read_csv_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads CSV data from a given path into a dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">csv_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>  <span class="c1"># Skip the header</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="s2">&quot;|&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">header</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="n">header</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+                <span class="n">row</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                <span class="n">csv_data</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">row</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">csv_data</span></div>
+
+
+<div class="viewcode-block" id="RandomTransitionsExecuter.merge_and_delete">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.RandomTransitionsExecuter.merge_and_delete">[docs]</a>
+    <span class="k">def</span> <span class="nf">merge_and_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Merges individual CSV result files into a single file and cleans up.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1">#create a dir to keep old csvs</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">time_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">merged_csv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_merged_file_path</span>
+        <span class="c1">#rename it to avoid deleting the merges already</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">merged_csv</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">merged_csv</span><span class="p">,</span> <span class="n">merged_csv</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="n">time_</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">))</span>
+
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;*.csv&#39;</span><span class="p">)</span>
+        <span class="n">csv_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="n">dataframes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">csv_files</span><span class="p">:</span>
+            <span class="c1"># Skip the &#39;list_of_files_info.csv&#39; file it contains all txt metadata</span>
+            <span class="k">if</span> <span class="s1">&#39;list_of_files_info.csv&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                <span class="n">dataframes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># Concatenate all dataframes into one</span>
+        <span class="n">merged_dataframe</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dataframes</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Save the merged dataframe to a new CSV file</span>
+        <span class="n">merged_dataframe</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">merged_csv</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Move all original CSV files except &#39;list_of_files_info.csv&#39; to a new dir, to keep old onces</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">csv_files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;list_of_files_info.csv&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">f_name</span> <span class="o">=</span> <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">f_name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/</span><span class="si">{</span><span class="n">time_</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span></div>
+
+
+     
+
+<div class="viewcode-block" id="RandomTransitionsExecuter.process_all_txt_files">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.RandomTransitionsExecuter.process_all_txt_files">[docs]</a>
+    <span class="k">def</span> <span class="nf">process_all_txt_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes all text files containing FSM definitions for verification.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;list_of_files_info.csv&#39;</span><span class="p">))</span>
+        <span class="n">sorted_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;num_transitions&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">txt_files</span> <span class="o">=</span> <span class="p">[</span> <span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sorted_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]]</span>
+        
+        <span class="n">works</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">num_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_test_per_cpu</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt_files</span><span class="p">),</span> <span class="n">num_item</span><span class="p">):</span>
+            <span class="n">works</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">function_to_run</span><span class="p">,</span> <span class="n">txt_files</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">num_item</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt_files</span><span class="p">))],</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_data</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_runs_per_each</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_out</span><span class="p">))</span>
+
+        <span class="n">run_parallel_generations</span><span class="p">(</span><span class="n">works</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RandomTransitionsExecuter.count_all_path_in_fsm">
+<a class="viewcode-back" href="../Random_exec.html#Random_exec.RandomTransitionsExecuter.count_all_path_in_fsm">[docs]</a>
+    <span class="k">def</span> <span class="nf">count_all_path_in_fsm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Counts all paths in FSMs defined in text files and updates CSV data with the counts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_csv_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csv_merged_file_path</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;merged_list_of_files_info.csv&#39;</span><span class="p">))</span>
+        <span class="n">sorted_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;num_transitions&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">txt_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sorted_data</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]]</span>
+
+        <span class="n">works</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">num_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_test_per_cpu</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt_files</span><span class="p">),</span> <span class="n">num_item</span><span class="p">):</span>
+            <span class="n">end_index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">num_item</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt_files</span><span class="p">))</span>
+            <span class="n">works</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">function_to_count_num_path</span><span class="p">,</span> <span class="n">txt_files</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">end_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv_data</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">))</span>
+
+        <span class="n">run_parallel_generations</span><span class="p">(</span><span class="n">works</span><span class="p">)</span></div>
+</div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Generate Random Transitions and Store Them in Files&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;directory&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Txt Dir where tests are located&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--merge_csv&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Merge Only Csvs in dir 1 true 0&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--add_path&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;add path in dir 1 true 0&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--number_test_per_cpu&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">s_number_test_per_cpu</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Number per cpu / thread&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--number_runs_per_each&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">s_number_runs_per_each</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Number of runs per each&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--time_out&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">s_time_out</span> <span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Time out number&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+   
+    <span class="n">rExec</span> <span class="o">=</span> <span class="n">RandomTransitionsExecuter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">directory</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">merge_csv</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_test_per_cpu</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">number_runs_per_each</span><span class="p">,</span> <span class="n">time_out</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">time_out</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">add_path</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+        <span class="n">rExec</span><span class="o">.</span><span class="n">count_all_path_in_fsm</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">merge_csv</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">rExec</span><span class="o">.</span><span class="n">merge_and_delete</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rExec</span><span class="o">.</span><span class="n">process_all_txt_files</span><span class="p">()</span>
+        <span class="n">rExec</span><span class="o">.</span><span class="n">merge_and_delete</span><span class="p">()</span>
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

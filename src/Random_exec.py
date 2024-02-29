@@ -123,7 +123,6 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
                 times["participants"] += trGrinder.info["t_participants"]
                 times["non_determinism"] += trGrinder.info["t_non_determinism"]
                 times["a_consistency"] += trGrinder.info["t_a_consistency"]
-                times["f_building"] += trGrinder.info["t_building"]
 
                 if trGrinder.info["is_time_out"]:
                     if nb_time_out > 2:
@@ -131,9 +130,13 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
 
                     nb_time_out += 1
                     continue
-
+                
+                
                 timer.start_time()
                 Fbuilder.build_z3_formulas_model_and_save(trGrinder, trGrinder.get_full_z3model_path(), False)
+                times["f_building"] += timer.get_ellapsed_time()
+
+                timer.start_time()
                 verdict = Z3Runner.execute_model(trGrinder,trGrinder.get_full_z3model_path())
                 runningTime += timer.get_ellapsed_time()
             

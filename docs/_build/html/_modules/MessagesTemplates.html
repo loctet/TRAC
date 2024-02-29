@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MessagesTemplates &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">MessagesTemplates</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for MessagesTemplates</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="MessagesTemplates">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates">[docs]</a>
+<span></span><span class="k">class</span> <span class="nc">MessagesTemplates</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides templates for generating Z3 solver function definitions, result checks,</span>
+<span class="sd">    global variable reset functions, and variable declaration blocks for use in</span>
+<span class="sd">    smart contract verification scripts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MessagesTemplates.getFunctionActionDefinition">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates.getFunctionActionDefinition">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getFunctionActionDefinition</span><span class="p">(</span><span class="n">funtionData</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a Z3 solver function definition from provided function data.</span>
+
+<span class="sd">        :param functionData: A dictionary containing information about the function,</span>
+<span class="sd">            such as name, global variables, parameters, and conditions.</span>
+<span class="sd">        :type functionData: dict</span>
+<span class="sd">        :return: A string representing the complete function definition in Python code.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">funtionData</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">def </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">(infos = False):</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sglobalVars&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">    # Declare variable before   </span>
+<span class="s2">    </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;sparams&quot;</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">    </span>
+<span class="s2">    #building the solver for the predancontion</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> = z3.Solver() </span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">2 = z3.Solver() </span>
+<span class="s2">    #check if post condition implies any pre precondition</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.push()</span>
+<span class="s2">    </span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.add(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span>
+<span class="s2">    post_result = solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.check() == z3.unsat</span>
+<span class="s2">    </span>
+<span class="s2">    #check determinism</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.pop()</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.push()</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.add(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;epsformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">) </span>
+<span class="s2">    eps_result = solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.check() == z3.unsat</span>
+
+<span class="s2">    #check participants</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.pop()</span>
+<span class="s2">    solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.add(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sparticipants&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">) </span>
+<span class="s2">    part_result = solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.check() == z3.sat</span>
+<span class="s2">    </span>
+<span class="s2">    result = post_result and eps_result and part_result</span>
+<span class="s2">    </span>
+<span class="s2">    if infos :</span>
+<span class="s2">        if not result:</span>
+<span class="s2">            print()</span>
+<span class="s2">            print(&quot;--For </span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: &quot;, (</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">), &quot; :: &quot;, result)</span>
+
+<span class="s2">        if not part_result :</span>
+<span class="s2">            print(f&quot;--- Participants       : </span><span class="se">{{</span><span class="s2">part_result</span><span class="se">}}</span><span class="s2">&quot;, &quot;(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sparticipants&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;)</span>
+
+<span class="s2">        if  not eps_result :</span>
+<span class="s2">            print (&quot;--- Non Determinism  : &quot;, (</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;epsformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">))</span>
+<span class="s2">            </span>
+<span class="s2">        if not post_result: </span>
+<span class="s2">            print(f&quot;--- Sat of Prec-Conds: </span><span class="se">{{</span><span class="s2">post_result</span><span class="se">}}</span><span class="s2">&quot;)</span>
+<span class="s2">            solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">2.add(Not(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">))</span>
+<span class="s2">            print(&quot;</span><span class="se">\\</span><span class="s2">nSimplify of the Not Formula: &quot;, simplify(Not(</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;sformula&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)), &quot; :: &quot;, solver_</span><span class="si">{</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;snameF&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">2.check() == z3.sat)</span>
+<span class="s2">            </span>
+<span class="s2">          </span>
+<span class="s2">                   </span>
+<span class="s2">    return result</span>
+<span class="s2">    &quot;&quot;&quot;</span></div>
+
+    
+<div class="viewcode-block" id="MessagesTemplates.getResultCheckPart">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates.getResultCheckPart">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getResultCheckPart</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a template string for printing the verification result.</span>
+
+<span class="sd">        :return: A string containing Python code for printing the verification verdict.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    print(&quot;</span><span class="se">\\</span><span class="s2">n(!) Verdict: &quot;+ (&quot;Well Formed&quot; if  check_resut == True else &quot;Not Well Formed&quot;))</span>
+<span class="s2">        &quot;&quot;&quot;</span></div>
+
+        
+<div class="viewcode-block" id="MessagesTemplates.getResetGlobalFunction">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates.getResetGlobalFunction">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getResetGlobalFunction</span><span class="p">(</span><span class="n">deploy_vars</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a function for resetting global variables to their deployment values.</span>
+
+<span class="sd">        :param deploy_vars: A string containing the deployment variable assignments.</span>
+<span class="sd">        :type deploy_vars: str</span>
+<span class="sd">        :param var_names: A list of variable names to be declared as global.</span>
+<span class="sd">        :type var_names: list[str]</span>
+<span class="sd">        :return: A string representing the function definition in Python code.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">var_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;global &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_names</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">var_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">def reset_deploy_vars():</span>
+<span class="s2">    1 == 1</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">var_names</span><span class="si">}</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">deploy_vars</span><span class="si">}</span>
+<span class="s2">&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MessagesTemplates.getFunctionVariableDeclaration">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates.getFunctionVariableDeclaration">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getFunctionVariableDeclaration</span><span class="p">(</span><span class="n">variable_name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span>  <span class="n">solver_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates code for declaring a variable and adding it to a Z3 solver instance.</span>
+
+<span class="sd">        :param variable_name: The name of the variable to declare.</span>
+<span class="sd">        :type variable_name: str</span>
+<span class="sd">        :param value: The value to assign to the variable.</span>
+<span class="sd">        :param solver_name: The name of the Z3 solver instance.</span>
+<span class="sd">        :type solver_name: str</span>
+<span class="sd">        :return: A string containing Python code for the variable declaration and solver addition.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">partern</span> <span class="o">=</span> <span class="s2">&quot;r&#39;[^\[\]</span><span class="si">{}</span><span class="s2">()]*[^\[\]</span><span class="si">{}</span><span class="s2">()\s]&#39;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    # Define a regular expression pattern to match variable names inside brackets or parentheses</span>
+<span class="s2">    pattern = </span><span class="si">{</span><span class="n">partern</span><span class="si">}</span>
+<span class="s2">    # Use re.search to find the first match in the expression</span>
+<span class="s2">    match = re.search(pattern, &quot;</span><span class="si">{</span><span class="n">variable_name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;)</span>
+<span class="s2">    </span>
+<span class="s2">    # Check if the variable exists in locals() or globals()</span>
+<span class="s2">    if match.group(0) in globals():</span>
+<span class="s2">        # If the variable exists, create a valid assignment</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span>
+<span class="s2">        _tmp_ = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">solver_name</span><span class="si">}</span><span class="s2">.add(</span><span class="si">{</span><span class="n">variable_name</span><span class="si">}</span><span class="s2"> == _tmp_)</span>
+<span class="s2">    else:</span>
+<span class="s2">        raise NameError(f&quot;State Variable &#39;</span><span class="se">{{</span><span class="s2">match.group(0)</span><span class="se">}}</span><span class="s2">&#39; does not exist&quot;)</span>
+<span class="s2">&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MessagesTemplates.getMessageWhenVarNotGlobal">
+<a class="viewcode-back" href="../MessagesTemplates.html#MessagesTemplates.MessagesTemplates.getMessageWhenVarNotGlobal">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">getMessageWhenVarNotGlobal</span><span class="p">(</span><span class="n">assignation_str</span><span class="p">,</span> <span class="n">solver_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a message indicating that a variable does not meet assignment requirements.</span>
+
+<span class="sd">        :param assignation_str: The assignment string that failed to meet requirements.</span>
+<span class="sd">        :type assignation_str: str</span>
+<span class="sd">        :param solver_name: The name of the Z3 solver instance.</span>
+<span class="sd">        :type solver_name: str</span>
+<span class="sd">        :return: A string containing Python code to add a false condition to the solver.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    #</span><span class="si">{</span><span class="n">assignation_str</span><span class="si">}</span><span class="s2"> do not meet the assignations requirements</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">solver_name</span><span class="si">}</span><span class="s2">.add(False)              </span>
+<span class="s2">            &quot;&quot;&quot;</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

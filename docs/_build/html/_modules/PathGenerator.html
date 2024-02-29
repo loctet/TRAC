@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PathGenerator &mdash; TRAC 1.0.0 Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            TRAC 1.0.0 Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extension.html">Extension module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FSMGraph.html">FSMGraph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Fbuilder.html">Fbuilder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Generate_examples.html">Generate_examples module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Helpers.html">Helpers module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Logger.html">Logger module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Main.html">Main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MessagesTemplates.html">MessagesTemplates module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../MiniTimer.html">MiniTimer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PathGenerator.html">PathGenerator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../PatternChecker.html">PatternChecker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Plot_data.html">Plot_data module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Random_exec.html">Random_exec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SafeVariableAssignment.html">SafeVariableAssignment module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Settings.html">Settings module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../The_Validator.html">The_Validator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransactionsGrinder.html">TransactionsGrinder module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../TransitionProcessor.html">TransitionProcessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../VariableDeclarationConverter.html">VariableDeclarationConverter module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visual_graph.html">Visual_graph module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Z3Runner.html">Z3Runner module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">TRAC 1.0.0 Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">PathGenerator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for PathGenerator</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">Extension</span> <span class="kn">import</span> <span class="n">replace_assertion</span>
+<span class="kn">from</span> <span class="nn">SafeVariableAssignment</span> <span class="kn">import</span> <span class="n">SafeVariableAssignment</span>
+<span class="kn">from</span> <span class="nn">TransitionProcessor</span> <span class="kn">import</span> <span class="n">TransitionProcessor</span>
+<span class="kn">from</span> <span class="nn">VariableDeclarationConverter</span> <span class="kn">import</span> <span class="n">VariableDeclarationConverter</span>
+
+
+<div class="viewcode-block" id="PathGenerator">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator">[docs]</a>
+<span class="k">class</span> <span class="nc">PathGenerator</span> <span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates and checks the satisfiability of paths within a finite state machine (FSM) based on a given JSON representation of transitions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PathGenerator.find_paths">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator.find_paths">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">find_paths</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="p">[]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursively finds all paths from start to end node in a graph.</span>
+
+<span class="sd">        :param graph: The graph represented as a dictionary.</span>
+<span class="sd">        :type graph: dict</span>
+<span class="sd">        :param start: The starting node.</span>
+<span class="sd">        :param end: The ending node.</span>
+<span class="sd">        :param path: The current path (used in recursive calls).</span>
+<span class="sd">        :type path: list</span>
+<span class="sd">        :return: A list of paths, where each path is a list of nodes.</span>
+<span class="sd">        :rtype: list[list]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="p">[</span><span class="n">start</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="s1">&#39;to&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">new_paths</span> <span class="o">=</span> <span class="n">PathGenerator</span><span class="o">.</span><span class="n">find_paths</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">new_path</span> <span class="ow">in</span> <span class="n">new_paths</span><span class="p">:</span>
+                    <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paths</span></div>
+
+
+<div class="viewcode-block" id="PathGenerator.group_transactions">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator.group_transactions">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">group_transactions</span><span class="p">(</span><span class="n">transition_json</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Groups transitions from the JSON representation of a Finite State Machine (FSM) into paths from the initial to final states.</span>
+
+<span class="sd">        :param transition_json: The JSON representation of the FSM&#39;s transitions.</span>
+<span class="sd">        :type transition_json: dict</span>
+<span class="sd">        :return: A dictionary where keys are string representations of paths and values are lists of transitions for each path.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">graph</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">transition_json</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">]:</span>
+            <span class="n">from_state</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span>
+            <span class="n">to_state</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">from_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+                <span class="n">graph</span><span class="p">[</span><span class="n">from_state</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;to&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+            <span class="n">graph</span><span class="p">[</span><span class="n">from_state</span><span class="p">][</span><span class="s1">&#39;to&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_state</span><span class="p">)</span>
+
+        <span class="n">initial_state</span> <span class="o">=</span> <span class="n">transition_json</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;from&#39;</span><span class="p">]</span>
+        <span class="n">final_states</span> <span class="o">=</span> <span class="n">transition_json</span><span class="p">[</span><span class="s1">&#39;finalStates&#39;</span><span class="p">]</span>
+
+        <span class="n">grouped_transactions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">final_state</span> <span class="ow">in</span> <span class="n">final_states</span><span class="p">:</span>
+            <span class="n">paths</span> <span class="o">=</span> <span class="n">PathGenerator</span><span class="o">.</span><span class="n">find_paths</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">,</span> <span class="n">final_state</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+                <span class="n">path_str</span> <span class="o">=</span> <span class="s1">&#39; -&gt; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="n">formatted_transitions</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">from_state</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">to_state</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">transition</span> <span class="o">=</span> <span class="n">PathGenerator</span><span class="o">.</span><span class="n">find_transition</span><span class="p">(</span><span class="n">transition_json</span><span class="p">[</span><span class="s1">&#39;transitions&#39;</span><span class="p">],</span> <span class="n">from_state</span><span class="p">,</span> <span class="n">to_state</span><span class="p">)</span>
+                    <span class="c1">#formatted_transition = PathGenerator.format_transition(transition)</span>
+                    <span class="n">formatted_transitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transition</span><span class="p">)</span>
+
+                <span class="n">grouped_transactions</span><span class="p">[</span><span class="n">path_str</span><span class="p">]</span> <span class="o">=</span> <span class="n">formatted_transitions</span>
+
+        <span class="k">return</span> <span class="n">grouped_transactions</span></div>
+
+
+<div class="viewcode-block" id="PathGenerator.find_transition">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator.find_transition">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">find_transition</span><span class="p">(</span><span class="n">transitions</span><span class="p">,</span> <span class="n">from_state</span><span class="p">,</span> <span class="n">to_state</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds a transition between two states.</span>
+
+<span class="sd">        :param transitions: A list of all transitions.</span>
+<span class="sd">        :type transitions: list[dict]</span>
+<span class="sd">        :param from_state: The starting state of the transition.</span>
+<span class="sd">        :param to_state: The ending state of the transition.</span>
+<span class="sd">        :return: The found transition or None if not found.</span>
+<span class="sd">        :rtype: dict or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">from_state</span> <span class="ow">and</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">to_state</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">transition</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="PathGenerator.format_transition">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator.format_transition">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">format_transition</span><span class="p">(</span><span class="n">transition</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Formats a single transition into a string representation.</span>
+
+<span class="sd">        :param transition: The transition to format.</span>
+<span class="sd">        :type transition: dict</span>
+<span class="sd">        :return: The formatted string representing the transition.</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pre_condition</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;preCondition&#39;</span><span class="p">]</span>
+        <span class="n">input_params</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span>
+        <span class="n">action_label</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span>
+        <span class="n">post_condition</span> <span class="o">=</span> <span class="n">transition</span><span class="p">[</span><span class="s1">&#39;postCondition&#39;</span><span class="p">]</span>
+
+        <span class="n">formatted_transition</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">pre_condition</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">input_params</span><span class="si">}</span><span class="s2">|</span><span class="si">{</span><span class="n">action_label</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">post_condition</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">formatted_transition</span></div>
+
+    
+<div class="viewcode-block" id="PathGenerator.check_path_satisfiability">
+<a class="viewcode-back" href="../PathGenerator.html#PathGenerator.PathGenerator.check_path_satisfiability">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_path_satisfiability</span><span class="p">(</span><span class="n">fsm</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the satisfiability of each path within the Finite State Machine (FSM) and outputs the results to a Python file for execution.</span>
+
+<span class="sd">        :param fsm: The finite state machine representation.</span>
+<span class="sd">        :type fsm: dict</span>
+<span class="sd">        :param file_name: The base name for the output file where Z3 code will be generated.</span>
+<span class="sd">        :type file_name: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;./Z3_models/</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">PathGenerator</span><span class="o">.</span><span class="n">group_transactions</span><span class="p">(</span><span class="n">fsm</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">transitions</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Path: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">TransitionProcessor</span><span class="p">(</span><span class="n">fsm</span><span class="p">)</span>
+            <span class="n">result</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">participants</span> <span class="o">=</span> <span class="n">VariableDeclarationConverter</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="n">fsm</span><span class="p">[</span><span class="s1">&#39;statesDeclaration&#39;</span><span class="p">],</span> <span class="n">temp</span><span class="o">.</span><span class="n">deploy_init_var_val</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">var_names</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="s1">&#39;deploy_init_var_val&#39;</span><span class="p">,</span> <span class="n">deploy_init_var_val</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="s1">&#39;var_names&#39;</span><span class="p">,</span> <span class="n">var_names</span><span class="p">)</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;solver = z3.Solver()</span><span class="se">\n</span><span class="s2">check = True</span><span class="se">\n</span><span class="s2">solver.push()&quot;</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">transition</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+                <span class="n">pre</span> <span class="o">=</span> <span class="n">replace_assertion</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;preCondition&#39;</span><span class="p">])</span>
+                <span class="n">sVarUpdate</span><span class="p">,</span> <span class="n">global_vars</span>  <span class="o">=</span> <span class="n">SafeVariableAssignment</span><span class="o">.</span><span class="n">safe_variable_assignment</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;postCondition&#39;</span><span class="p">],</span> <span class="s1">&#39;solver&#39;</span><span class="p">)</span>
+                <span class="n">sparams</span><span class="p">,</span> <span class="n">init_var_val</span><span class="p">,</span> <span class="n">var_names</span><span class="p">,</span> <span class="n">participants</span> <span class="o">=</span> <span class="n">VariableDeclarationConverter</span><span class="o">.</span><span class="n">convert_to_z3_declarations</span><span class="p">(</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="p">[])</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sparams</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## </span><span class="si">{</span><span class="n">transition</span><span class="p">[</span><span class="s1">&#39;actionLabel&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">solver.add(</span><span class="si">{</span><span class="n">pre</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">check = check and solver.check() == z3.sat</span><span class="se">\n</span><span class="s2">solver.pop()</span><span class="se">\n</span><span class="s2">solver.push()</span><span class="se">\n</span><span class="si">{</span><span class="n">sVarUpdate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">print(f&#39;=&gt;</span><span class="si">{check}</span><span class="s2">&#39;)</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>    
+            <span class="n">temp</span><span class="o">.</span><span class="n">str_code</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">str_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;        &quot;</span><span class="p">,</span> <span class="s2">&quot;____&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;    &quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;____&quot;</span><span class="p">,</span> <span class="s2">&quot;    &quot;</span><span class="p">)</span>
+            <span class="c1"># Specify the file name with a .py extension</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">_path.py&quot;</span>
+
+            <span class="c1"># Open the file for writing and write the code</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;from z3 import *</span><span class="se">\n</span><span class="s2"># setting path</span><span class="se">\n</span><span class="s2">sys.path.append(&#39;../&#39;) </span><span class="se">\n</span><span class="s2">from Extension import *</span><span class="se">\n\n</span><span class="si">{</span><span class="n">temp</span><span class="o">.</span><span class="n">str_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="c1">#exec</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;python </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: The file &#39;</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&#39; does not exist.&quot;</span><span class="p">)</span>
+            
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">(Check the generated file  </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">_path.py to fine the z3 code generated)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> </div>
+</div>
+
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Elvis KONJOH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
