@@ -236,7 +236,19 @@ This command allows for versatile plotting configurations, adjusting for differe
 ## Main functions 
 
    ![Architecture of TRAC](./images/architecture.png)
-   -[Validator]()
+   - [Validator](https://github.com/loctet/TRAC/blob/main/src/The_Validator.py)
+   - [TrGrinder](https://github.com/loctet/TRAC/blob/main/src/TransactionsGrinder.py)
+   - [CallerCheck](https://github.com/loctet/TRAC/blob/main/src/FSMGraph.py#L86)
+   - [NDetCheck](https://github.com/loctet/TRAC/blob/main/src/TransitionProcessor.py#L132)
+   - [AConsitency](https://github.com/loctet/TRAC/blob/main/src/TransitionProcessor.py#L109)
+   - [FBuilder](https://github.com/loctet/TRAC/blob/main/src/Fbuilder.py)
+   - [Z3Runner](https://github.com/loctet/TRAC/blob/main/src/Z3Runner.py#L13)
+   - [Analyzer](https://github.com/loctet/TRAC/blob/main/src/Z3Runner.py#L43)
+______________________________
+   - [Generate Examples](https://github.com/loctet/TRAC/blob/main/src/Generate_examples.py#L397)
+   - [Run randoms examples](https://github.com/loctet/TRAC/blob/main/src/Random_exec.py)
+   - [Plot example](https://github.com/loctet/TRAC/blob/main/src/Plot_data.py)
+   - [Defualt Settings](https://github.com/loctet/TRAC/blob/main/src/Settings.py)
 
 
 ## Reminder
