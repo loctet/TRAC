@@ -169,6 +169,7 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter
    ```
    This will plot these plots 
+   |   |   |
    |---|---|
    | ![Evaluation path participant time](./images/evaluation_path_participant_time.png)| ![Evaluation transitions a_consitency time](./images/evaluation_transitions_a_consitency_time.png)|
    | ![Evaluation transitions non determinism time](./images/evaluation_transitions_non_determinism_time.png)|  ![Evaluation transitions participant time](./images/evaluation_transitions_participant_time.png) |
