@@ -170,8 +170,8 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    ```
    This will plot these plots 
    |---|---|
-   |![Evaluation path participant time](./images/evaluation_path_participant_time.png)| ![Evaluation transitions a_consitency time](./images/evaluation_transitions_a_consitency_time.png)|
-   |![Evaluation transitions non determinism time](./images/evaluation_transitions_non_determinism_time.png)| ![Evaluation transitions participant time](./images/evaluation_transitions_participant_time.png)|
+   | ![Evaluation path participant time](./images/evaluation_path_participant_time.png)| ![Evaluation transitions a_consitency time](./images/evaluation_transitions_a_consitency_time.png)|
+   | ![Evaluation transitions non determinism time](./images/evaluation_transitions_non_determinism_time.png)|  ![Evaluation transitions participant time](./images/evaluation_transitions_participant_time.png) |
 
 
 3. **Parameters**:
