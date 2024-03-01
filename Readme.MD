@@ -27,12 +27,7 @@ TRAC can also be cloned directly from its GitHub repository for those who prefer
 Before installing TRAC, ensure Python 3.6 or later is installed on your system. TRAC relies on several Python packages for its operation. Use the following pip commands to install the necessary dependencies:
 
 ```bash
-pip install z3-solver
-pip install matplotlib
-pip install numpy
-pip install plotly
-pip install networkx
-pip install pandas 
+pip install z3-solver matplotlib numpy plotly pandas networkx
 ```
 Also make sure the `java JRE` is installed to run the `java` command. This is used to hava a visual view of the DAFSMs
 
@@ -43,7 +38,7 @@ These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for
 To run the "simplemarket_place" example with TRAC:
 
 1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
-2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where `TRAC/src` is located.
+2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where ```cd TRAC/src``` is located.
 3. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designated examples (`Examples/dafsms_txt/azure`) directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) namely:
    - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
    - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
@@ -56,6 +51,7 @@ To run the "simplemarket_place" example with TRAC:
    - [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator)
    
    All manually executed examples should be kept in the folder  `Examples/dafsms_txt` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
+   
 4. **Execute the Example**:
    - Use `Main.py` to run the example. The command syntax is:
      ```bash
@@ -249,6 +245,8 @@ ______________________________
    - [Run randoms examples](https://github.com/loctet/TRAC/blob/main/src/Random_exec.py)
    - [Plot example](https://github.com/loctet/TRAC/blob/main/src/Plot_data.py)
    - [Defualt Settings](https://github.com/loctet/TRAC/blob/main/src/Settings.py)
+
+   **The full documentation in html format can be found locally in the subdir `docs`**
 
 
 ## Reminder
