@@ -3,7 +3,6 @@
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
-
 Follow the instructions at
 [https://docs.docker.com/](https://docs.docker.com/) to install
 `Docker` on your system.
@@ -25,7 +24,7 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
 ## Structure of a DAFSMs
 
-The definition of the DAFSMs model is given in `section 2 of TRAC paper` mor precisely what is the structure of a DAFSM. 
+The definition of the DAFSMs model is given in `section 2 of TRAC paper` more precisely what is the structure of a DAFSM. 
 
 Let's consider the Simple Market Place(SMP) example, given in `section 1`
 
@@ -33,7 +32,7 @@ The deploy transition in looks like this:
 
 ` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0`
 
-Deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description and a price. These values are assigned to declared variable `string description` and `int price, int offer`. here the precondition(guard `g`) is `True`.
+Deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description and a price. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
 
 - states: (`_` to `S0`) here `_` is a special state only used to deploy the coordinator
 - guard(g<sub>0</sub>): `{True}`
@@ -48,10 +47,9 @@ To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int 
 
 To accept the offer, the transition`S1 {True} o > c.acceptOffer() {} S2+` can be invokes by the previously introduced `o` to accept the offer and move to a final state `S2` as it has the sign `+` after.
 
-To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones` We can
-![Simplemarket_place `TRAC`T DAFSMs](./images/fsm_simplemarke_place.png)
+To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make an offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`. 
 
-The `TXT` file for the SMP example should contain :
+The `TXT` file for the SMP example should be this :
 
 ```
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -62,7 +60,7 @@ S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 ```
 
-
+![Simplemarket_place `TRAC`T DAFSMs](./images/fsm_simplemarke_place.png)
 
 ## Azure benchmark
 
