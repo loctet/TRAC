@@ -1,10 +1,12 @@
 # COORDINATION 2024: Artefact submission for the paper #8
 
 
-This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a 'Docker' container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
+This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
 
-Follow the instructions at [https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
+Follow the instructions at
+[https://docs.docker.com/](https://docs.docker.com/) to install
+`Docker` on your system.
  
 To install and run TRAC using `Docker`:
 
@@ -16,6 +18,7 @@ To install and run TRAC using `Docker`:
    ```bash
    docker run -it loctet/trac_dafsms:v1
    ```
+
 The former command downloads the `Docker` image of `TRAC` while the latter starts a container with an interactive terminal.
  
 -------------------------------------------------
@@ -42,7 +45,7 @@ These commands install the Z3 SMT solver, Matplotlib for plotting, and NumPy for
 
 To run the "simplemarket_place" example with `TRAC`:
 1. **Navigate to the `TRAC` Directory**: from the `Docker` container execute ```cd src```.
-2. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designed examples (`Examples/dafsms_txt/azure`) directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) namely:
+2. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designed examples (`Examples/dafsms_txt/azure`) directory as well as the [other examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) from the Azure blockchain-workbench:
    - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
    - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
    - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)
