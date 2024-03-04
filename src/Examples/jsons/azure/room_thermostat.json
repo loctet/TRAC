@@ -1,0 +1,79 @@
+{
+    "id": "c",
+    "initialState": "S0",
+    "statesDeclaration": "int mode; int targetTemp",
+    "states": [
+        "S0",
+        "S1"
+    ],
+    "finalStates": [],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "S0",
+            "initialStates": [
+                "S0"
+            ],
+            "finalStates": [],
+            "newParticipants": {
+                "o": "O"
+            },
+            "caller": {
+                "o": [
+                    ""
+                ]
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "targetTemp := 70",
+            "input": "participant I i, participant U u",
+            "externalAction": false
+        },
+        {
+            "from": "S0",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "i": []
+            },
+            "actionLabel": "startThermostat",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "u": []
+            },
+            "actionLabel": "setTargetTemperature",
+            "preCondition": "_temp > 0",
+            "postCondition": "targetTemp := _temp",
+            "input": "int _temp",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "u": []
+            },
+            "actionLabel": "setMode",
+            "preCondition": "True",
+            "postCondition": "mode := _mode",
+            "input": "int _mode",
+            "externalAction": false
+        }
+    ],
+    "rPAssociation": []
+}

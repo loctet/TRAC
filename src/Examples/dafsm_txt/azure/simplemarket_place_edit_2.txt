@@ -1,0 +1,6 @@
+_ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
+S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+S1 {False} o > c.acceptOffer() {} S2+
+S1 {False} o > c.rejectOffer() {} S01
+S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
+S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1

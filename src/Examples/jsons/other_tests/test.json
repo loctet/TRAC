@@ -1,0 +1,74 @@
+{
+    "id": "c",
+    "initialState": "S0",
+    "statesDeclaration": "",
+    "states": [
+        "S0",
+        "S1"
+    ],
+    "finalStates": [
+        "S1"
+    ],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "S0",
+            "initialStates": [
+                "S0"
+            ],
+            "finalStates": [],
+            "newParticipants": {
+                "o": "O"
+            },
+            "caller": {
+                "o": [
+                    ""
+                ]
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S0",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [
+                "S1"
+            ],
+            "newParticipants": {
+                "p": "P"
+            },
+            "caller": {
+                "p": []
+            },
+            "actionLabel": "f1",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S0",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [
+                "S1"
+            ],
+            "newParticipants": {},
+            "caller": {
+                "p": [
+                    "O"
+                ]
+            },
+            "actionLabel": "f1",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        }
+    ],
+    "rPAssociation": []
+}

@@ -1,0 +1,37 @@
+{
+    "id": "c",
+    "initialState": "S0",
+    "statesDeclaration": "int x",
+    "states": [
+        "S0"
+    ],
+    "finalStates": [
+        "S0"
+    ],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "S0",
+            "initialStates": [
+                "S0"
+            ],
+            "finalStates": [
+                "S0"
+            ],
+            "newParticipants": {
+                "p": "P"
+            },
+            "caller": {
+                "p": [
+                    ""
+                ]
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "x := \"ciao\"",
+            "input": "",
+            "externalAction": false
+        }
+    ],
+    "rPAssociation": []
+}

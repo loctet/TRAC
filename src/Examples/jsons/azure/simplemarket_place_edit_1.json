@@ -59,7 +59,7 @@
             ],
             "newParticipants": {},
             "caller": {
-                "o": []
+                "x": []
             },
             "actionLabel": "acceptOffer",
             "preCondition": "True",

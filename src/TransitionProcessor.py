@@ -206,7 +206,7 @@ class TransitionProcessor(MiniTimer):
         """
 
         if formula == "False":
-            print(f"Error from this transitions:{transition['from']}_{transition['actionLabel']}({transition['input']})_{transition['to']}")
+            print(f"Error from this stage:{transition['from']}_{transition['actionLabel']}({transition['input']})_{transition['to']}")
             print(f"Participant: {participant} not introduced")
             if self.non_stop:
                 return True

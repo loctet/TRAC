@@ -191,7 +191,7 @@ class FSMGraph(MiniTimer):
             
         if not caller_introduced:
             if self.log:
-                print(f"The Path : {self.printPathTrace(path)} do not contain the participant {caller} : {callerRoles[:]}") 
+                print(f"The Path : {self.printPathTrace(path)} does not contain the participant {caller} : {callerRoles[:]}") 
             return False  # Caller was not introduced in at least one path
     
         return True

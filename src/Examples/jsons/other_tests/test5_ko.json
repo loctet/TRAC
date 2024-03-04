@@ -1,0 +1,90 @@
+{
+    "id": "c",
+    "initialState": "S0",
+    "statesDeclaration": "",
+    "states": [
+        "S0",
+        "S1",
+        "S2",
+        "S3"
+    ],
+    "finalStates": [
+        "S2",
+        "S3"
+    ],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "S0",
+            "initialStates": [
+                "S0"
+            ],
+            "finalStates": [],
+            "newParticipants": {
+                "p1": "P"
+            },
+            "caller": {
+                "p1": [
+                    ""
+                ]
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S0",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "p2": [
+                    "P"
+                ]
+            },
+            "actionLabel": "f1",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S2",
+            "initialStates": [],
+            "finalStates": [
+                "S2"
+            ],
+            "newParticipants": {},
+            "caller": {
+                "p1": []
+            },
+            "actionLabel": "f2",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S3",
+            "initialStates": [],
+            "finalStates": [
+                "S3"
+            ],
+            "newParticipants": {},
+            "caller": {
+                "p2": []
+            },
+            "actionLabel": "f2",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        }
+    ],
+    "rPAssociation": []
+}

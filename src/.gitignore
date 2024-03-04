@@ -1,5 +1,5 @@
 __pycache__/
 Z3_models/
-Examples/jsons/
+#Examples/jsons/
 Examples/random_txt/
 Examples/random_json/
