@@ -1,0 +1,121 @@
+{
+    "id": "c",
+    "initialState": "S0",
+    "statesDeclaration": "string description, int price, int offer",
+    "states": [
+        "S0",
+        "S01",
+        "S1",
+        "S2"
+    ],
+    "finalStates": [
+        "S2"
+    ],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "S0",
+            "initialStates": [
+                "S0"
+            ],
+            "finalStates": [],
+            "newParticipants": {
+                "o": "O"
+            },
+            "caller": {
+                "o": [
+                    ""
+                ]
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "description := _description & price := _price",
+            "input": "string _description, int _price",
+            "externalAction": false
+        },
+        {
+            "from": "S0",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {
+                "b": "B"
+            },
+            "caller": {
+                "b": []
+            },
+            "actionLabel": "makeOffer",
+            "preCondition": "_offer > 0",
+            "postCondition": "offer := _offer",
+            "input": "int _offer",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S2",
+            "initialStates": [],
+            "finalStates": [
+                "S2"
+            ],
+            "newParticipants": {},
+            "caller": {
+                "o": []
+            },
+            "actionLabel": "acceptOffer",
+            "preCondition": "False",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S1",
+            "to": "S01",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "o": []
+            },
+            "actionLabel": "rejectOffer",
+            "preCondition": "False",
+            "postCondition": "",
+            "input": "",
+            "externalAction": false
+        },
+        {
+            "from": "S01",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "b": [
+                    "B"
+                ]
+            },
+            "actionLabel": "makeOffer",
+            "preCondition": "_offer > 0",
+            "postCondition": "offer := _offer",
+            "input": "int _offer",
+            "externalAction": false
+        },
+        {
+            "from": "S01",
+            "to": "S1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {
+                "b": "B"
+            },
+            "caller": {
+                "b": []
+            },
+            "actionLabel": "makeOffer",
+            "preCondition": "_offer > 0",
+            "postCondition": "offer := _offer",
+            "input": "int _offer",
+            "externalAction": false
+        }
+    ],
+    "rPAssociation": []
+}
