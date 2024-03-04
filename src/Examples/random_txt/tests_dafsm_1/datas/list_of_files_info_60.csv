@@ -1,0 +1,6 @@
+path,num_states,num_actions,num_vars,max_branching_factor,num_participants,num_transitions,seed_num,min_param_num,average_param_num,max_param_num,min_bf_num,average_bf_num,max_bf_num,num_paths,verdict,participants_time,non_determinism_time,a_consistency_time,building_time,z3_running_time,total,is_time_out
+./examples/random_txt/tests_dafsm_2/20_40/test_gen_1.txt,20,18,4,5,6,43,16844791412587793515,0,1.0465116279069768,4,0,2.15,5,829,False,15428362.0,371546.0,3954123.3,6720414.1,371693372.6,378413786.7,False
+./examples/random_txt/tests_dafsm_2/30_40/test_gen_1.txt,30,18,45,5,9,43,12805566856415254472,0,9.30232558139535,45,0,1.4333333333333331,5,516,False,12442244.8,660904.6,17561686.8,33441821.8,793460994.6,826902816.4,False
+./examples/random_txt/tests_dafsm_2/20_40/test_gen_4.txt,20,18,4,5,6,43,3450631988141883847,0,1.4651162790697674,4,0,2.15,5,1071,False,22897785.2,373530.1,3753461.6,6892006.2,372565653.7,379457659.9,False
+./examples/random_txt/tests_dafsm_2/30_40/test_gen_4.txt,30,18,45,5,9,43,17645755135281311269,0,9.86046511627907,45,0,1.4333333333333331,5,589,False,12038185.6,496830.4,16773798.3,27926555.8,732135720.3,760062276.1,False
+./examples/random_txt/tests_dafsm_2/30_40/test_gen_3.txt,30,18,45,5,9,44,289766485504934755,0,8.340909090909092,42,0,1.4666666666666666,5,524,False,8073017.0,742245.5,15583706.6,27853962.7,576982485.7,604836448.4,False

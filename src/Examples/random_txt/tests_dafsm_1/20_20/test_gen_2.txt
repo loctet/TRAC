@@ -1,0 +1,22 @@
+_ {True} p1:R > starts(c, int _vr) {} {int r_p; int a_z; int y_r; int o_u} S0
+S0 {And(r_p > 13 , a_z > 98 , r_p > 43 , a_z > 94 , o_u > 73)} p8:R8 > c.a12(int _sj, int _mc, int _c, int _c) {r_p := 48 - r_p_old - r_p_old & a_z := 40 + a_z_old - a_z_old & y_r := 24 - y_r_old + y_r_old & o_u := 69 + o_u_old + o_u_old} S1
+S1 {And(_eh > 79 , r_p > 50 , y_r > 44 , r_p > 44 , o_u > 100 , o_u > 24 , y_r > 5 , y_r > 43)} p5 > c.a17(int _eh) {r_p := 7 - r_p_old - r_p_old & a_z := 41 + a_z_old - a_z_old & y_r := 52 + y_r_old + y_r_old & o_u := 53 - o_u_old + o_u_old} S2
+S2 {And(a_z > 74 , r_p > 31 , _m > 47)} p4 > c.a9(int _m, int _u) {r_p := 28 + r_p_old + r_p_old & a_z := 9 + a_z_old + a_z_old & y_r := 100 + y_r_old - y_r_old & o_u := 29 + o_u_old + o_u_old} S3
+S3 {And(r_p > 1 , o_u > 54)} p4 > c.a13(int _tn, int _e, int _b) {r_p := 28 + r_p_old & a_z := 4 + a_z_old & y_r := 100 - y_r_old & o_u := 59 + o_u_old} S4
+S4 {And(r_p > 97 , r_p > 46 , _w > 90 , r_p > 70 , y_r > 0)} p4 > c.a5(int _w) {r_p := 18 + r_p_old & a_z := 79 - a_z_old & y_r := 42 + y_r_old & o_u := 46 + o_u_old} S5
+S5 {And(a_z > 31 , a_z > 0)} p1 > c.a7(int _g) {r_p := 55 + r_p_old & a_z := 89 + a_z_old & y_r := 70 + y_r_old & o_u := 50 + o_u_old} S6
+S6 {And(y_r > 80 , _h > 26)} p5 > c.a8(int _h) {r_p := 10 + r_p_old & a_z := 12 - a_z_old & y_r := 16 - y_r_old & o_u := 43 + o_u_old} S7
+S7 {And(o_u > 55 , a_z > 85 , y_r > 77)} p4:R1 > c.a12(int _s, int _f, int _n) {r_p := 62 + r_p_old - r_p_old & a_z := 20 + a_z_old - a_z_old & y_r := 16 - y_r_old + y_r_old & o_u := 38 - o_u_old + o_u_old} S8+
+S8 {r_p > 78} p3 > c.a7(int _x, int _ha, int _a) {r_p := 30 & a_z := 66 & y_r := 27 & o_u := 2} S9
+S9 {y_r > 51} p6:R5 > c.a18(int _nh, int _pa) {r_p := 18 & a_z := 39 & y_r := 39 & o_u := 56} S10
+S10 {And(_kh > 30 , _g > 41 , y_r > 40)} p4 > c.a9(int _qi, int _kh, int _g, int _y) {r_p := 26 + r_p_old & a_z := 35 - a_z_old & y_r := 0 + y_r_old & o_u := 99 - o_u_old} S11+
+S11 {And(r_p > 11 , o_u > 37)} any p8:R8 > c.a10(int _ny, int _sb) {r_p := 71 - r_p_old & a_z := 66 + a_z_old & y_r := 52 - y_r_old & o_u := 54 - o_u_old} S12
+S12 {And(r_p > 51 , _q > 46 , o_u > 26 , y_r > 99 , _m > 58 , r_p > 92 , _q > 42 , y_r > 9 , r_p > 91 , _m > 45 , o_u > 25)} p1:R2 > c.a8(int _m, int _q) {r_p := 72 - r_p_old - r_p_old & a_z := 9 - a_z_old - a_z_old & y_r := 27 + y_r_old - y_r_old & o_u := 26 + o_u_old + o_u_old} S13
+S13 {And(_dw > 67 , _cm > 25 , r_p > 97 , y_r > 61)} p4 > c.a15(int _nd, int _dw, int _cm, int _g) {r_p := 79 - r_p_old + r_p_old & a_z := 52 + a_z_old + a_z_old & y_r := 97 - y_r_old + y_r_old & o_u := 98 - o_u_old - o_u_old} S14
+S14 {And(r_p > 95 , _ee > 63 , y_r > 32 , _gn > 34)} p6 > c.a8(int _f, int _wr, int _gn, int _ee) {r_p := 44 + r_p_old + r_p_old & a_z := 7 + a_z_old - a_z_old & y_r := 57 - y_r_old + y_r_old & o_u := 10 + o_u_old + o_u_old} S15
+S15 {And(o_u > 34 , a_z > 85 , _m > 100 , y_r > 78 , _m > 17 , y_r > 78)} p2 > c.a4(int _m) {r_p := 75 - r_p_old + r_p_old & a_z := 16 + a_z_old + a_z_old & y_r := 83 + y_r_old + y_r_old & o_u := 23 - o_u_old + o_u_old} S16
+S16 {r_p > 40} p5:R1 > c.a13(int _c) {r_p := 31 & a_z := 87 & y_r := 4 & o_u := 53} S17
+S17 {_h > 25} p4 > c.a12(int _vz, int _mm, int _h) {r_p := 100 & a_z := 1 & y_r := 95 & o_u := 56} S18
+S18 {And(a_z > 16 , _u > 88 , o_u > 9 , _u > 58 , _u > 17 , _u > 71 , _s > 59)} p1 > c.a18(int _u, int _mz, int _ei, int _s) {r_p := 11 + r_p_old + r_p_old & a_z := 77 - a_z_old - a_z_old & y_r := 1 + y_r_old - y_r_old & o_u := 82 + o_u_old - o_u_old} S19
+S0 {a_z > 60} p6 > c.a17(int _jo) {r_p := 79 & a_z := 55 & y_r := 40 & o_u := 75} S18
+S0 {And(_vr > 57 , o_u > 15 , y_r > 88 , r_p > 69)} p1 > c.a1(int _vr) {r_p := 62 - r_p_old & a_z := 53 + a_z_old & y_r := 50 + y_r_old & o_u := 46 - o_u_old} S2

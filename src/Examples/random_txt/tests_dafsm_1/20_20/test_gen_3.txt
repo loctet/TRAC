@@ -1,0 +1,22 @@
+_ {True} p1:R > starts(c, int _g, int _o, int _fj, int _f) {} {int m_a; int q_b; int q_g; int p_p} S0
+S0 {And(_r > 43 , q_b > 20 , q_g > 32 , m_a > 33 , _f > 9 , q_b > 100 , m_a > 59 , _f > 46 , m_a > 67 , p_p > 15 , q_g > 100 , q_g > 56 , p_p > 85 , p_p > 76)} p3:R5 > c.a13(int _f, int _r, int _dg) {m_a := 10 - m_a_old & q_b := 35 + q_b_old & q_g := 73 + q_g_old & p_p := 91 + p_p_old} S1+
+S1 {And(q_b > 83 , q_g > 61 , _vg > 40 , m_a > 45 , q_g > 47 , q_g > 19)} p3 > c.a13(int _vg) {m_a := 74 - m_a_old & q_b := 77 - q_b_old & q_g := 10 - q_g_old & p_p := 11 + p_p_old} S2
+S2 {And(m_a > 65 , _ph > 48 , _b > 0 , q_g > 25 , p_p > 36 , p_p > 23)} p2 > c.a8(int _ph, int _b) {m_a := 76 + m_a_old - m_a_old & q_b := 60 + q_b_old - q_b_old & q_g := 53 + q_g_old - q_g_old & p_p := 14 + p_p_old - p_p_old} S3
+S3 {And(q_b > 15 , q_g > 14 , m_a > 22 , _bp > 95 , _bx > 95 , _bp > 27)} p6 > c.a4(int _bp, int _bx) {m_a := 96 + m_a_old + m_a_old & q_b := 29 + q_b_old + q_b_old & q_g := 89 - q_g_old + q_g_old & p_p := 28 + p_p_old + p_p_old} S4
+S4 {_ob > 92} p5 > c.a7(int _ob, int _w, int _t) {m_a := 27 & q_b := 74 & q_g := 74 & p_p := 72} S5
+S5 {q_g > 16} p4:R2 > c.a17(int _r, int _np, int _q, int _pv) {m_a := 62 & q_b := 87 & q_g := 26 & p_p := 46} S6
+S6 {And(q_b > 30 , q_b > 42 , q_b > 67 , _rs > 34 , q_b > 86 , _vl > 45)} p2 > c.a16(int _rs, int _vl) {m_a := 19 - m_a_old & q_b := 91 - q_b_old & q_g := 70 + q_g_old & p_p := 19 - p_p_old} S7
+S7 {m_a > 7} p6:R8 > c.a6(int _gp) {m_a := 69 & q_b := 13 & q_g := 12 & p_p := 79} S8
+S8 {And(_hi > 26 , _hi > 23)} p7 > c.a12(int _m, int _hi) {m_a := 26 + m_a_old & q_b := 3 + q_b_old & q_g := 7 - q_g_old & p_p := 74 + p_p_old} S9
+S9 {And(m_a > 63 , m_a > 2 , q_b > 98 , q_g > 54 , q_g > 96 , q_g > 98 , q_g > 42 , q_g > 19 , q_b > 73 , p_p > 36)} p6 > c.a18(int _sm) {m_a := 8 + m_a_old + m_a_old & q_b := 13 - q_b_old - q_b_old & q_g := 45 - q_g_old - q_g_old & p_p := 29 - p_p_old - p_p_old} S10+
+S10 {q_b > 79} p8 > c.a7(int _b, int _zh, int _sg) {m_a := 91 & q_b := 59 & q_g := 89 & p_p := 23} S11
+S11 {_vv > 80} p8:R1 > c.a9(int _vv, int _s) {m_a := 4 & q_b := 40 & q_g := 19 & p_p := 87} S12
+S12 {_bz > 59} p8 > c.a12(int _jv, int _bz) {m_a := 32 & q_b := 91 & q_g := 33 & p_p := 62} S13
+S13 {And(m_a > 91 , q_g > 0)} p3 > c.a7(int _l) {m_a := 93 + m_a_old & q_b := 3 - q_b_old & q_g := 0 - q_g_old & p_p := 44 + p_p_old} S14
+S14 {And(q_g > 96 , m_a > 77 , q_b > 44 , _cd > 22 , _h > 36 , _h > 75 , _o > 40 , m_a > 21)} p6 > c.a15(int _h, int _o, int _cd) {m_a := 49 - m_a_old - m_a_old & q_b := 97 - q_b_old + q_b_old & q_g := 45 - q_g_old + q_g_old & p_p := 6 - p_p_old - p_p_old} S15
+S15 {And(_x > 25 , q_g > 43 , _x > 16 , q_g > 11 , q_g > 12)} p5 > c.a16(int _yl, int _cu, int _ec, int _x) {m_a := 35 + m_a_old - m_a_old & q_b := 78 - q_b_old + q_b_old & q_g := 80 - q_g_old + q_g_old & p_p := 66 - p_p_old + p_p_old} S16
+S16 {And(_r > 13 , m_a > 18 , q_b > 53 , _r > 97 , q_g > 64 , q_b > 53 , q_g > 30 , _eb > 18 , p_p > 62)} p3 > c.a1(int _eb, int _r, int _r) {m_a := 47 + m_a_old + m_a_old & q_b := 65 - q_b_old + q_b_old & q_g := 85 + q_g_old + q_g_old & p_p := 90 - p_p_old - p_p_old} S17
+S17 {q_g > 20} p7:R5 > c.a8(int _v) {m_a := 97 & q_b := 29 & q_g := 76 & p_p := 79} S18
+S18 {p_p > 20} p2:R1 > c.a2(int _qf, int _c, int _yp) {m_a := 38 & q_b := 76 & q_g := 23 & p_p := 3} S19
+S0 {_wn > 86} p3 > c.a10(int _be, int _wn, int _t) {m_a := 18 & q_b := 67 & q_g := 30 & p_p := 48} S4
+S0 {m_a > 66} any p3:R1 > c.a19(int _g, int _o, int _fj, int _f) {m_a := 97 & q_b := 40 & q_g := 47 & p_p := 20} S15
