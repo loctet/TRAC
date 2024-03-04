@@ -18,8 +18,7 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
 
 # 1- Installation
 Follow the instructions at
-[https://docs.docker.com/](https://docs.docker.com/) to install
-`Docker` on your system.
+[https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
 
 To install and run TRAC using `Docker`:
 
@@ -38,26 +37,26 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
 # 2- Reproducibility
 
-## 2.1 How the table 1 what generated
+## 2.1 How the Table 1 was generated
    The `Table 1: Features in the Azure benchmark` In the `TRAC` paper present some features extracted from the implementation of the example.  The Azure repositoty describe the example and give an implementation in `Solidity`:
    [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain), [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace), [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance), [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker), [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation), [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer), [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat), [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter), [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator). 
 
    The example in the table bellow point to the `.sol` file implementing the example, and we give the line where the feature can be found and also the line in the `TRAC` repository that models the feature.
 
 
-   |Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
-   |---|---|---|
-   |[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI : ✅ L44|BI : ✅ `b:B` > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt)) |
-   |[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI : ✅ Line 19 & 31|BI : ✅ `RqT:Resquester`, `RpD:Responder` ([Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt)) |
-   |[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI : ❌ BazaarItem (Line 78) ItemList(Line 40) <br/>BI : ✅ BazaarItem (Line 76) ItemList(Line 33)| |
-   |[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |ICI : ❌ (Line 18 and 82)<br/>BI : ✅ (Line 16 and 67)| |
-   |[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| PP : ✅ Line 26 |PP :✅ `m:M` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)) |
-   |[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI : ✅ Line 20 <br/>PP : ✅ Line 18 & 21 |BI : ✅ `ar:AirRep` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt))<br/>PP: ✅ `participant FL f`  [Line 1] |
-   |[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP : ✅ Line 16 & 18 & 19 |PP: ✅ `participant I i`, `participant U u` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt)) |
-   |[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI : ✅ Line 18, <br/>RR : 🔽 Line 97 |BI: ✅ `b:B` ([Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt))<br/>RR: 🔽 reject goes to `S01` at that stage if we assume `b` is `new` them it somehow destroy previous `b` as we rebind it to `new B` |
-   |[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI : ✅ Line 19 <br/>PP : ✅ Line 17 <br/>RR : 🔽 Line 51 |BI: ✅ `cp:Conterparty` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt))<br/>PP: ✅ `participant SupplyOwner so` (Line 1, 2,3)<br/>RR: 🔽 Since the protocol does not evolve after `S2`(final state) we assume all participants are reintroduced if we restart the protocol |
-   |[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI : ✅ Line 32 <br/>PP : ✅ Line 28 <br/>RR : 🔽 Line 143 <br/>MRP : 🔽 Line 119 |BI: ✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>PP: ✅ `participant D d`, `participant SC sc`, `participant OBS obs` (Line 1, 5)<br/>RR: 🔽 Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP: 🔽 This are participants of same role, they are assign same values |
-   |[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 |BI:✅ `o:O` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>PP: ✅ participant Banker ba (Line 1)<br/>RR: 🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP: 🔽 `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
+|Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
+|---|---|---|
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI : ✅ Line 44|BI : ✅ `b:B` > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt)) |
+|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI : ✅ Line 19 & 31|BI : ✅ `RqT:Resquester`, `RpD:Responder` ([Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt)) |
+|[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI : ❌ BazaarItem (Line 78) ItemList(Line 40) <br/>BI : ✅ BazaarItem (Line 76) ItemList(Line 33)| |
+|[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |ICI : ❌ (Line 18 and 82)<br/>BI : ✅ (Line 16 and 67)| |
+|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| PP : ✅ Line 26 |PP :✅ `m:M` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)) |
+|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI : ✅ Line 20 <br/>PP : ✅ Line 18 & 21 |BI : ✅ `ar:AirRep` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt))<br/>PP: ✅ `participant FL f`  [Line 1] |
+|[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP : ✅ Line 16 & 18 & 19 |PP: ✅ `participant I i`, `participant U u` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt)) |
+|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI : ✅ Line 18, <br/>RR : 🔽 Line 97 |BI: ✅ `b:B` ([Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt))<br/>RR: 🔽 reject goes to `S01` at that stage if we assume `b` is `new` them it somehow destroy previous `b` as we rebind it to `new B` |
+|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI : ✅ Line 19 <br/>PP : ✅ Line 17 <br/>RR : 🔽 Line 51 |BI: ✅ `cp:Conterparty` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt))<br/>PP: ✅ `participant SupplyOwner so` (Line 1, 2,3)<br/>RR: 🔽 Since the protocol does not evolve after `S2`(final state) we assume all participants are reintroduced if we restart the protocol |
+|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI : ✅ Line 32 <br/>PP : ✅ Line 28 <br/>RR : 🔽 Line 143 <br/>MRP : 🔽 Line 119 |BI: ✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>PP: ✅ `participant D d`, `participant SC sc`, `participant OBS obs` (Line 1, 5)<br/>RR: 🔽 Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP: 🔽 This are participants of same role, they are assign same values |
+|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 |BI:✅ `o:O` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>PP: ✅ participant Banker ba (Line 1)<br/>RR: 🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP: 🔽 `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
 
 ## 2.2- Run the Azure repository examples
 
@@ -71,7 +70,7 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    python3 Main.py --filetype txt "azure/simplemarket_place"
    ```
    This command tells `TRAC` to proceed to the check of the "simplemarket_place" example. The output is <span style="color:green">`(!) Verdict: Well Formed`</span> telling that the DAFSMs given as input is well formed.
-   
+
    |Example|Command to run the example| Verdict|
    |---|---|---|
    | Asset transfer | `python3 Main.py --filetype txt "azure/asset_transfer" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
@@ -88,13 +87,13 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
    1. **Navigate to `TRAC` Directory**: Ensure you're in the `src` directory of `cd src`
 
-   2. **Run of examples of the `TRAC` tool paper**
+   2. **Run of examples of the `TRAC` tool paper** in `section 4`
 
       ```bash
       python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10  --number_test_per_cpu 5 --time_out 300000000000  
       ```
 
-      This will run the 135 random DAFSMs in the folder `Examples/random_txt/tests_dafsms_1` with subfolders, each folder having 5 tests and a CSV file(`list_of_files_info.csv`) containing metadata of those 5 examples. The check will start, going through each file and performing the well-formedness check. (`this process can be long depending on your environment`). While running the checks further csv files will be generated and merged (to `merged_list_of_files_info`) when all checks are completed.
+      This will run the 135 randomly genated DAFSMs in the folder `Examples/random_txt/tests_dafsms_1` with subfolders, each folder having 5 tests and a CSV file(`list_of_files_info.csv`) containing metadata of those 5 examples. The check will start, going through each file and performing the well-formedness check. (`this process can be long depending on your environment`). While running the checks further csv files will be generated and merged (to `merged_list_of_files_info.csv`) when all checks are completed.
       *Now you can plot the data to visualize different running time by executing the following command*
 
       ```bash
@@ -108,13 +107,13 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 ## 3.1- Format of DAFSMs
    The definition of the DAFSMs model is given in `section 2 of TRAC paper` more precisely what is the structure of a DAFSM. 
 
-   Let's consider the Simple Market Place(SMP) example, given in `section 1`
+   Let's consider the Simple Market Place(SMP) example, given in `section 1 of the paper`
 
-   The deploy transition in looks like this:
+   The deploy transition looks like this:
 
    ` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0`
 
-   Deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description and a price. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
+   The above deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
 
    - states: (`_` to `S0`) here `_` is a special state only used to deploy the coordinator
    - guard(g<sub>0</sub>): `{True}`
@@ -125,13 +124,13 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    - declaration: `{string description, int price, int offer}`where we are declaring states variables <span style="color:red;">`only in the deploy transition`</span>
    - assignments: `{description := _description & price := _price}`
 
-   To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
+   To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function `makeOffer`, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
 
    To accept the offer, the transition`S1 {True} o > c.acceptOffer() {} S2+` can be invokes by the previously introduced `o` to accept the offer and move to a final state `S2` as it has the sign `+` after.
 
    To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make an offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`. 
 
-   The `TXT` file for the SMP example should be this :
+   The `TXT` file for the SMP example should be :
 
    ```
    _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -148,7 +147,8 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    We ran the `simplemarket_place` example in a section above. 
    **Non Well Formed Examples**
    Let's modify the previous simple market place to make it not well-formed.
-   Modify transition<span style="color:green">`S1 {True} o > c.acceptOffer() {} S2+`</span> to <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> this modification say `x` can accept the offer, here, `x` is never introduce and therefore the new given DAFSMs should not be well formed. Run
+   Modify transition<span style="color:green">`S1 {True} o > c.acceptOffer() {} S2+`</span> to <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> this modification says `x` can accept the offer, here, `x` is never introduce and therefore the new given DAFSMs should not be well formed. Run
+
    ```bash
    python3 Main.py --filetype txt "azure/simplemarket_place_edit_1"
    ```
@@ -170,7 +170,7 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
    This line `--- Participants       : False` tells the test which failed if `Participant`
 
-   __________________
+__________________
    Let's do another modification:
    Modify transition  <span style="color:green">`S1 {True} o > c.rejectOffer() {} S01`</span> to <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span>
    and transition  <span style="color:green">`S1 {True} o > c.acceptOffer() {} S01`</span> to  <span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span>
@@ -198,8 +198,8 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
    The line `Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True` is the `Simplify Z3` formula to check the `negation of the satisfiability formula` In this case the negation is `True`.
 
-   ---
-   
+---
+
    **Main File**
 
    The `Main.py`, can take some configurations as follows:
