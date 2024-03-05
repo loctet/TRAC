@@ -8,7 +8,7 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
 - [1- Installation](#1--installation)
 - [2- Reproducibility](#2--reproducibility)
    - [2.1- How the table 1 what generated](#21-how-the-table-1-what-generated)
-   - [2.2- Run the Azure repository examples](#22--run-the-azure-repository-examples)
+   - [2.2- Run the Azure repository benchmark](#22--run-the-azure-repository-examples)
    - [2.3- Run the randomized examples ](#23--run-the-randomized-examples)
 - [3- Usage](#usage)
    - [3.1- Format of DAFSMs](#31--format-of-dafsms)
@@ -36,47 +36,38 @@ To install and run TRAC using `Docker`:
 
 # 2- Reproducibility
 
-## 2.1 How the Table 1 was generated
+## 2.1 Applying `TRAC` to the Azure repository
+We now describe how the information in Table 1 of our COORDINATION has
+been determined. 
+We recall that Table 1 reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
+- [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
+- [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
+- [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)
+- [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker)
+- [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation)
+- [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer)
+- [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat)
+- [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter)
+- [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator).
 
-------------------------------------------------------
--- WHICH EXAMPLE???-----------------------------------
-------------------------------------------------------
+For each smart contract, the table below reports
+- where the features are met in the `Solidity` implementation in the Azure repository
+- the lines in the DAFSM model where the feature is captured (if at all) 
 
-Table 1 in our COORDINATION paper present some features extracted from the implementation of the example.  The Azure repositoty describes the example and gives an implementation in `Solidity`:
-<!-- - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain) -->
-<!-- - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) -->
-<!-- - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance) -->
-<!-- - [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker) -->
-<!-- - [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation) -->
-<!-- - [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer) -->
-<!-- - [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat) -->
-<!-- - [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter) -->
-<!-- - [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator).  -->
-
-------------------------------------------------------
--- WHICH EXAMPLE? | USE A SPELL-CHECKER | TYPOS  -----
-------------------------------------------------------
-
-The example in the table bellow point to the `.sol` file implementing the example, and we give the line where the feature can be found and also the line in the `TRAC` repository that models the feature.
-
-
-------------------------------------------------------
--- WHY THE UNICODE CHARACTERS?  -----
-------------------------------------------------------
 
 |Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
 |---|---|---|
-|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI : ✅ Line 44|BI : ✅ `b:B` > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt)) |
-|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI : ✅ Line 19 & 31|BI : ✅ `RqT:Resquester`, `RpD:Responder` ([Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt)) |
-|[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI : ❌ BazaarItem (Line 78) ItemList(Line 40) <br/>BI : ✅ BazaarItem (Line 76) ItemList(Line 33)| |
-|[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |ICI : ❌ (Line 18 and 82)<br/>BI : ✅ (Line 16 and 67)| |
-|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| PP : ✅ Line 26 |PP :✅ `m:M` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)) |
-|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI : ✅ Line 20 <br/>PP : ✅ Line 18 & 21 |BI : ✅ `ar:AirRep` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt))<br/>PP: ✅ `participant FL f`  [Line 1] |
-|[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP : ✅ Line 16 & 18 & 19 |PP: ✅ `participant I i`, `participant U u` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt)) |
-|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI : ✅ Line 18, <br/>RR : 🔽 Line 97 |BI: ✅ `b:B` ([Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt))<br/>RR: 🔽 reject goes to `S01` at that stage if we assume `b` is `new` them it somehow destroy previous `b` as we rebind it to `new B` |
-|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI : ✅ Line 19 <br/>PP : ✅ Line 17 <br/>RR : 🔽 Line 51 |BI: ✅ `cp:Conterparty` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt))<br/>PP: ✅ `participant SupplyOwner so` (Line 1, 2,3)<br/>RR: 🔽 Since the protocol does not evolve after `S2`(final state) we assume all participants are reintroduced if we restart the protocol |
-|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI : ✅ Line 32 <br/>PP : ✅ Line 28 <br/>RR : 🔽 Line 143 <br/>MRP : 🔽 Line 119 |BI: ✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>PP: ✅ `participant D d`, `participant SC sc`, `participant OBS obs` (Line 1, 5)<br/>RR: 🔽 Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP: 🔽 This are participants of same role, they are assign same values |
-|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 |BI:✅ `o:O` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>PP: ✅ participant Banker ba (Line 1)<br/>RR: 🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP: 🔽 `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Line 44|BI :  `b:B` > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt)) |
+|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI :  Line 19 & 31|BI :  `RqT:Resquester`, `RpD:Responder` ([Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt)) |
+|[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI :  BazaarItem (Line 78) ItemList(Line 40) <br/>BI :  BazaarItem (Line 76) ItemList(Line 33)| |
+|[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |ICI :  (Line 18 and 82)<br/>BI :  (Line 16 and 67)| |
+|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| PP :  Line 26 |PP : `m:M` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)) |
+|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI :  Line 20 <br/>PP :  Line 18 & 21 |BI :  `ar:AirRep` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt))<br/>PP:  `participant FL f`  [Line 1] |
+|[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP :  Line 16 & 18 & 19 |PP:  `participant I i`, `participant U u` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt)) |
+|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI :  Line 18, <br/>RR :  Line 97 |BI:  `b:B` ([Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt))<br/>RR:  reject goes to `S01` at that stage if we assume `b` is `new` them it somehow destroy previous `b` as we rebind it to `new B` |
+|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI :  Line 19 <br/>PP :  Line 17 <br/>RR :  Line 51 |BI:  `cp:Conterparty` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt))<br/>PP:  `participant SupplyOwner so` (Line 1, 2,3)<br/>RR:  Since the protocol does not evolve after `S2`(final state) we assume all participants are reintroduced if we restart the protocol |
+|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI :  Line 32 <br/>PP :  Line 28 <br/>RR :  Line 143 <br/>MRP :  Line 119 |BI:  o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>PP:  `participant D d`, `participant SC sc`, `participant OBS obs` (Line 1, 5)<br/>RR:  Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP:  This are participants of same role, they are assign same values |
+|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP :  Line 19 <br/>RR :  Line 102 <br/>MRP :  Line 76, 91 |BI: `o:O` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>PP:  participant Banker ba (Line 1)<br/>RR:  Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP:  `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
 
 ## 2.2- Run the Azure repository examples
 
