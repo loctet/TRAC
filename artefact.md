@@ -5,19 +5,19 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
 
 
 # Table of content 
-- [1- Installation](#1--installation)
-- [2- Reproducibility](#2--reproducibility)
-   - [2.1- How the table 1 what generated](#21-how-the-table-1-what-generated)
-   - [2.2- Run the Azure repository benchmark](#22--run-the-azure-repository-examples)
-   - [2.3- Run the randomized examples ](#23--run-the-randomized-examples)
-- [3- Usage](#usage)
-   - [3.1- Format of DAFSMs](#31--format-of-dafsms)
-   - [3.2- Different commands ](#32--different-commands)
-   - [3.3- Run you own examples](#33--run-you-own-examples)
-- [4- Documentation](#4--documentation)
-- [5- Tips](#5--tips)
+- [1. Installation](#1--installation)
+- [2. Reproducibility](#2--reproducibility)
+   - [2.1 How the table 1 what generated](#21-how-the-table-1-what-generated)
+   - [2.2 Run the Azure repository benchmark](#22--run-the-azure-repository-examples)
+   - [2.3 Run the randomized examples ](#23--run-the-randomized-examples)
+- [3. Usage](#usage)
+   - [3.1 Format of DAFSMs](#31--format-of-dafsms)
+   - [3.2 Different commands ](#32--different-commands)
+   - [3.3 Run you own examples](#33--run-you-own-examples)
+- [4. Documentation](#4--documentation)
+- [5. Tips](#5--tips)
 
-# 1- Installation
+# 1. Installation
 Follow the instructions at [https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
 
 To install and run TRAC using `Docker`:
@@ -34,9 +34,9 @@ To install and run TRAC using `Docker`:
 
 -------------------------------------------------
 
-# 2- Reproducibility
+# 2. Reproducibility
 
-## 2.1 Applying `TRAC` to the Azure repository
+## 2.1 How Table 1 has been created
 We now describe how the information in Table 1 of our COORDINATION has
 been determined. 
 We recall that Table 1 reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
@@ -69,22 +69,16 @@ For each smart contract, the table below reports
 |[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI :  Line 32 <br/>PP :  Line 28 <br/>RR :  Line 143 <br/>MRP :  Line 119 |BI:  o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>PP:  `participant D d`, `participant SC sc`, `participant OBS obs` (Line 1, 5)<br/>RR:  Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP:  This are participants of same role, they are assign same values |
 |[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP :  Line 19 <br/>RR :  Line 102 <br/>MRP :  Line 76, 91 |BI: `o:O` ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>PP:  participant Banker ba (Line 1)<br/>RR:  Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP:  `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
 
-## 2.2- Run the Azure repository examples
+## 2.2. How to check well-formedness of the Azure benchmarks
 
-------------------------------------------------------
--- ENGLISH  -----
-------------------------------------------------------
-The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designed examples directory (`Examples/dafsms_txt/azure`)  as well as the [other examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) from the Azure blockchain-workbench. 
+The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `Examples/dafsms_txt/azure`.
 
-To run an example from the Azure repository with `TRAC`, navigate to the directory `src` and execute the `Main.py` python script there as per the `Docker` commands below in the case of the  [`simple-marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) example:
+To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done with the `Docker` commands below on the  [`simple-marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
    ```bash
    cd src
    python3 Main.py --filetype txt "azure/simplemarket_place"
    ```
-------------------------------------------------------
--- cut at leat 3 words  -----
-------------------------------------------------------
-This command tells `TRAC` to proceed to the check of the `simplemarket_place` example. The output produce is
+The latter command produces the following output
 	```bash
 	--Parsing Txt to generate Json file
 
@@ -92,7 +86,7 @@ This command tells `TRAC` to proceed to the check of the `simplemarket_place` ex
 
 	(!) Verdict: Well Formed
 	```
-reporting that the DAFSMs for the `simplemarket_place` is well formed.
+reporting that the DAFSMs for the `simplemarket_place` is well formed. For the other smart contracts it is enough to execute the python script on the corresponding DAFSM.
 
    <!-- |Example|Command to run the example| Verdict| -->
    <!-- |---|---|---| -->
@@ -106,45 +100,51 @@ reporting that the DAFSMs for the `simplemarket_place` is well formed.
    <!-- | Room thermostat | `python3 Main.py --filetype txt "azure/room_thermostat" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
 
 
-## 2.3- Run the randomized examples 
+## 2.3. How to check the randomly generated models 
 
-From the root directory of `TRAC` execute the following commands from the `Docker` to run the examples of Section 4 of our paper:
+The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in subfolders each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata). Our perfomance analysis can be reproduced by executing the following commands in the `Docker`:
 
       ```bash
 	  cd src
       python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10  --number_test_per_cpu 5 --time_out 300000000000  
       ```
+Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper).
+The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analysed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not change, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contain the values plotted in Figures 2 and 3 of our paper.
 
-This will run the 135 randomly genated DAFSMs in the folder `Examples/random_txt/tests_dafsms_1` with subfolders, each folder having 5 tests and a CSV file(`list_of_files_info.csv`) containing metadata of those 5 examples. The check will start, going through each file and performing the well-formedness check. (`this process can be long depending on your environment`). While running the checks further csv files will be generated and merged (to `merged_list_of_files_info.csv`) when all checks are completed.
-      *Now you can plot the data to visualize different running time by executing the following command*
-
+The plots can be obtained by executing 
       ```bash
       python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter
       ```
-      The command will generate the graphs in `section 4 of the paper`. All plots images are saved in the `Examples/random_txt/tests_dafsms_1` directly.
+      in the `Docker`; the plots are `png` images saved in the directory `Examples/random_txt/tests_dafsms_1`.
 ---
 
-# 3- Usage
+# 3. Usage
 
-## 3.1- Format of DAFSMs
-The definition of the DAFSMs model is given in `section 2 of TRAC paper` more precisely what is the structure of a DAFSM. 
+## 3.1. Format of DAFSMs
+The definition of the DAFSMs model (Definition 1 of our paper) is implemented by our DSL for DAFSMs. The format in the DSL of a DAFSM is a sequence of lines with each line specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place following Example 1 of our paper.
 
-Let's consider the Simple Market Place(SMP) example, given in `section 1 of the paper`
+The start transition is rendered in out DSL as follows:
 
-The deploy transition looks like this:
+   ```_ {True} o:O > starts(c, string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0```
 
-   ` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0`
+this corresponds to the transition entering state $q_0$ in Example 1 of the paper barred for
 
-The above deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
+- the `_description` parameter, omitted in the paper for readability
+- the name of the initial state (which is immaterial for the analysis)
+- an explicit declaration of the contract variables to capture the assumption on contract variables in the first item of page 3 of the paper.
 
-   - states: (`_` to `S0`) here `_` is a special state only used to deploy the coordinator
-   - guard(g<sub>0</sub>): `{True}`
-   - Participant: `o:O` new participant `o` of role `O`
-   - function: `starts` a keyword to deploy the coordinator 
-   - coordinator id: `c`
-   - parameter: `string _description, int _price` 
-   - declaration: `{string description, int price, int offer}`where we are declaring states variables <span style="color:red;">`only in the deploy transition`</span>
-   - assignments: `{description := _description & price := _price}`
+Conventionally parameters start with `_` to distinguish them from contract variables. 
+
+The above transition has `True` as guard, introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to contract variables `description` , `price`, and`offer`.
+
+In general a transition consists of
+
+   - a source and a target state (above `_` and  `S0`, respectively; `_` is a special state used together with the keyword `starts` to identify the creator of the coordinator; cf. comment before Definition 1 of the paper)
+   - a guard specified in the notation of `z3`
+   - a qualified participant `p : P` corresponding to $\nu p : P$ in the paper, `any p : P`, or just `p`
+   - a call to an operation of the contract similar to the invocation to `starts`
+   - a list of `&`-separate assignments such as `{description := _description & price := _price}` above.
+
 
 To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function `makeOffer`, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
 
@@ -165,7 +165,7 @@ The `TXT` file for the SMP example should be :
 
    ![Simplemarket_place `TRAC`T DAFSMs](./images/fsm_simplemarke_place.png)
 
-## 3.2- Different commands 
+## 3.2. Different commands 
 We ran the `simplemarket_place` example in a section above. 
 
 **Non Well Formed Examples**
@@ -306,7 +306,7 @@ The `Main.py`, can take some configurations as follows:
    This command allows for versatile plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory directly.
 
 
-## 3.3- Run you own examples
+## 3.3. Run you own examples
    Now that your first example is completed, you can design some DAFSMs and play around with the command by just changing the name of the file in the command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
 
    /!\ All manually executed examples should be kept in the folder  `Examples/dafsms_txt` you can create sub-dirs, just be assured to give the exact path to the command `Main.py`. 
@@ -316,7 +316,7 @@ ______________________________
 
 
 
-# 4- Documentation
+# 4. Documentation
 
    **The full documentation in HTML format can be found locally in the sub-dir `docs`**
    ## CSV Header Description
@@ -347,5 +347,5 @@ ______________________________
    24. **is_time_out**: Indicates if there was a timeout during processing.
 
 
-# 5- Tips
+# 5. Tips
    All commands provided, such as running tests, generating examples, executing multiple examples, and plotting results with various scripts like `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py`, come equipped with a `--help` option. Utilizing `--help` will display detailed usage instructions and available options for each command, aiding users in understanding and effectively utilizing the tool's features.
