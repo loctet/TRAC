@@ -3,6 +3,7 @@
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
+
 # Table of content 
 - [1- Installation](#1--installation)
 - [2- Reproducibility](#2--reproducibility)
@@ -17,8 +18,7 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
 - [5- Tips](#5--tips)
 
 # 1- Installation
-Follow the instructions at
-[https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
+Follow the instructions at [https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
 
 To install and run TRAC using `Docker`:
 
@@ -30,19 +30,39 @@ To install and run TRAC using `Docker`:
    ```bash
    docker run -it loctet/trac_dafsms:v1
    ```
-
-The former command downloads the `Docker` image of `TRAC` while the latter starts a container with an interactive terminal.
+(you might need to run the above commands as `root`). The former command downloads the `Docker` image of `TRAC` while the latter starts a container with an interactive terminal.
 
 -------------------------------------------------
 
 # 2- Reproducibility
 
 ## 2.1 How the Table 1 was generated
-   The `Table 1: Features in the Azure benchmark` In the `TRAC` paper present some features extracted from the implementation of the example.  The Azure repositoty describe the example and give an implementation in `Solidity`:
-   [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain), [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace), [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance), [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker), [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation), [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer), [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat), [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter), [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator). 
 
-   The example in the table bellow point to the `.sol` file implementing the example, and we give the line where the feature can be found and also the line in the `TRAC` repository that models the feature.
+------------------------------------------------------
+-- WHICH EXAMPLE???-----------------------------------
+------------------------------------------------------
 
+Table 1 in our COORDINATION paper present some features extracted from the implementation of the example.  The Azure repositoty describes the example and gives an implementation in `Solidity`:
+<!-- - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain) -->
+<!-- - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) -->
+<!-- - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance) -->
+<!-- - [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker) -->
+<!-- - [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation) -->
+<!-- - [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer) -->
+<!-- - [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat) -->
+<!-- - [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter) -->
+<!-- - [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator).  -->
+
+------------------------------------------------------
+-- WHICH EXAMPLE? | USE A SPELL-CHECKER | TYPOS  -----
+------------------------------------------------------
+
+The example in the table bellow point to the `.sol` file implementing the example, and we give the line where the feature can be found and also the line in the `TRAC` repository that models the feature.
+
+
+------------------------------------------------------
+-- WHY THE UNICODE CHARACTERS?  -----
+------------------------------------------------------
 
 |Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
 |---|---|---|
@@ -60,40 +80,51 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 
 ## 2.2- Run the Azure repository examples
 
-   The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designed examples directory (`Examples/dafsms_txt/azure`)  as well as the [other examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) from the Azure blockchain-workbench. 
+------------------------------------------------------
+-- ENGLISH  -----
+------------------------------------------------------
+The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designed examples directory (`Examples/dafsms_txt/azure`)  as well as the [other examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) from the Azure blockchain-workbench. 
 
-   To run the "simplemarket_place" example with `TRAC`:
-   1. **Navigate to the `TRAC` Directory**: from the `Docker` container execute ```cd src```.
-   2. **Execute the Example**: 
-
+To run an example from the Azure repository with `TRAC`, navigate to the directory `src` and execute the `Main.py` python script there as per the `Docker` commands below in the case of the  [`simple-marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) example:
    ```bash
+   cd src
    python3 Main.py --filetype txt "azure/simplemarket_place"
    ```
-   This command tells `TRAC` to proceed to the check of the "simplemarket_place" example. The output is <span style="color:green">`(!) Verdict: Well Formed`</span> telling that the DAFSMs given as input is well formed.
+------------------------------------------------------
+-- cut at leat 3 words  -----
+------------------------------------------------------
+This command tells `TRAC` to proceed to the check of the `simplemarket_place` example. The output produce is
+	```bash
+	--Parsing Txt to generate Json file
 
-   |Example|Command to run the example| Verdict|
-   |---|---|---|
-   | Asset transfer | `python3 Main.py --filetype txt "azure/asset_transfer" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Basic provenance | `python3 Main.py --filetype txt "azure/basic_provenance" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Defective component counter | `python3 Main.py --filetype txt "azure/defective_component_counter" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Digital locker | `python3 Main.py --filetype txt "azure/digital_locker" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Frequent flyer rewards_calculator | `python3 Main.py --filetype txt "azure/frequent_flyer_rewards_calculator" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Hello blockchain | `python3 Main.py --filetype txt "azure/hello_blockchain" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Refrigirated transport | `python3 Main.py --filetype txt "azure/refrigirated_transport" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
-   | Room thermostat | `python3 Main.py --filetype txt "azure/room_thermostat" `| <span style="color:green">`(!) Verdict: Well Formed`</span>|
+	Checking the well formness of the model----
+
+	(!) Verdict: Well Formed
+	```
+reporting that the DAFSMs for the `simplemarket_place` is well formed.
+
+   <!-- |Example|Command to run the example| Verdict| -->
+   <!-- |---|---|---| -->
+   <!-- | Asset transfer | `python3 Main.py --filetype txt "azure/asset_transfer" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Basic provenance | `python3 Main.py --filetype txt "azure/basic_provenance" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Defective component counter | `python3 Main.py --filetype txt "azure/defective_component_counter" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Digital locker | `python3 Main.py --filetype txt "azure/digital_locker" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Frequent flyer rewards_calculator | `python3 Main.py --filetype txt "azure/frequent_flyer_rewards_calculator" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Hello blockchain | `python3 Main.py --filetype txt "azure/hello_blockchain" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Refrigirated transport | `python3 Main.py --filetype txt "azure/refrigirated_transport" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
+   <!-- | Room thermostat | `python3 Main.py --filetype txt "azure/room_thermostat" `| <span style="color:green">`(!) Verdict: Well Formed`</span>| -->
 
 
 ## 2.3- Run the randomized examples 
 
-   1. **Navigate to `TRAC` Directory**: Ensure you're in the `src` directory of `cd src`
-
-   2. **Run of examples of the `TRAC` tool paper** in `section 4`
+From the root directory of `TRAC` execute the following commands from the `Docker` to run the examples of Section 4 of our paper:
 
       ```bash
+	  cd src
       python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10  --number_test_per_cpu 5 --time_out 300000000000  
       ```
 
-      This will run the 135 randomly genated DAFSMs in the folder `Examples/random_txt/tests_dafsms_1` with subfolders, each folder having 5 tests and a CSV file(`list_of_files_info.csv`) containing metadata of those 5 examples. The check will start, going through each file and performing the well-formedness check. (`this process can be long depending on your environment`). While running the checks further csv files will be generated and merged (to `merged_list_of_files_info.csv`) when all checks are completed.
+This will run the 135 randomly genated DAFSMs in the folder `Examples/random_txt/tests_dafsms_1` with subfolders, each folder having 5 tests and a CSV file(`list_of_files_info.csv`) containing metadata of those 5 examples. The check will start, going through each file and performing the well-formedness check. (`this process can be long depending on your environment`). While running the checks further csv files will be generated and merged (to `merged_list_of_files_info.csv`) when all checks are completed.
       *Now you can plot the data to visualize different running time by executing the following command*
 
       ```bash
@@ -105,15 +136,15 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
 # 3- Usage
 
 ## 3.1- Format of DAFSMs
-   The definition of the DAFSMs model is given in `section 2 of TRAC paper` more precisely what is the structure of a DAFSM. 
+The definition of the DAFSMs model is given in `section 2 of TRAC paper` more precisely what is the structure of a DAFSM. 
 
-   Let's consider the Simple Market Place(SMP) example, given in `section 1 of the paper`
+Let's consider the Simple Market Place(SMP) example, given in `section 1 of the paper`
 
-   The deploy transition looks like this:
+The deploy transition looks like this:
 
    ` _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0`
 
-   The above deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
+The above deploy transition introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to declared variable `string description` , `int price` and`int offer`. here the precondition(guard `g`) is `True`.
 
    - states: (`_` to `S0`) here `_` is a special state only used to deploy the coordinator
    - guard(g<sub>0</sub>): `{True}`
@@ -124,13 +155,13 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    - declaration: `{string description, int price, int offer}`where we are declaring states variables <span style="color:red;">`only in the deploy transition`</span>
    - assignments: `{description := _description & price := _price}`
 
-   To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function `makeOffer`, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
+To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function `makeOffer`, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
 
-   To accept the offer, the transition`S1 {True} o > c.acceptOffer() {} S2+` can be invokes by the previously introduced `o` to accept the offer and move to a final state `S2` as it has the sign `+` after.
+To accept the offer, the transition`S1 {True} o > c.acceptOffer() {} S2+` can be invokes by the previously introduced `o` to accept the offer and move to a final state `S2` as it has the sign `+` after.
 
-   To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make an offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`. 
+To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make an offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`. 
 
-   The `TXT` file for the SMP example should be :
+The `TXT` file for the SMP example should be :
 
    ```
    _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -144,10 +175,14 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    ![Simplemarket_place `TRAC`T DAFSMs](./images/fsm_simplemarke_place.png)
 
 ## 3.2- Different commands 
-   We ran the `simplemarket_place` example in a section above. 
-   **Non Well Formed Examples**
-   Let's modify the previous simple market place to make it not well-formed.
-   Modify transition<span style="color:green">`S1 {True} o > c.acceptOffer() {} S2+`</span> to <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> this modification says `x` can accept the offer, here, `x` is never introduce and therefore the new given DAFSMs should not be well formed. Run
+We ran the `simplemarket_place` example in a section above. 
+
+**Non Well Formed Examples**
+Let's modify the previous simple market place to make it not well-formed.
+
+Modify transition<span style="color:green">`S1 {True} o > c.acceptOffer() {} S2+`</span> to <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> 
+
+this modification says `x` can accept the offer, here, `x` is never introduce and therefore the new given DAFSMs should not be well formed. Run
 
    ```bash
    python3 Main.py --filetype txt "azure/simplemarket_place_edit_1"
@@ -171,15 +206,19 @@ The former command downloads the `Docker` image of `TRAC` while the latter start
    This line `--- Participants       : False` tells the test which failed if `Participant`
 
 __________________
-   Let's do another modification:
-   Modify transition  <span style="color:green">`S1 {True} o > c.rejectOffer() {} S01`</span> to <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span>
-   and transition  <span style="color:green">`S1 {True} o > c.acceptOffer() {} S01`</span> to  <span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span>
-   Here we are creating DAFSMs where from `S1` there is no possible outgoing transition to progress base on the `guard satifiability`.
-   The Tool should spot the fact that the model has `inconsistency`.Run
+Let's do another modification:
+
+Modify transition  <span style="color:green">`S1 {True} o > c.rejectOffer() {} S01`</span> to <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span>
+
+and transition  <span style="color:green">`S1 {True} o > c.acceptOffer() {} S01`</span> to  <span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span>
+
+Here we are creating DAFSMs where from `S1` there is no possible outgoing transition to progress base on the `guard satifiability`.
+
+The Tool should spot the fact that the model has `inconsistency`.Run
    ```bash
    python3 Main.py --filetype txt "azure/simplemarket_place_edit_2"
    ```
-   After running the check, we have an output:
+After running the check, we have an output:
 
    ```
    Error from this state:S01_makeOffer(int _offer)_S1
@@ -190,19 +229,19 @@ __________________
    
    (!) Verdict: Not Well Formed
    ```
-   This tells that the consistency rule is violated with transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` reaching `S1`. 
+This tells that the consistency rule is violated with transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` reaching `S1`. 
 
-   This line `--For _makeOffer_0:   Check result ::  False` tells that the check of the model failed when checking the first occurrence of the function `makeOffer`
+This line `--For _makeOffer_0:   Check result ::  False` tells that the check of the model failed when checking the first occurrence of the function `makeOffer`
 
-   This line `--- A-Consistency: False` tells the test which failed if `Consistency`
+This line `--- A-Consistency: False` tells the test which failed if `Consistency`
 
-   The line `Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True` is the `Simplify Z3` formula to check the `negation of the satisfiability formula` In this case the negation is `True`.
+The line `Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True` is the `Simplify Z3` formula to check the `negation of the satisfiability formula` In this case the negation is `True`.
 
 ---
 
-   **Main File**
+**Main File**
 
-   The `Main.py`, can take some configurations as follows:
+The `Main.py`, can take some configurations as follows:
 
    - `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for `TRAC` to analyse.
    - `check_type`: Optional. Defines the type of check to perform on the input file. It can be one of four options:
