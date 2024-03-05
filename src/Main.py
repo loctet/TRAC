@@ -68,9 +68,10 @@ def main():
     elif args.check_type == '3':
         trGrinder.check_path_sat()
     elif args.check_type == 'fsm':
-        os.system(f"java -jar ./GraphGen/GraphGen.jar -i {trGrinder.get_full_json_path()} -visualize ")
+        print("--Generating the visual FSM")
+        os.system(f"java -jar ./GraphGen/GraphGen.jar {trGrinder.get_full_json_path()}  {trGrinder.get_full_png_path()}")
         os.system(f"cls")
-        print("--Generated the visual FSM")
+        print(f"--Generated the visual FSM :  {trGrinder.get_full_png_path()}")
     elif args.check_type == 'fsm2':
         print("--Generating the visual FSM")
         draw_fsm_graph(generate_fsm_graph(''.join(input_text)))        

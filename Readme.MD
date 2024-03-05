@@ -2,7 +2,7 @@
 
 ## Introduction to TRAC
 
-TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring that only one transition within a group can be satisfied at a time. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol. TRAC's flexibility across different operating systems makes.
+TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring the consistency the model. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol.
 
 ## Docker Installation and Running Instructions
 
@@ -39,17 +39,8 @@ To run the "simplemarket_place" example with TRAC:
 
 1. **Prepare the Environment**: Ensure TRAC and its dependencies are installed as per the installation instructions.
 2. **Navigate to the TRAC Directory**: Open a terminal and change directory to where ```cd TRAC/src``` is located.
-3. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designated examples (`Examples/dafsms_txt/azure`) directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) namely:
-   - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
-   - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
-   - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)
-   - [Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker)
-   - [Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation)
-   - [Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer)
-   - [Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat)
-   - [Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter)
-   - [Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator)
-   
+3. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already within designated examples (`Examples/dafsms_txt/azure`) directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) 
+
    All manually executed examples should be kept in the folder  `Examples/dafsms_txt` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
 
 4. **Execute the Example**:
@@ -129,24 +120,6 @@ The `Main.py`, can take some configurations as follows:
 - `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
 - `--time_out`: Optional. Sets a timeout for the operation in seconds. The default is `0`, meaning no timeout.
 This detailed explanation provides a comprehensive guide on how to utilize `Main.py` for different operations within the TRAC tool.
-
-## Azure Examples 
-
-|Example| Line in Code for the feature | How TRAC handle it |
-|---|---|---|
-|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|ICI : ➖ <br/>BI : ✅ L44   <br/>PP : ➖ <br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>✅ b:B > c.makeOffer ([Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt))<br/>➖<br/>➖<br/>➖<br/> |
-|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|ICI : ➖ <br/>BI : ✅ Line 19 & 31<br/>PP : ➖ <br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>✅ RqT:Resquester, RpD:Responder ([Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt))<br/>➖<br/>➖<br/>➖<br/> |
-|[Bazaar Item Listing](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI : ❌ BazaarItem (Line 78) ItemList(Line 40) <br/>BI : ✅ BazaarItem (Line 76) ItemList(Line 33)<br/>PP : ➖ <br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>➖<br/>➖<br/>➖<br/>➖<br/> |
-|[Ping Pong Game](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |ICI : ❌ (Line 18 and 82)<br/>BI : ✅ (Line 16 and 67)<br/>PP : ➖ <br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>➖<br/>➖<br/>➖<br/>➖<br/> |
-|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| ICI : ➖ <br/>BI : ➖ <br/>PP : ✅ Line 26<br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>➖<br/>✅ m:M ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)) <br/>➖<br/>➖<br/> |
-|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| ICI : ➖ <br/>BI : ✅ Line 20 <br/>PP : ✅ Line 18 & 21<br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>✅ ar:AirRep  ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt))<br/>✅ participant FL f [Line 1]  <br/>➖<br/>➖<br/> |
-|[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| ICI : ➖ <br/>BI : ➖ <br/>PP : ✅ Line 16 & 18 & 19<br/>RR : ➖ <br/>MRP : ➖ <br/>|➖<br/>➖<br/>✅ participant I i, participant U u ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt))  <br/>➖<br/>➖<br/> |
-|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| ICI : ➖ <br/>BI : ✅ Line 18, <br/>PP : ➖ <br/>RR : 🔽 Line 97 <br/>MRP : ➖ <br/>|➖<br/>✅ b:B ([Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt))<br/>➖<br/>🔽 reject goes to `S01` at that stage if we assume `b` is `new` them it somehow detroy previous `b` as we rebind it to `new B`<br/>➖<br/> |
-|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| ICI : ➖ <br/>BI : ✅ Line 19 <br/>PP : ✅ Line 17 <br/>RR : 🔽 Line 51 <br/>MRP : ➖ <br/>|➖<br/>✅ cp:Conterparty ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt))<br/>✅ participant SupplyOwner (Line 1, 2,3)<br/>🔽 Since the protocol does not evove after `S2`(final state) we assume all participants are reintroduced if we restart the protocol<br/>➖<br/> |
-|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| ICI : ➖ <br/>BI : ✅ Line 32 <br/>PP : ✅ Line 28 <br/>RR : 🔽 Line 143 <br/>MRP : 🔽 Line 119 <br/>|➖<br/>✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt))<br/>✅ participant D d, participant SC sc, participant OBS obs (Line 1, 5)<br/>🔽 Since the protocol does not evove after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>🔽 This are participants of same role, they are assigne same values<br/> |
-|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| ICI : ➖ <br/>BI : ✅ Line 21 <br/>PP : ✅ Line 19 <br/>RR : 🔽 Line 102 <br/>MRP : 🔽 Line 76, 91 <br/>|➖<br/>✅ o:O ([Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt))<br/>✅ participant Banker ba (Line 1)<br/>🔽 Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>🔽 `AcceptSharingLock` we directly pass the new participant so there is not a role changing but introducing new one<br/> |
-
-
 
 ## Generating Examples
 To generate DAFSM examples with `Generate_examples.py`, follow these steps:

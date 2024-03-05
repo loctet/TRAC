@@ -5,15 +5,15 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
 
 
 # Table of content 
-- [1. Installation](#1--installation)
-- [2. Reproducibility](#2--reproducibility)
+- [1. Installation](#1-installation)
+- [2. Reproducibility](#2-reproducibility)
    - [2.1 How table 1 has been created](#21-how-table-1-has-been-created)
-   - [2.2 How to check well formedness of the Azure benchmarks](#22-how-to-check-well-formedness-of-the-azure-benchmarks)
+   - [2.2 How to check well formedness of the Azure benchmarks](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks)
    - [2.3 How to check the randomly generated models ](#23-how-to-check-the-randomly-generated-models)
 - [3. Usage](#3-usage)
    - [3.1 Format of DAFSMs](#31-format-of-dafsms)
-   - [3.2 Commands for performance evaluation](#32-different-commands)
-   - [3.3 Run you own examples](#33-run-you-own-examples)
+   - [3.2 Commands for performance evaluation](#32-commands-for-performance-evaluation)
+   - [3.3 Run you own examples](#33-run-your-own-examples)
 - [4. Documentation](#4-documentation)
 - [5. Tips](#5-tips)
 
@@ -57,19 +57,19 @@ For each smart contract, the table below reports
 
 |Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
 |---|---|---|
-|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Lines 21 & 44|BI :  [Line 2 and 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt) |
-|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI :  Lines 19 & 39|BI :  [Line 1 and 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt) |
-|[Bazaar](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI :  BazaarItem (Line 78) ItemList(Line 40) <br/>BI :  BazaarItem (Line 76) ItemList(Line 33)| |
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Lines 21 & 44|BI:  [Line 1, 2 & 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt#L2) |
+|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI:  Lines 19 & 39|Bi:  [Line 1 & 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt) |
+|[Bazaar](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI:  BazaarItem (Line 78) ItemList(Line 40) <br/>BI :  BazaarItem (Line 76) ItemList(Line 33)| |
 |[Ping Pong](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |BI :  Line 16 & 67<br/>ICI :  Lines 18, 29, 41, 47, 77, 82 & 88| |
-|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| BI :  Line 17<br>PP: Line 15 |PP : [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt) |
-|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI :  Line 20 <br/>PP :  Line 18 |BI :  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt)<br/>PP:  Line 1 |
+|[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| BI:  Line 17<br>PP: Line 15 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)<br/>PP: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt) |
+|[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI :  Line 20 <br/>PP :  Line 18 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt)<br/>PP:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt) |
 |[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP :  Line 16 |PP:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt) |
-|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI :  Line 18, <br/>RR :  Lines 97 & 171 |BI:  [Line 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>RR:  reject goes to `S01` at that stage if we assume `b` is `new` them it somehow destroy previous `b` as we rebind it to `new B` |
-|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI :  Line 19 <br/>PP :  Line 17 <br/>RR :  Line 51 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>PP:  Line 1, 2,3<br/>RR:  Since the protocol does not evolve after `S2`(final state) we assume all participants are reintroduced if we restart the protocol |
-|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI :  Line 32 <br/>PP :  Line 28 <br/>RR :  Line 143 <br/>MRP :  Lines 33, 34, 37, 118, 119 & 142 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>PP:  Line 1, 5<br/>RR:  Since the protocol does not evolve after `Success`(final state) we assume all participants are reintroduced if we restart the protocol<br/>MRP:  This are participants of same role, they are assigned same values |
-|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP :  Lines 19, 68 <br/>RR :  Lines 102,126, 127, 139 & 149 <br/>MRP :  Lines 76, 91 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>PP: Line 1<br/>RR:  Since `RejectSharingLock` goes back to `S2`, participant `cau` can only invoke function when the new one will be introduce in `S4`<br/>MRP:  `AcceptSharingLock` we directly pass the new participant as parameter so there is not a role changing but introducing new one |
+|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI :  Line 18, <br/>PP: Line 49<br/>RR :  Lines 97 & 171 |BI:  [Lines 1& 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>PP: [Lines 2& 7](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>RR: |
+|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI:  Line 19 <br/>PP:  Line 17, 26 <br/>RR :  Line 38, 51 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>PP:  [Line 1, 2, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>RR: |
+|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI:  Line 32 <br/>PP:  Line 28, 89 <br/>RR :  Line 118, 143 <br/>MRP :  Lines 33, 34, 119 & 142 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>PP:  [Line 1, 5 & 9](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>RR:  <br/>MRP: |
+|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP:  Lines 19, 68 <br/>RR :  Lines 102,126, 127, 139 & 149 <br/>MRP :  Lines 76, 91 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>PP: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>RR:  <br/>MRP: |
 
-## 2.2. How to check well-formedness of the Azure benchmarks
+## 2.2. How to check the well-formedness of the Azure benchmarks
 
 The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `Examples/dafsms_txt/azure`.
 
@@ -79,7 +79,7 @@ To check a model with `TRAC`, navigate to the directory `src` and execute the `M
    python3 Main.py --filetype txt "azure/simplemarket_place"
    ```
 The latter command produces the following output
-   ```bash
+   ```tex
    --Parsing Txt to generate Json file
 
    Checking the well formness of the model----
@@ -91,14 +91,14 @@ reporting that the DAFSMs for the `simplemarket_place` is well formed. For the o
 
 ## 2.3. How to check the randomly generated models 
 
-The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in subfolders each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata). Our perfomance analysis can be reproduced by executing the following commands in the `Docker`:
+The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in subfolders each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
 
    ```bash
-   cd src
+   performancecd src
    python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10 --number_test_per_cpu 5 --time_out 300000000000  
    ```
 Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper).
-The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analysed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not change, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contain the values plotted in Figures 2 and 3 of our paper.
+The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper.
 
 The plots can be obtained by executing 
 ```bash
@@ -179,7 +179,7 @@ The file `azure/simplemarket_place_edit_2` modifies the original DAFSM of the si
 Executing the command below from the `Docker` 
 
 ```bash
-   python3 Main.py --filetype txt "azure/simplemarket_place_edit_2"
+python3 Main.py --filetype txt "azure/simplemarket_place_edit_2"
 ```
 
 we get the output:
@@ -201,65 +201,66 @@ S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 
 The last but one line of the output yields the simplified `Z3` negation of the formula.
 
-The `Main.py` script accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers: the default one is `1` which is set to check  well-formedness; the other qualifier is `fsm` which generates a visual representation of a DAFSM as a `png` file. To access the file it is necessary to copy it from the `Docker` with the following command executed in a non-docker shell:
+The `Main.py` script accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers: the default one is `1` which is set to check well-formedness; the other qualifier is `fsm` which generates a visual representation of a DAFSM as a `png` file. To access the file it is necessary to copy it from the `Docker` with the following command executed in a non-docker shell:
 
 ```
 docker cp <container-ID>:<path-to-image> <destination-path-on-local-machine>
 ```
 
-The image generated for the simple market place DAFSM is below.
+The image generated for the simple marketplace DAFSM is below.
 
 ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
 
 
 ## 3.2. Commands for performance evaluation
---------- CHANGE ALL --------
-the `DAFSMs random generator` to generate random examples, the `Random checker` to check bulk examples, and the `Data Plot` to visualize data from cvs file. The following part explain how to execute each and gives available parameters.
-
-
+To evaluate the performances of `TRAC`, we created a randomizer that contains a `Random generator`  that generates random examples, a `Random checker` that checks examples in bulk, and a `Data Plot` that visualizes data from a `csv` file. The following part explains how to execute each and gives available parameters.
 
 ---
 ### **Generating random examples**
-To generate DAFSMs examples with `Generate_examples.py`, follow these steps:
+To generate DAFSMs examples with `Generate_examples.py`,  you can run the following command:
 
-   1. **Run Generate_examples.py** : Use the command below, adjusting parameters as needed.
+**Run Generate_examples.py** : Use the command below, adjusting parameters as needed.
+
 ```bash
 python3 Generate_examples.py --directory your_directory_name --num_tests 100
 ```
-   Replace `your_directory_name` with the desired directory to store test files, and adjust `--num_tests` to the number of examples you wish to generate.
+Replace `your_directory_name` with the desired directory to store test files, and adjust `--num_tests` to the number of examples you wish to generate.
 
-   2. **Parameters**:
-      The parameters for `Generate_examples.py` enable customization of the DAFSMs example generation process. If not specified, values for these parameters are generated randomly:
+The parameters for `Generate_examples.py` enable customization of the DAFSMs example generation process. If not specified, values for these parameters are generated randomly:
 
-      - `--directory`: Specifies the directory to save generated examples.
-      - `--num_tests`: The number of tests to generate.
-      - `--num_states`: The number of states per test.
-      - `--num_actions`: The number of actions.
-      - `--num_vars`: The number of variables.
-      - `--max_num_transitions`: The maximum number of transitions.
-      - `--max_branching_factor`: The maximum branching factor.
-      - `--num_participants`: The number of participants.
-      - `--incremental_gen`: Enables incremental generation with num_states ranging from 10 to num_tests with given steps.
-      - `--merge_only_csv`: Merges results into a single CSV without generating new tests.
-      - `--steps`: The increment steps for generating tests.
-      - `--num_example_for_each`: The number of examples to generate for each configuration.
+- `--directory`: Specifies the directory to save generated examples.
+- `--num_tests`: The number of tests to generate.
+- `--num_states`: The number of states per test.
+- `--num_actions`: The number of actions.
+- `--num_vars`: The number of variables.
+- `--max_num_transitions`: The maximum number of transitions.
+- `--max_branching_factor`: The maximum branching factor.
+- `--num_participants`: The number of participants.
+- `--incremental_gen`: Enables incremental generation with num_states ranging from 10 to num_tests with given steps.
+- `--merge_only_csv`: Merges results into a single CSV without generating new tests.
+- `--steps`: The increment steps for generating tests.
+- `--num_example_for_each`: The number of examples to generate for each configuration.
 
-   To generate the examples we used for `section 4` of the paper, we ran the following command:
+To generate the examples we used for `section 4` of the paper, we ran the following command:
+
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
-   3. **Output**: Examples are created in the directory `Examples/random_txt/<directory>`. A CSV at the root of this directory contains metadata of each generated example, including paths, number of states, actions, variables, branching factors, and timings. [fill list here](#4-documentation)
-   4. **Checking the examples**: The check of the generated examples starts immediatly after completion of the generation.
+**Output**: Examples are created in the directory `Examples/random_txt/<directory>`. A CSV at the root of this directory contains metadata of each generated example, including paths, number of states, actions, variables, branching factors, and timings. [fill list here](#4-documentation)
 
-   This process allows the automated generation of DAFSMs examples, facilitating comprehensive testing and verification of DAFSMs with `TRAC`.
+**Checking the examples**: The check of the generated examples starts immediately after the completion of the generation.
+
+This process allows the automated generation of DAFSMs examples, facilitating comprehensive testing and verification of DAFSMs with `TRAC`.
 
 ---
-### **Running a sets of examples**
-   To run the check of multiple examples with `Random_exec.py`, the command format and parameters are as follows:
+### **Running a set of examples**
+ To check multiple examples in a given repository, you can run the following command:
 
    ```bash
    python3 Random_exec.py --directory <subdir> --merge_csv --add_path --number_test_per_cpu <num> --number_runs_per_each <runs> --time_out <nanoseconds>
    ```
+The latter command can be configured by passing some parameters to `Random_exec.py`. The full list of available parameters follows: 
+
    - `--directory`: Specifies a subdirectory in `Examples/random_txt` where the examples, and `list_of_files_info.csv` are located.
    - `--merge_csv`: Only merges individual CSV results into `merged_list_of_files_info.csv`.
    - `--add_path`: Just count the number_path to each test in the CSV.
@@ -267,37 +268,38 @@ python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_
    - `--number_runs_per_each`: Specifies how many times to run each test.
    - `--time_out`: Sets a timeout limit for each test.
 
-   The process splits tests for parallel execution, outputs results to CSV files, and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<directory>` to preserve data.
+The checking process splits tests for parallel execution, each thread output results into a CSV file and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<directory>` to preserve data.
 
 ---
 ### Plotting Results
-   To plot data using `Plot_data.py`, follow these command-line instructions, customizing them based on your needs:
+To plot data using `Plot_data.py`, the following command can be customized with some given parameters below:
 
 ```bash
-   python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
+python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
 ```
 
    - `<directory>`: The directory where the test data CSV is located, relative to `./examples/random_txt/` where the `merged_list_of_files_info.csv` is.
    - `--shape`: Choose the plot shape: `2d`, `3d`, or `4d`.
    - `--file`: Specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`.
    - `--fields`: Set the column(s) to plot against time, default is `num_states`.
-   - `--pl_lines`: Define which time metric to plot agains the fields, with defaults including participants time, non-determinism time and a-consistency-time.
+   - `--pl_lines`: Define which time metric to plot against the fields, with defaults including participants' time, non-determinism time, and a-consistency-time.
    - `--type_plot`: Choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default.
 
    This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
 
 
-## 3.3. Run you own examples
-   Now that the check of some examples are completed, you can design some DAFSMs and check it they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
+## 3.3. Run your own examples
+Now that the check of some examples is completed, you can design some DAFSMs and check if they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
 
-   /!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact path `<subdir>/<example>`. 
+/!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact path `<subdir>/<example>`. 
 
-   Some examples can be found in `Examples/other_tests` testing some scenario not found the Azure repository. 
+Some examples can be found in `Examples/other_tests` testing some scenarios not found in the Azure repository. 
+
 ______________________________
 
 # 4. Documentation
 
-   The full documentation in HTML format can be downloaded [here](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip)
+ The full documentation in HTML format can be downloaded [in from the git repository](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip)
 
    ## CSV Header Description
    - **path**: The path of the file.
@@ -327,7 +329,7 @@ ______________________________
 
 
 # 5. Tips
-   All commands provided, `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py`, come equipped with a `--help` option. Utilizing `--help` will display detailed usage instructions and available options for each command, aiding users in understanding and effectively utilizing the tool's features.
+All commands provided, `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py`, come equipped with a `--help` option. Utilizing `--help` will display detailed usage instructions and available options for each command, aiding users in understanding and effectively utilizing the tool's features.
 ```bash
    python3 Main.py --help
 ```

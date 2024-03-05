@@ -49,7 +49,7 @@ class The_Validator:
                 "initialStates": [self.initialStage],
                 "finalStates": [self.initialStage] if final_marker else [],
                 "newParticipants": {participant: role},
-                "caller": {participant: [""]},
+                "caller": {participant: []},
                 "actionLabel": "starts",
                 "preCondition": pre_condition,
                 "postCondition": post_condition,

@@ -71,6 +71,7 @@ class TransactionsGrinder(Logger):
             "is_time_out": False
         }
         os.makedirs(txt_path, exist_ok=True)
+        os.makedirs(txt_path+"/images", exist_ok=True)
         os.makedirs(json_path, exist_ok=True)
         os.makedirs(z3model_path, exist_ok=True)
         
@@ -102,6 +103,15 @@ class TransactionsGrinder(Logger):
         :rtype: str
         """
         return os.path.join(self.json_path, f"{self.file_name}.json")
+    
+    def get_full_png_path(self):
+        """
+        Constructs the full path to the PNG file based on the base Txt path and file name.
+
+        :return: The full path to the PNG file.
+        :rtype: str
+        """
+        return os.path.join(self.txt_path,"images", f"{self.file_name}.png")
     
     def get_full_txt_path(self):
         """
