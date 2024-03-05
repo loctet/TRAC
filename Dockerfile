@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir z3-solver matplotlib numpy plotly networkx pandas
 RUN apt-get update && \
     apt-get -y install default-jre && \
     apt-get install -y nano && \
-    apt install graphviz &&\
+    apt-get -y install graphviz &&\
     apt-get clean;
 
 # Set up the 'll' command alias
