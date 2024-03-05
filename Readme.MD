@@ -69,7 +69,7 @@ To run the "simplemarket_place" example with TRAC:
     The next transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` allow new participant `b` of role `B` to make and offer by passing a price `_offer` the guard requires `-offer` to be `>0` to update the value of the state variable `offer` and move the protocol to `S1`
     - `S1 {True} o > c.acceptOffer() {} S2+` can be invoque by the previously introduced `o` to accepte the offer and move to a final state `S2` it has the signe `+` after
     - `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`
-    ![Simplemarket_place TRACT DAFSMs](./images/fsm_simplemarke_place.png)
+    ![Simplemarket_place TRAC DAFSMs](./images/fsm_simplemarke_place.png)
     
     - The result of the check should be `(!) Verdict: Well Formed`
 
@@ -131,7 +131,7 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    ```
    Replace `your_directory_name` with the desired directory to store test files and adjust `--num_tests` to the number of examples you wish to generate.
 
-   **Generate examples of the TRAC tool paper**
+   **Generate som examples**
    ```bash
    python3 Generate_examples.py --directory examples_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
    ```
@@ -141,12 +141,6 @@ To generate DAFSM examples with `Generate_examples.py`, follow these steps:
    ```
    python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter
    ```
-   This will plot these plots 
-   |   |   |
-   |---|---|
-   | ![Evaluation path participant time](./images/evaluation_path_participant_time.png)| ![Evaluation transitions a_consitency time](./images/evaluation_transitions_a_consitency_time.png)|
-   | ![Evaluation transitions non determinism time](./images/evaluation_transitions_non_determinism_time.png)|  ![Evaluation transitions participant time](./images/evaluation_transitions_participant_time.png) |
-
 
 3. **Parameters**:
     The parameters for `Generate_examples.py` enable customization of the DAFSM example generation process. If not specified, values for these parameters are generated randomly:
