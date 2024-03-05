@@ -54,7 +54,7 @@ def main():
 
         #setattr(trGrinder, "file_name", file_name)
     elif not os.path.isfile(trGrinder.get_full_json_path()):
-            exitWithMessage(f"{trGrinder.get_full_json_path()} does not exist")
+        exitWithMessage(f"{trGrinder.get_full_json_path()} does not exist")
 
     input_text = trGrinder.get_json_from_file()
     trGrinder.pre_process_fsm()
@@ -68,8 +68,9 @@ def main():
     elif args.check_type == '3':
         trGrinder.check_path_sat()
     elif args.check_type == 'fsm':
-        print("--Generating the visual FSM")
         os.system(f"java -jar ./GraphGen/GraphGen.jar -i {trGrinder.get_full_json_path()} -visualize ")
+        os.system(f"cls")
+        print("--Generated the visual FSM")
     elif args.check_type == 'fsm2':
         print("--Generating the visual FSM")
         draw_fsm_graph(generate_fsm_graph(''.join(input_text)))        
