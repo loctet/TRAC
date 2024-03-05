@@ -12,7 +12,7 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
    - [2.3 How to check the randomly generated models ](#23-how-to-check-the-randomly-generated-models)
 - [3. Usage](#3-usage)
    - [3.1 Format of DAFSMs](#31-format-of-dafsms)
-   - [3.2 Different commands ](#32-different-commands)
+   - [3.2 Commands for performance evaluation](#32-different-commands)
    - [3.3 Run you own examples](#33-run-you-own-examples)
 - [4. Documentation](#4-documentation)
 - [5. Tips](#5-tips)
@@ -132,7 +132,7 @@ _ {True} o:O > starts(c,string _description, int _price) {description := _descri
 
 this corresponds to the transition entering state q<sub>0</sub> in Example 1 of the paper barred for
 
-- the `_description` parameter, omitted in the paper for readability
+- the `_description` parameter (omitted in the paper for readability)
 - the name of the initial state (which is immaterial for the analysis)
 - an explicit declaration of the contract variables to capture the assumption on contract variables in the first item of page 3 of the paper.
 
@@ -201,33 +201,22 @@ S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 
 The last but one line of the output yields the simplified `Z3` negation of the formula.
 
-## 3.2. Different commands 
-`TRAC` has 4 entries: The `Main` that handles the manual checks, the `DAFSMs random generator` to generate random examples, the `Random checker` to check bulk examples, and the `Data Plot` to visualize data from cvs file. The following part explain how to execute each and gives available parameters.
+The `Main.py` script accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers: the default one is `1` which is set to check  well-formedness; the other qualifier is `fsm` which generates a visual representation of a DAFSM as a `png` file. To access the file it is necessary to copy it from the `Docker` with the following command executed in a non-docker shell:
 
----
-### **Main File**
-The `Main.py`, can take some configurations as follows:
-   - `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for `TRAC` to analyse.
-   - `check_type`: Optional. Defines the type of check to perform on the input file. It can be one of four options:
-     - `1` for Well-Formedness Check,
-     - `fsm` for generating a visual representation of a DAFSM. The default is `1`.
-   - `--filetype`: Optional. Indicates the type of the input file, either `json` or `txt`. The default is `json`.
-   - `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
-   - `--time_out`: Optional. Sets a timeout for the operation in seconds. The default is `0`, meaning no timeout.
-     This detailed explanation provides a comprehensive guide on how to utilize `Main.py` for different operations within the `TRAC` tool.
-
-   Run this command to check an example `xxxxx`
-```bash
-   python3 Main.py --filetype txt "xxxxx"
+```
+docker cp <container-ID>:<path-to-image> <destination-path-on-local-machine>
 ```
 
-   To generate a visual representation of the DAFSM of the simple market place example, you can run the command:
-```bash
-   python3 Main.py --filetype txt "azure/simplemarket_place" fsm
-```
-   the latest command will output this visual representation: 
+The image generated for the simple market place DAFSM is below.
 
-   ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
+![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
+
+
+## 3.2. Commands for performance evaluation
+--------- CHANGE ALL --------
+the `DAFSMs random generator` to generate random examples, the `Random checker` to check bulk examples, and the `Data Plot` to visualize data from cvs file. The following part explain how to execute each and gives available parameters.
+
+
 
 ---
 ### **Generating random examples**
