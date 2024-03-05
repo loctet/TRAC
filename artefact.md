@@ -284,8 +284,19 @@ python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fi
    - `--fields`: Set the column(s) to plot against time, default is `num_states`.
    - `--pl_lines`: Define which time metric to plot against the fields, with defaults including participants' time, non-determinism time, and a-consistency-time.
    - `--type_plot`: Choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default.
+   - `--scale`: Y scale function, with default `log` (values `log`, `linear`)
 
-   This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
+To generate the plots of section 4 of the paper, we ran the following commands:
+
+```bash
+python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale linear
+
+python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale log
+```
+
+
+
+This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
 
 
 ## 3.3. Run your own examples

@@ -84,7 +84,7 @@ class CSVDataPlotter:
 
         fig.show()
 
-    def plot_csv_data_2d(self, fields, pl_lines, typeP = 'line'):
+    def plot_csv_data_2d(self, fields, pl_lines, typeP = 'line', scale = 'log'):
         """
         Plots 2D data from the CSV file as line, bar, or scatter plots.
         
@@ -96,6 +96,9 @@ class CSVDataPlotter:
         
         :param typeP: The type of plot ('line', 'bar', or 'scatter').
         :type typeP: str
+        
+        :param scale: Y scale function, with default 'log' (values 'log', linear)
+        :type scale: str
         """
         self.data = self.data[self.data["is_time_out"] == False]
         for field in fields:
@@ -105,9 +108,10 @@ class CSVDataPlotter:
             # Normalize the 'average_bf_num' for color mapping
             average_bf_num_normalized = to_normalize
 
-            plt.figure(figsize=(12, 8))
+            
             space = - 0.2
             for line in pl_lines:
+                plt.figure(figsize=(12, 8))
                 sorted_data[line] = sorted_data[line] / 10e6
                 if typeP == 'line': 
                     plt.plot(sorted_data[field], sorted_data[line])
@@ -120,13 +124,15 @@ class CSVDataPlotter:
                 plt.xlabel(s_labels[field])
                 plt.ylabel('Time in ms')
                 plt.title(f'Variation of {line} Metrics with {s_labels[field]}')
-                plt.legend()
+                #plt.legend()
                 plt.grid(True)
-                plt.yscale("linear")
+                plt.yscale(scale)
                 plt.xscale("linear")
                 plt.colorbar(label="Branching factor", orientation="vertical") 
-                plt.savefig(self.csv_file_path.replace(".csv",  f'_{line} Metrics with {field}_{time.time()}_linear_linear.png'))
-                plt.show()
+                image_name = self.csv_file_path.replace(".csv",  f'_{line}__with_{field}_{time.time()}_2d.png')
+                plt.savefig(image_name)
+                print(f"image create: {image_name}")
+                #plt.show()
 
     def plot_csv_data_3d(self, fields, time_metrics):
         """
@@ -149,10 +155,11 @@ class CSVDataPlotter:
             ax.set_ylabel(fields[1])
             ax.set_zlabel(f'{metric}')
             ax.set_title(f'3D Plot of {metric} against {fields[0]} and {fields[1]}')
-            ax.legend()
-
-            plt.savefig(self.csv_file_path.replace(".csv", f"3D Plot of {metric} against {fields[0]} and {fields[1]}_{time.time()}.png"))
-            plt.show()
+            #ax.legend()
+            image_name = self.csv_file_path.replace(".csv", f"3D_{metric}_against_{fields[0]}_and_{fields[1]}_{time.time()}.png")
+            plt.savefig(image_name)
+            print(f"image create: {image_name}")
+            #plt.show()
 
     def plot_csv_data_4d(self, fields):
         """
@@ -186,11 +193,13 @@ class CSVDataPlotter:
             # Colorbar to show the scale of 'average_bf_num'
             cbar = fig.colorbar(scatter, ax=ax, shrink=0.5, aspect=5)
             cbar.set_label('Average BF Num (N)')
-            
+            image_name = self.csv_file_path.replace(".csv", f"{fields[0]}_{fields[1]}_{metric}_4d_{time.time()}.png")
             # Save the plot to a PNG file
-            plt.savefig(self.csv_file_path.replace(".csv", f"{fields[0]}_{fields[1]}_{metric}_4d_{time.time()}.png"))
+            plt.savefig(image_name)
+            print(f"image create: {image_name}")
+
         
-        plt.show()
+        #plt.show()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate Plots')
@@ -200,6 +209,7 @@ if __name__ == "__main__":
     parser.add_argument('--fields', type=comma_separated_strings, default = ['num_states'], help='collumn to plot agains time num_state is the defalt')
     parser.add_argument('--pl_lines', type=comma_separated_strings, default=['participants_time', 'non_determinism_time', 'a_consistency_time', 'z3_running_time'], help='Lines to plot')
     parser.add_argument('--type_plot', type=str, default= 'line',  choices= ['line', 'scatter', 'bar'], help='Type of 2D to plot')
+    parser.add_argument('--scale', type=str, default= 'log',  choices= ['log', 'linear'], help='Y Scale')
     
     args = parser.parse_args()
     
@@ -207,7 +217,7 @@ if __name__ == "__main__":
     plotter = CSVDataPlotter(path)
 
     if args.shape == '2d':
-        plotter.plot_csv_data_2d(args.fields, args.pl_lines, args.type_plot)
+        plotter.plot_csv_data_2d(args.fields, args.pl_lines, args.type_plot, args.scale)
     elif args.shape == "3d":
         plotter.plot_csv_data_3d(args.fields, args.pl_lines)
     elif args.shape == "4d":
