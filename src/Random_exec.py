@@ -57,7 +57,7 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
             traceback.print_exc()
             exit()
     
-    path = f"./examples/random_txt/{directory}/list_of_files_info_{index}.csv"
+    path = f"./Examples/random_txt/{directory}/list_of_files_info_{index}.csv"
     print("Writing data in : ", path)
     write_csv(path, n_csv_data)
     return []
@@ -160,7 +160,7 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
             print(f"Error occurred: {e}")
             traceback.print_exc()
             exit()
-    path = f"./examples/random_txt/{directory}/list_of_files_info_{index}.csv"
+    path = f"./Examples/random_txt/{directory}/list_of_files_info_{index}.csv"
     print("Writing data in : ", path)
     write_csv(path, n_csv_data)
     return []
@@ -190,10 +190,10 @@ class RandomTransitionsExecuter:
         self.headers = s_csv_headers
         self.number_runs_per_each = number_runs_per_each
         self.number_test_per_cpu = number_test_per_cpu
-        self.csv_file_path = os.path.join('./examples/random_txt/', self.directory, 'list_of_files_info.csv')
-        self.csv_merged_file_path = os.path.join('./examples/random_txt/', self.directory, 'merged_list_of_files_info.csv')
+        self.csv_file_path = os.path.join('./Examples/random_txt/', self.directory, 'list_of_files_info.csv')
+        self.csv_merged_file_path = os.path.join('./Examples/random_txt/', self.directory, 'merged_list_of_files_info.csv')
         self.csv_data = self.read_csv_data(self.csv_file_path)
-        self.base_dir =  os.path.join('./examples/random_txt/', self.directory)
+        self.base_dir =  os.path.join('./Examples/random_txt/', self.directory)
         self.timer = MiniTimer()
         self.time_out = time_out
         print("Init Done")

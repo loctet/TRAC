@@ -279,9 +279,9 @@ def write_file(path, transitions):
 
 def genFile(directory, subdir_num, max_tests, num_states, num_actions, num_vars, max_branching_factor, num_participants, max_num_transitions):
     # make sure we create all needed sub dirs
-    p_sud_dir = os.path.join("./examples/random_txt/",directory, str(subdir_num))
+    p_sud_dir = os.path.join("./Examples/random_txt/",directory, str(subdir_num))
     os.makedirs(p_sud_dir, exist_ok=True)
-    os.makedirs(os.path.join("./examples/random_json/",directory, str(subdir_num)), exist_ok=True)
+    os.makedirs(os.path.join("./Examples/random_json/",directory, str(subdir_num)), exist_ok=True)
     os.makedirs(os.path.join("./Z3_models/random_tests/",directory, str(subdir_num)), exist_ok=True) 
     paramsList = []
     for i in range(max_tests):
@@ -331,7 +331,7 @@ class RandomTransitionsGenerator:
 
         self.num_tests = num_tests if num_tests is not None else 1000
         self.directory = directory
-        self.base_dir =  os.path.join('./examples/random_txt/', self.directory)
+        self.base_dir =  os.path.join('./Examples/random_txt/', self.directory)
         self.num_states = num_states
         self.num_actions = num_actions
         self.num_vars = num_vars

@@ -203,7 +203,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    path = os.path.join('./examples/random_txt/', args.directory, f"{args.file}.csv")
+    path = os.path.join('./Examples/random_txt/', args.directory, f"{args.file}.csv")
     plotter = CSVDataPlotter(path)
 
     if args.shape == '2d':
