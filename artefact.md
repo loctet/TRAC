@@ -106,7 +106,8 @@ The 135 randomly generated models used in last part of Section 4 of our paper ar
 
       ```bash
 	  cd src
-      python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10  --number_test_per_cpu 5 --time_out 300000000000  
+      python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10\
+		  --number_test_per_cpu 5 --time_out 300000000000  
       ```
 Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper).
 The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analysed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not change, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contain the values plotted in Figures 2 and 3 of our paper.
@@ -121,7 +122,16 @@ The plots can be obtained by executing
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The definition of the DAFSMs model (Definition 1 of our paper) is implemented by our DSL for DAFSMs. The format in the DSL of a DAFSM is a sequence of lines with each line specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place following Example 1 of our paper.
+The definition of the DAFSMs model (Definition 1 of our paper) is implemented by our DSL for DAFSMs. The format in the DSL of a DAFSM is a sequence of lines with each line specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place following Example 1 of our paper, which in our DSL is
+
+   ```
+   _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
+   S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+   S1 {True} o > c.acceptOffer() {} S2+
+   S1 {True} o > c.rejectOffer() {} S01
+   S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
+   S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+   ```
 
 The start transition is rendered in out DSL as follows:
 
@@ -139,48 +149,25 @@ The above transition has `True` as guard, introduce new participant `o` of role 
 
 In general a transition consists of
 
-   - a source and a target state (above `_` and  `S0`, respectively; `_` is a special state used together with the keyword `starts` to identify the creator of the coordinator; cf. comment before Definition 1 of the paper)
+   - a source and a target state (above `_` and  `S0`, respectively; `_` is a special state used together with the keyword `starts` to identify the creator of the coordinator; cf. comment before Definition 1 of the paper); states with a trailing `+` are final (like `S2+` above)
    - a guard specified in the notation of `z3`
    - a qualified participant `p : P` corresponding to $\nu p : P$ in the paper, `any p : P`, or just `p`
    - a call to an operation of the contract similar to the invocation to `starts`
    - a list of `&`-separate assignments such as `{description := _description & price := _price}` above.
 
+As seen above, the DAFSM for the simple market place is well-formed. The file `azure/simplemarket_place_edit_1` contain a modified DAFSM for the simple market place contract where the accept transition is replaced with
 
-To make an offer, we have the transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` that allow new participant `b` of role `B` to make an offer by passing a price `_offer` as parameter to the function `makeOffer`, the guard requires `_offer` to be `> 0` to update the value of the state variable `offer` and move the protocol to `S1`
+<span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> 
 
-To accept the offer, the transition`S1 {True} o > c.acceptOffer() {} S2+` can be invokes by the previously introduced `o` to accept the offer and move to a final state `S2` as it has the sign `+` after.
-
-To reject the offer, the transition `S1 {True} o > c.rejectOffer() {} S01` can be invoked by `o`and move the protocol back to a state where new byer or existing buyer can now make an offer. So we have these 2 transitions: `S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by any existing participant with role `B`. and `S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` can be invoke only by fresh one. This allow the function `makeOffer` to be available to both `new participant` and `existing ones`. 
-
-The `TXT` file for the SMP example should be :
-
-   ```
-   _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
-   S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
-   S1 {True} o > c.acceptOffer() {} S2+
-   S1 {True} o > c.rejectOffer() {} S01
-   S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
-   S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
-   ```
-
-   ![Simplemarket_place `TRAC`T DAFSMs](./images/fsm_simplemarke_place.png)
-
-## 3.2. Different commands 
-We ran the `simplemarket_place` example in a section above. 
-
-**Non Well Formed Examples**
-Let's modify the previous simple market place to make it not well-formed.
-
-Modify transition<span style="color:green">`S1 {True} o > c.acceptOffer() {} S2+`</span> to <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> 
-
-this modification says `x` can accept the offer, here, `x` is never introduce and therefore the new given DAFSMs should not be well formed. Run
+If we now execute in the `Docker`
 
    ```bash
    python3 Main.py --filetype txt "azure/simplemarket_place_edit_1"
    ```
 
-   After running the check, we have this output:
-   ```
+we get this output:
+
+```
    The Path : _-starts-S0>S0-makeOffer-S1 does not contain the participant x : []
    Error from this stage:S1_acceptOffer()_S2
    --For _acceptOffer_0:   Check result ::  False
@@ -188,28 +175,21 @@ this modification says `x` can accept the offer, here, `x` is never introduce an
    
    (!) Verdict: Not Well Formed
    ```
-   This tells that the participant `x` has not been introduced.
 
-   The `CallerCheck` found a path from the initial state `_` to `S1` where there is not an introduction of participant `x` (`The Path : _-starts-S0>S0-makeOffer-S1 does not contain the participant x : []`)
+stating that participant `x` has not been introduced. In fact, the `CallerCheck` finds a path to `S1` where  participant `x` is not introduced (first line of the output above) identified in the trasition from `S1` to `S2` with label `acceptOffer` (second line of the output). The last three lines of the output inform the user that well formedness does not hold for the use of a non introduced participant.
 
-   This line `--For _acceptOffer_0:   Check result ::  False` tells that the check of the model failed when checking the first occurrence of the function `acceptOffer`
+The file `azure/simplemarket_place_edit_2` modifies the original DAFSM of the simple market place contract by replacing the transitions reject and accept respectively with
 
-   This line `--- Participants       : False` tells the test which failed if `Participant`
+<span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span> and  
+<span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span>
 
-__________________
-Let's do another modification:
+Executing the command below from the `Docker` 
 
-Modify transition  <span style="color:green">`S1 {True} o > c.rejectOffer() {} S01`</span> to <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span>
-
-and transition  <span style="color:green">`S1 {True} o > c.acceptOffer() {} S01`</span> to  <span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span>
-
-Here we are creating DAFSMs where from `S1` there is no possible outgoing transition to progress base on the `guard satifiability`.
-
-The Tool should spot the fact that the model has `inconsistency`.Run
-   ```bash
+```bash
    python3 Main.py --filetype txt "azure/simplemarket_place_edit_2"
    ```
-After running the check, we have an output:
+
+we get the output:
 
    ```
    Error from this state:S01_makeOffer(int _offer)_S1
@@ -220,15 +200,19 @@ After running the check, we have an output:
    
    (!) Verdict: Not Well Formed
    ```
-This tells that the consistency rule is violated with transition `S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1` reaching `S1`. 
+which tells that consistency is violated by the transition 
 
-This line `--For _makeOffer_0:   Check result ::  False` tells that the check of the model failed when checking the first occurrence of the function `makeOffer`
+```
+S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
+```
 
-This line `--- A-Consistency: False` tells the test which failed if `Consistency`
+The last but one line of the output yields the simplified `Z3` formula.
 
-The line `Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True` is the `Simplify Z3` formula to check the `negation of the satisfiability formula` In this case the negation is `True`.
 
----
+![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png)
+
+## 3.2. Different commands 
+
 
 **Main File**
 
