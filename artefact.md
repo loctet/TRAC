@@ -91,7 +91,7 @@ reporting that the DAFSMs for the `simplemarket_place` is well formed. For the o
 
 ## 2.3. How to check the randomly generated models 
 
-The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in subfolders each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
+The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in subfolders each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
 
    ```bash
    performancecd src
@@ -235,10 +235,9 @@ python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_
 ```
 **Warning**: the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper.
 
+The `csv` file containing metadata of each generated example. The full description of the metadata is in [section 4 below](#4-documentation).
 
 ---------------------------------------------------------
-
-The `csv` file containing metadata of each generated example. [The full description of the metadata list can be found here](#4-documentation)
 
 The check of the generated examples starts immediately after generation completion. This process allows the auto-generation and checking of DAFSMs examples, facilitating the evaluation of `TRAC`.
 
