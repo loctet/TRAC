@@ -1,10 +1,17 @@
-## COORDINATION 2024: Artefact submission for the paper #8
-
+---
+title: "COORDINATION 2024: Artefact submission for the paper #8"
+author: "Joao Afonso, Elvis Konjoh Selabi, Maurizio Murgia, Antonio Ravara, and Emilio Tuosto"
+date: ""
+output: 
+  html_document:
+     css: style.css
+     self_contained: no
+---
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
 
-# Table of content 
+## Table of content 
 - [1. Installation](#1-installation)
 - [2. Reproducibility](#2-reproducibility)
    - [2.1 How table 1 has been created](#21-how-table-1-has-been-created)
