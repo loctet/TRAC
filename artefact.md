@@ -239,7 +239,8 @@ The `csv` file containing metadata of each generated example. The full descripti
 
 ---------------------------------------------------------
 
-The check of the generated examples starts immediately after generation completion. This process allows the auto-generation and checking of DAFSMs examples, facilitating the evaluation of `TRAC`.
+The check of the generated examples starts immediately after the generation is completed. 
+This process allows the auto-generation and checking of DAFSMs models, facilitating the evaluation of `TRAC`.
 
 
 ### **Running a set of examples**
@@ -248,16 +249,15 @@ The following command configuration allows you to check a set of examples in a g
 ```bash
 python3 Random_exec.py --directory <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
 ```
-The latter command takes all the examples metadata information in file `list_of_files_info.csv` in the `<subdir>`, allocates 5 examples to each CPU, and checks each example 10 times to have an average measured time, each CPU will output a CSV file `list_of_files_info_{id}.csv` at the end, and all generated csvs will be merged into `merged_list_of_files_info.csv` upon completion of all the examples.
-The checking process can be customized setting some parameters of `Random_exec.py`. The full list of available parameters follows: 
+The latter command takes all the models metadata information in file `list_of_files_info.csv` within the `<subdir>`, allocates 5 models to each CPU for verification, and checks each model 10 times to have an average measured time, each CPU will output a `csv` file `list_of_files_info_{id}.csv` at the end, and all generated `csv` will be merged into `merged_list_of_files_info.csv` upon completion of all the examples.
+The checking process can be customized by setting some parameters of `Random_exec.py`. The full list of available parameters follows: 
 
-   - `--merge_csv`only merges individual CSV results into `merged_list_of_files_info.csv`
-   - `--add_path` just count the number_path to each test in the `list_of_files_info.csv`
-   - `--number_test_per_cpu` determines how many tests are to run in parallel per CPU
-   - `--number_runs_per_each` specifies how many times to run each test
-   - `--time_out` sets a timeout limit for each test
-
-The checking process splits tests for parallel execution, each thread output results into a CSV file and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<subdir>` to preserve data.
+   - `--merge_csv [True|False]` only merges individual generated `csv` results into `merged_list_of_files_info.csv`
+   - `--add_path [True|False]` count the number path for each model in the `list_of_files_info.csv`
+   - `--number_test_per_cpu <num>` determines how many tests are to run in parallel per CPU (default is `5`)
+   - `--number_runs_per_each <num>` specifies how many times to run each model check (default is `10`)
+   - `--time_out <num>` sets a timeout limit (in nanoseconds) to perform each model check (default is `300000000000` 5 minutes).
+The checking process splits tests for parallel execution, each thread output results into a `csv` file and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<subdir>` to preserve data.
 
 
 ### Plotting Results
@@ -267,12 +267,12 @@ To plot data using `Plot_data.py`, the following command can be customized with 
 python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
 ```
    - `<directory>` the directory where the test data CSV is located, relative to `./Examples/random_txt/` where the `merged_list_of_files_info.csv` is
-   - `--shape` choose the plot shape: `2d`, `3d`, or `4d`
-   - `--file` specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`
-   - `--fields` set the column(s) to plot against time, default is `num_states`
-   - `--pl_lines` define which time metric to plot against the fields, with defaults including participants' time, non-determinism time,and a-consistency-time
-   - `--type_plot` choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default
-   - `--scale` Y scale function, with default `log` (values `log`, `linear`).
+   - `--file <str>` specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`
+   - `--shape <str>` choose the plot shape: `2d` or `3d`
+   - `--fields <list>` set the column(s) in the `csv` to plot against time, default is `num_states`
+   - `--pl_lines <list>` define which time metric column(s) in the the `csv` to plot against the `--fields`, with default `participants_time`,`non-determinism_time`,`a-consistency-time`
+   - `--type_plot <str>` choose the type of 2D plot, with `line` as the default. (values `line`, `scatter`, `bar`)
+   - `--scale [log|linear]` Y scale function, with default `log`. (values `log`, `linear`)
 
 To generate the plots of section 4 of the paper, we ran the following commands:
 
@@ -282,7 +282,7 @@ python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale log
 ```
 
-This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
+All plots are saved in the directory `<directory>`.
 
 
 ## 3.4. Run your own examples
