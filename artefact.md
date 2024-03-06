@@ -233,7 +233,7 @@ To generate the models used in Section 4 of the paper, we ran the following comm
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
-**Warning**: executing the command above in  the `Docker` would overwrite the files (models and `csv` files) generated for the experiments in our paper.
+**Warning**: the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper.
 
 
 ---------------------------------------------------------
