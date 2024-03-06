@@ -185,9 +185,9 @@ Error from this state:S01_makeOffer(int _offer)_S1
 --For _makeOffer_0:   Check result ::  False
 --- A-Consistency: False
 
-   Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True
+Simplification of the of the negation of the formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True
    
-   (!) Verdict: Not Well Formed
+(!) Verdict: Not Well Formed
 ```
 which tells that consistency is violated by the transition 
 
@@ -195,7 +195,7 @@ which tells that consistency is violated by the transition
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 ```
 
-The simplification operated by `Z3` on the formula in the last but one line of the output yields (the formula) `True`.
+The simplification operated by `Z3` on the negation of the formula in the last but one line of the output yields (the formula) `True`.
 
 The `Main.py` script used above accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers; `check_type` defaults to `1` which checks well-formedness and can be set to `fsm` to generate a visual representation of a DAFSM as a `png` file.
 
