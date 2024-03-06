@@ -6,6 +6,7 @@ from VariableDeclarationConverter import VariableDeclarationConverter
 from The_Validator import *
 from Settings import s_non_stop
 from Visual_graph import *
+from Helpers import clear
 
 def exitWithMessage(message):
     """
@@ -69,9 +70,9 @@ def main():
         trGrinder.check_path_sat()
     elif args.check_type == 'fsm':
         print("--Generating the visual FSM")
-        os.system(f"java -jar ./GraphGen/GraphGen.jar {trGrinder.get_full_json_path()}  {trGrinder.get_full_png_path()}")
-        os.system(f"cls")
-        print(f"--Generated the visual FSM :  {trGrinder.get_full_png_path()}")
+        os.system(f"java -jar ./GraphGen/GraphGen.jar -i {trGrinder.get_full_json_path()} -visualize ")
+        clear()
+        print(f"--Generated the visual FSM")
     elif args.check_type == 'fsm2':
         print("--Generating the visual FSM")
         draw_fsm_graph(generate_fsm_graph(''.join(input_text)))        

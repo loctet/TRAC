@@ -40,3 +40,10 @@ def run_parallel_generations(works):
         futures = [executor.submit(*args) for args in works]
         for future in concurrent.futures.as_completed(futures):
             future.result()
+
+def clear():
+    if(os.name == 'posix'):
+        os.system('clear')
+    # else screen will be cleared for windows
+    else:
+        os.system('cls')
