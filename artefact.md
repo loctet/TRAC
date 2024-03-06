@@ -177,7 +177,7 @@ stating that participant `x` has not been introduced. In fact, the `CallerCheck`
 
 The file `azure/simplemarket_place_edit_2` modifies `SMP` by replacing the transitions `acceptOffer` and `rejectOffer` respectively with
 
-<span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.acceptOffer() {} S01</span> and <span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.rejectOffer() {} S01</span> 
+<span class="text">S1 {False} o > c.acceptOffer() {} S01</span> and <span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.rejectOffer() {} S01</span> 
 
 Executing now the command below in the `Docker` 
 
