@@ -1,12 +1,5 @@
----
-title: "COORDINATION 2024: Artefact submission for the paper #8"
-author: "Joao Afonso, Elvis Konjoh Selabi, Maurizio Murgia, Antonio Ravara, and Emilio Tuosto"
-date: ""
-output: 
-  html_document:
-     css: style.css
-     self_contained: no
----
+# "COORDINATION 2024: Artefact submission for the paper #8
+<span style="-typora-class: authors;">Authors: Joao Afonso, Elvis Konjoh Selabi, Maurizio Murgia, Antonio Ravara, and Emilio Tuosto</span>
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
@@ -87,25 +80,25 @@ To check a model with `TRAC`, navigate to the directory `src` and execute the `M
    ```
 The latter command produces the following output
    ```tex
-   --Parsing Txt to generate Json file
+--Parsing Txt to generate Json file
 
-   Checking the well formness of the model----
+Checking the well formness of the model----
 
-   (!) Verdict: Well Formed
+(!) Verdict: Well Formed
    ```
 reporting that the DAFSMs for the `simplemarket_place` is well formed. For the other smart contracts it is enough to execute the python script on the corresponding DAFSM.
 
 
 ## 2.3. How to check the randomly generated models 
 
-The 135 randomly generated models used in last part of Section 4 of our paper are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
+The 135 randomly generated models used in last part of Section 4 of our paper<span style="-typora-class: textPaperPage;"> </span> are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
 
    ```bash
-   performancecd src
+   cd src
    python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10 --number_test_per_cpu 5 --time_out 300000000000  
    ```
-Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper).
-The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper.
+Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper<span style="-typora-class: textPaperPage;"> </span>).
+The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper<span style="-typora-class: textPaperPage;"> </span>.
 
 The plots can be obtained by executing 
 ```bash
@@ -118,9 +111,9 @@ in the `Docker`; the plots are `png` images saved in the directory `Examples/ran
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The DAFSMs model (Definition 1 of our paper) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper), which in our DSL is
+The DAFSMs model (Definition 1 of our paper<span style="-typora-class: textPaperPage;"> </span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
-<pre style="font-size:10px; background-color:#f6f8fa; padding:10px">
+<pre style="-typora-class: transitionB;">
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S1 {True} o > c.acceptOffer() {} S2+
@@ -132,29 +125,28 @@ S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
 
-In general a transition consists of
+In general, a transition consists of
 
    - a source and a target state; a trailing `+` denotes final states (like `S2+` above)
    - a guard specified in the notation of `Z3`
-   - a qualified participant `p : P` corresponding to <em><i>ν</i></em> p : P in the paper, `any p : P`, or just `p`
+   - a qualified participant `p : P` corresponding to <em><i>ν</i></em> p : P in the paper<span style="-typora-class: textPaperPage;"> </span>, `any p : P`, or just `p`
    - a call to an operation of the contract
    - a list of `&`-separate assignments.
 
 The first line of `SMP` is a special transition corresponding to the edge entering the initial state in Example 1 barred for
 
 - the fact that the source state is `_` is used to identify the initial state
-- the additional `_description` parameter, omitted in the paper for readability
+- the additional `_description` parameter, omitted in the paper<span style="-typora-class: textPaperPage;"> </span> for readability
 
-The guard `True` in the transition is the *precondition* while the list of assignments `{description := _description & price := _price}` is followed by  an explicit declaration of the contract variables to capture the assumption in the first item of Page 3 of the paper; the transition introduces a fresh participant `o` with role `O` which renders the object-oriented mechanism described just above Definition 1.
+The guard `True` in the transition is the *precondition* while the list of assignments `{description := _description & price := _price}` is followed by an explicit declaration of the contract variables to capture the assumption in the first item of Page 3 of the paper<span style="-typora-class: textPaperPage;"> </span>; the transition introduces a fresh participant `o` with role `O` which renders the object-oriented mechanism described just above Definition 1.
 
 Conventionally, parameters start with `_` to distinguish them from contract variables. 
 
 ## 3.2. Examples of non well-formed models
 As seen in [Section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
 
-<pre style="background-color:#f6f8fa; padding:10px">
-<span style="color:red">S1 {True} x > c.acceptOffer() {} S2+</span> 
-</pre>
+<pre style="-typora-class: transitionLL;">S1 {True} x > c.acceptOffer() {} S2+</pre> 
+
 
 Executing in the `Docker`
 
@@ -173,11 +165,11 @@ Error from this stage:S1_acceptOffer()_S2
 (!) Verdict: Not Well Formed
 ```
 
-stating that participant `x` has not been introduced. In fact, the `CallerCheck` finds a path to `S1` where  participant `x` is not introduced (first line of the output above) identified in the trasition from `S1` to `S2` with label `acceptOffer` (second line of the output). The last three lines of the output inform the user that well formedness does not hold for the use of a non introduced participant.
+stating that participant `x` has not been introduced. In fact, the `CallerCheck` finds a path to `S1` where  participant `x` is not introduced (first line of the output above) identified in the transition from `S1` to `S2` with label `acceptOffer` (second line of the output). The last three lines of the output inform the user that well formedness does not hold for the use of a non introduced participant.
 
 The file `azure/simplemarket_place_edit_2` modifies `SMP` by replacing the transitions `acceptOffer` and `rejectOffer` respectively with
 
-<span class="text">S1 {False} o > c.acceptOffer() {} S01</span> and <span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.rejectOffer() {} S01</span> 
+<span style="-typora-class: transitionL;">S1 {False} o > c.acceptOffer() {} S01</span> and <span style="-typora-class: transitionL;">S1 {False} o > c.rejectOffer() {} S01</span> 
 
 Executing now the command below in the `Docker` 
 
@@ -206,11 +198,11 @@ The simplification operated by `Z3` on the negation of the formula in the last b
 
 The `Main.py` script used above accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers; `check_type` defaults to `1` which checks well-formedness and can be set to `fsm` to generate a visual representation of a DAFSM as a `png` file.
 
-The image below for `SMP` is generated by invoking the `GraphStream` library ([https://graphstream-project.org/](https://graphstream-project.org/)) from our `GraphGen` component according to Figure 1 in the paper
+The image below for `SMP` is generated by invoking the `GraphStream` library ([https://graphstream-project.org/](https://graphstream-project.org/)) from our `GraphGen` component according to Figure 1 in the paper<span style="-typora-class: textPaperPage;"> </span>
 
 ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
 
-(labels are simplified for readability). The description in Section 3.1 of the paper wrongly states that `GraphGen` is "a third-party component", but in fact it should read that `GraphGen` is a wrapper to invoke `GraphStream`. Unfortunately, the image cannot be visualised from inside the `Docker` because `GraphGen` uses the functionality of `GraphStream` that displays the graph in an interactive window. So, to see the model it is necessary to use `TRAC` from outside the `Docker`.
+(labels are simplified for readability). The description in Section 3.1 of the paper<span style="-typora-class: textPaperPage;"> </span> wrongly states that `GraphGen` is "a third-party component", but in fact it should read that `GraphGen` is a wrapper to invoke `GraphStream`. Unfortunately, the image cannot be visualised from inside the `Docker` because `GraphGen` uses the functionality of `GraphStream` that displays the graph in an interactive window. So, to see the model it is necessary to use `TRAC` from outside the `Docker`.
 
 
 ## 3.3. Commands for performance evaluation
@@ -230,19 +222,19 @@ The generation process can be customised setting optional parameters of `Generat
 - `--num_actions <num>` is the number of actions
 - `--num_vars <num>` is the number of variables
 - `--max_num_transitions <num>` is the maximal number of transitions that should be at least the number of states (minus 1) 
-- `--max_branching_factor <num>` is the maximum branching factor should be greater or equal than 1; in corner cases, the branching factor is predominant and may lead to exceed the maximum number of transitions
-- `--num_participants <num>` is the maximum number of participants variables
+- `--max_branching_factor <num>` is the maximum branching factor that should be greater or equal to 1; in corner cases, the branching factor is predominant and may lead to exceeding the maximum number of transitions
+- `--num_participants <num>` is the maximum number of participant variables
 - `--steps <num>` the increment steps for generating tests (meaningful only if `--incremental_gen` below is set to true; default: `10`)
 - `--incremental_gen [True|False]` enables/disables incremental generation of models (default: `False`)
 - `--merge_only_csv [True|False]` if set to `True` merges results into a single `csv` file; all other parameters are ignored when this is flag is used (default: `False`)
 - `--num_example_for_each <num>` is the number of models to generate for each configuration (default:`5`).
 
-To generate the models used in Section 4 of the paper, we ran the following command:
+To generate the models used in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>, we ran the following command:
 
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
-<span style="color:red">**Warning**:</span> the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper.
+<span style="-typora-class: textRed;">**Warning**:</span> the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper<span style="-typora-class: textPaperPage;"> </span>.
 
 Well-formedness check of the models starts immediately after the generation phase is completed. The results of each check are stored in a `csv` file together with metadata for the performance evaluation. (The full description of the metadata is in [section 4 below](#4-documentation).)
 
@@ -258,13 +250,13 @@ where
    - `--number_runs_per_each <num>` specifies how many times to run each model check (default: `10`)
    - `--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).
 
-The command above takes reads the metadata in `Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4 of the paper. Each CPU will output a `csv` file `Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
+The command above reads the metadata in `Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
 
 The checking process can be customized by setting the following optional parameters:
 
    - `--merge_csv [True|False]` if set to `True`, merges individual generated `csv` results into `Examples/random_txt/<subdir>/merged_list_of_files_info.csv` (default: `False`)
    - `--add_path [True|False]` if set to `True`, counts the number path for each model in the `Examples/random_txt/<subdir>/list_of_files_info.csv` (default: `False`)
-   
+
 To preserve data `Random_exec.py` stores results in `Examples/random_txt/<subdir>/<time>` where `<time>` is the time when the execution started.
 
 
@@ -278,11 +270,11 @@ where
    - `--shape [2d|3d]` sets the plot shape
    - `--file <str>` specify the name of the `csv` file (without the extension) (default: `merged_list_of_files_info`)
    - `--fields <list>` sets the column(s) in the `csv` file to plot (default: `num_states`)
-   - `--pl_lines <list>` defines a comma-separated list of performance indicator to plot against the list set in `--fields` (default: `participants_time, non-determinism_time, a-consistency-time`)
+   - `--pl_lines <list>` defines a comma-separated list of performance indicators to plot against the list set in `--fields` (default: `participants_time, non-determinism_time, a-consistency-time`)
    - `--type_plot [line|scatter|bar]` chooses the type of 2D plot (default: `line`)
    - `--scale [log|linear]` scale of the y-axis (default: `log`).
 
-To generate the plots of section 4 of the paper, we ran the following commands:
+To generate the plots of section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>, we ran the following commands:
 
 ```bash
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale linear
@@ -299,16 +291,15 @@ where `containerID` is the `Docker` identity of the `loctet/trac_dafsms:v1` imag
 
 
 ## 3.4. Run your own examples
-Designing some DAFSM and check them can be done executing (`python3 Main.py --filetype txt "file_name"`)  where `file_name` is the file where the DAFSM is stored and specifying an alternative base directory `<directory>` if the default one is not used.
+Designing some DAFSM and checking them can be done by executing (`python3 Main.py --filetype txt "file_name"`)  where `file_name` is the file where the DAFSM is stored and specifying an alternative base directory `<directory>` if the default one is not used.
 
 Further models can be found in `src/Examples/other_tests`.
 
-
+Additional settings can be configured in the file `src/Settings.py`. This includes default directories and other parameters for various commands. For more detailed information about these settings, refer to the [full documentation](#4-further-information).
 
 # 4. Further information
 
 Below is the description of the header of the `csv` files:
-
    - `path` the path to the model file
    - `num_states` number of states 
    - `num_actions` number of actions
