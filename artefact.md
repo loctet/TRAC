@@ -145,7 +145,9 @@ Conventionally, parameters start with `_` to distinguish them from contract vari
 ## 3.2. Examples of non well-formed models
 As seen in [Section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
 
-<span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> 
+<pre style="background-color:#f6f8fa; padding:10px">
+<span style="color:red">S1 {True} x > c.acceptOffer() {} S2+</span> 
+</pre>
 
 Executing in the `Docker`
 
@@ -168,7 +170,7 @@ stating that participant `x` has not been introduced. In fact, the `CallerCheck`
 
 The file `azure/simplemarket_place_edit_2` modifies `SMP` by replacing the transitions `acceptOffer` and `rejectOffer` respectively with
 
-<span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span> and <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span> 
+<span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.acceptOffer() {} S01</span> and <span style="color:red;background-color:#f6f8fa; padding:10px">S1 {False} o > c.rejectOffer() {} S01</span> 
 
 Executing now the command below in the `Docker` 
 
@@ -233,18 +235,19 @@ To generate the models used in Section 4 of the paper, we ran the following comm
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
-**Warning**: the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper.
+<span style="color:red">**Warning**:</span> the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper.
 
 The `csv` file containing metadata of each generated example. The full description of the metadata is in [section 4 below](#4-documentation).
 
 ---------------------------------------------------------
 
-The check of the generated examples starts immediately after the generation is completed. 
-This process allows the auto-generation and checking of DAFSMs models, facilitating the evaluation of `TRAC`.
+Well-formedness check of the generated examples starts immediately after the generation is completed. 
+
+The overall process allows the auto-generation and checking of DAFSMs models, facilitating the evaluation of `TRAC`.
 
 
 ### **Running a set of examples**
-The following command configuration allows you to check a set of examples in a given sub-repository `<subdir>` in `Examples/random_txt`:
+The following command configuration allows the check of a set of examples in a given sub-repository `<subdir>` in `Examples/random_txt`:
 
 ```bash
 python3 Random_exec.py --directory <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
@@ -286,34 +289,35 @@ All plots are saved in the directory `<directory>`.
 
 
 ## 3.4. Run your own examples
-Now that the check of some examples is completed, you can design some DAFSMs and check if they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
+Now that the verification of some examples is completed, you can design some DAFSMs and check if they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
 
-/!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact name to the example `<subdir>/<example>`. 
-
-Some examples can be found in `Examples/other_tests` testing some scenarios which are not found in the Azure repository. 
+<pre style="color:red;background-color:#f6f8fa; padding:10px">
+/!\ Note that all manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact name of the example `< subdir>/< example>`. 
+</pre>
+Some examples can be found in `Examples/other_tests` testing some scenarios that are not found in the Azure repository. 
 
 ______________________________
 
 # 4. Documentation
 
- The full documentation in HTML format can be downloaded [in from the git repository](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip)
+To access the complete documentation, including detailed code explanations and usage instructions, please download the zipped file containing the HTML format documentation from the [GitHub repository](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip). After downloading, unzip the file to access the Sphinx-generated documentation. This documentation offers valuable insights into the inner workings of the TRAC system, facilitating a deeper understanding of its features and capabilities.
 
    ## CSV Header Description
-   - `path` the path of the file
-   - `num_states` number of states in the FSM
-   - `num_actions` number of actions in the FSM
-   - `num_vars` number of variables in the FSM
-   - `max_branching_factor` maximum branching factor in the FSM
-   - `num_participants` number of participants in the FSM
-   - `num_transitions` number of transitions in the FSM
+   - `path` the path to the model file
+   - `num_states` number of states 
+   - `num_actions` number of actions
+   - `num_vars` number of variables
+   - `max_branching_factor` maximum branching factor
+   - `num_participants` number of participants
+   - `num_transitions` number of transitions
    - `seed_num` seed number used for randomization
-   - `min_param_num` minimum number of parameters
-   - `average_param_num` average number of parameters
-   - `max_param_num` maximum number of parameters
-   - `min_bf_num` minimum number of branching factors
-   - `average_bf_num` average number of branching factors
-   - `max_bf_num` maximum number of branching factors
-   - `num_paths` number of paths in the FSM
+   - `min_param_num` actual minimum number of parameters
+   - `average_param_num` actual average number of parameters
+   - `max_param_num` actual maximum number of parameters
+   - `min_bf_num` actual minimum number of branching factors
+   - `average_bf_num` actual average number of branching factors
+   - `max_bf_num` actual maximum number of branching factors
+   - `num_paths` number of paths
    - `verdict` verdict of the verification process
    - `participants_time` time taken for checking participants
    - `non_determinism_time` time taken for non-determinism check
@@ -326,7 +330,9 @@ ______________________________
 
 
 # 5. Tips
-All commands provided, `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py`, come equipped with a `--help` option. Utilizing `--help` will display detailed usage instructions and available options for each command, aiding users in understanding and effectively utilizing the tool's features.
+Each of the commands - `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py` - is equipped with a `--help` option. When using the `--help` option, detailed usage instructions and available options for each command will be displayed. 
 ```bash
    python3 Main.py --help
 ```
+
+This functionality is designed to assist users in comprehending and efficiently utilizing the tool's features.
