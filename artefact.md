@@ -285,7 +285,12 @@ python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale log
 ```
 
-All plots are saved in the directory `<directory>`.
+All generated plots are stored in the directory `<directory>`. Since it's not possible to visualize these plots directly from within Docker, you'll need to copy them to a directory outside of `Docker`. Use the following command:
+```bash
+docker ps  
+docker cp <containerID>:/home/TRAC/src/Examples/random_txt/<directory> <localPath>
+```
+The first line in the command above outputs a list of running containers. Locate the container ID of the `loctet/trac_dafsms:v1` image, and replace `<containerID>` with it in the second line. `<localPath>` represents the path on your local machine where you want to copy the plots to. Once the copy is completed, you can view the plots outside of `Docker`. 
 
 
 ## 3.4. Run your own examples
