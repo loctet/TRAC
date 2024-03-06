@@ -208,18 +208,17 @@ The image generated for `SMP` is below.
 
 
 ## 3.3. Commands for performance evaluation
-To evaluate the performances of `TRAC`, we created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following we explain how to perform each step.
+To evaluate the performances of `TRAC`, we created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following, we explain how to perform each step.
 
 ---
 ### **Generating random examples**
-The following command generates 100 ramdom models and saves them in the directory `your_directory_name`:
+The following command generates 100 random models and saves them in the directory `Examples/random_txt/your_sub_dir_name`:
 
 ```bash
-python3 Generate_examples.py --directory your_directory_name --num_tests 100
+python3 Generate_examples.py --directory your_sub_dir_name --num_tests 100
 ```
 
-The generation process can be customised setting optional parameters of `Generate_examples.py`; if not specified,  such parameters default to randomly are generated values:
-
+The generation process can be customised setting optional parameters of `Generate_examples.py`; if not specified,  such parameters default to randomly generated values:
 - `--num_tests` the number of tests to generate
 - `--num_states` the number of states per test
 - `--num_actions` the number of actions
@@ -237,29 +236,27 @@ To generate the examples used in Section 4 of the paper, we ran the following co
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
-**Output**: Examples are created in the directory `Examples/random_txt/<directory>`. A CSV at the root of this directory contains metadata of each generated example, including paths, number of states, actions, variables, branching factors, and timings. [fill list here](#4-documentation)
+The above command creates 135 random examples in the directory `Examples/random_txt/tests_dafsms_1`, with a CSV containing metadata of each generated example. [The full description of the metadata list can be found here](#4-documentation)
 
-**Checking the examples**: The check of the generated examples starts immediately after the completion of the generation.
-
-This process allows the automated generation of DAFSMs examples, facilitating comprehensive testing and verification of DAFSMs with `TRAC`.
+The check of the generated examples starts immediately after generation completion. This process allows the auto-generation and checking of DAFSMs examples, facilitating the evaluation of `TRAC`.
 
 ---
 ### **Running a set of examples**
- To check multiple examples in a given repository, you can run the following command:
+The following command configuration allows you to check a set of examples in a given sub-repository `<subdir>` in `Examples/random_txt`:
 
-   ```bash
-   python3 Random_exec.py --directory <subdir> --merge_csv --add_path --number_test_per_cpu <num> --number_runs_per_each <runs> --time_out <nanoseconds>
-   ```
-The latter command can be configured by passing some parameters to `Random_exec.py`. The full list of available parameters follows: 
+```bash
+python3 Random_exec.py --directory <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
+```
+The latter command takes all the examples metadata information in file `list_of_files_info.csv` in the `<subdir>`, allocates 5 examples to each CPU, and checks each example 10 times to have an average measured time, each CPU will output a CSV file `list_of_files_info_{id}.csv` at the end, and all generated csvs will be merged into `merged_list_of_files_info.csv` upon completion of all the examples.
+The checking process can be customized setting some parameters of `Random_exec.py`. The full list of available parameters follows: 
 
-   - `--directory`: Specifies a subdirectory in `Examples/random_txt` where the examples, and `list_of_files_info.csv` are located.
-   - `--merge_csv`: Only merges individual CSV results into `merged_list_of_files_info.csv`.
-   - `--add_path`: Just count the number_path to each test in the CSV.
-   - `--number_test_per_cpu`: Determines how many tests are run in parallel per CPU.
-   - `--number_runs_per_each`: Specifies how many times to run each test.
-   - `--time_out`: Sets a timeout limit for each test.
+   - `--merge_csv`only merges individual CSV results into `merged_list_of_files_info.csv`
+   - `--add_path` just count the number_path to each test in the `list_of_files_info.csv`
+   - `--number_test_per_cpu` determines how many tests are to run in parallel per CPU
+   - `--number_runs_per_each` specifies how many times to run each test
+   - `--time_out` sets a timeout limit for each test
 
-The checking process splits tests for parallel execution, each thread output results into a CSV file and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<directory>` to preserve data.
+The checking process splits tests for parallel execution, each thread output results into a CSV file and merges them upon completion. Results are stored in a subdirectory within `Examples/random_txt/<subdir>` to preserve data.
 
 ---
 ### Plotting Results
@@ -268,14 +265,13 @@ To plot data using `Plot_data.py`, the following command can be customized with 
 ```bash
 python3 Plot_data.py <directory> --shape <shape> --file <file_name> --fields <fields_to_plot> --pl_lines <lines_to_plot> --type_plot <plot_type>
 ```
-
-   - `<directory>`: The directory where the test data CSV is located, relative to `./examples/random_txt/` where the `merged_list_of_files_info.csv` is.
-   - `--shape`: Choose the plot shape: `2d`, `3d`, or `4d`.
-   - `--file`: Specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`.
-   - `--fields`: Set the column(s) to plot against time, default is `num_states`.
-   - `--pl_lines`: Define which time metric to plot against the fields, with defaults including participants' time, non-determinism time, and a-consistency-time.
-   - `--type_plot`: Choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default.
-   - `--scale`: Y scale function, with default `log` (values `log`, `linear`)
+   - `<directory>` the directory where the test data CSV is located, relative to `./Examples/random_txt/` where the `merged_list_of_files_info.csv` is
+   - `--shape` choose the plot shape: `2d`, `3d`, or `4d`
+   - `--file` specify the CSV file name without the extension, defaulting to `merged_list_of_files_info`
+   - `--fields` set the column(s) to plot against time, default is `num_states`
+   - `--pl_lines` define which time metric to plot against the fields, with defaults including participants' time, non-determinism time,and a-consistency-time
+   - `--type_plot` choose the type of 2D plot, with `line`  (values `line`, `scatter`, `bar`)as the default
+   - `--scale` Y scale function, with default `log` (values `log`, `linear`).
 
 To generate the plots of section 4 of the paper, we ran the following commands:
 
@@ -285,17 +281,15 @@ python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale log
 ```
 
-
-
 This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
 
 
 ## 3.4. Run your own examples
 Now that the check of some examples is completed, you can design some DAFSMs and check if they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
 
-/!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact path `<subdir>/<example>`. 
+/!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact name to the example `<subdir>/<example>`. 
 
-Some examples can be found in `Examples/other_tests` testing some scenarios not found in the Azure repository. 
+Some examples can be found in `Examples/other_tests` testing some scenarios which are not found in the Azure repository. 
 
 ______________________________
 
@@ -304,30 +298,30 @@ ______________________________
  The full documentation in HTML format can be downloaded [in from the git repository](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip)
 
    ## CSV Header Description
-   - **path**: The path of the file.
-   - **num_states**: Number of states in the FSM.
-   - **num_actions**: Number of actions in the FSM.
-   - **num_vars**: Number of variables in the FSM.
-   - **max_branching_factor**: Maximum branching factor in the FSM.
-   - **num_participants**: Number of participants in the FSM.
-   - **num_transitions**: Number of transitions in the FSM.
-   - **seed_num**: Seed number used for randomization.
-   - **min_param_num**: Minimum number of parameters.
-   - **average_param_num**: Average number of parameters.
-   - **max_param_num**: Maximum number of parameters.
-   - **min_bf_num**: Minimum number of branching factors.
-   - **average_bf_num**: Average number of branching factors.
-   - **max_bf_num**: Maximum number of branching factors.
-   - **num_paths**: Number of paths in the FSM.
-   - **verdict**: Verdict of the verification process.
-   - **participants_time**: Time taken for checking participants.
-   - **non_determinism_time**: Time taken for non-determinism check.
-   - **a_consistency_time**: Time taken for action consistency check.
-   - **f_building_time**: Time taken for formula building.
-   - **building_time**: Time taken for building.
-   - **z3_running_time**: Time taken for running Z3.
-   - **total**: Total time taken for the process.
-   - **is_time_out**: Indicates if there was a timeout during processing.
+   - `path` the path of the file
+   - `num_states` number of states in the FSM
+   - `num_actions` number of actions in the FSM
+   - `num_vars` number of variables in the FSM
+   - `max_branching_factor` maximum branching factor in the FSM
+   - `num_participants` number of participants in the FSM
+   - `num_transitions` number of transitions in the FSM
+   - `seed_num` seed number used for randomization
+   - `min_param_num` minimum number of parameters
+   - `average_param_num` average number of parameters
+   - `max_param_num` maximum number of parameters
+   - `min_bf_num` minimum number of branching factors
+   - `average_bf_num` average number of branching factors
+   - `max_bf_num` maximum number of branching factors
+   - `num_paths` number of paths in the FSM
+   - `verdict` verdict of the verification process
+   - `participants_time` time taken for checking participants
+   - `non_determinism_time` time taken for non-determinism check
+   - `a_consistency_time` time taken for action consistency check
+   - `f_building_time` time taken for formula building
+   - `building_time` time taken for building
+   - `z3_running_time` time taken for running Z3
+   - `total` total time taken for the process
+   - `is_time_out` indicates if there was a timeout during processing.
 
 
 # 5. Tips
