@@ -12,8 +12,9 @@ This document specifies the instructions for the AEC of COORDINATION 2024 for th
    - [2.3 How to check the randomly generated models ](#23-how-to-check-the-randomly-generated-models)
 - [3. Usage](#3-usage)
    - [3.1 Format of DAFSMs](#31-format-of-dafsms)
-   - [3.2 Commands for performance evaluation](#32-commands-for-performance-evaluation)
-   - [3.3 Run you own examples](#33-run-your-own-examples)
+   - [3.2 Examples of non well-formed models](#32-examples-of-non-well-formed-models)
+   - [3.3 Commands for performance evaluation](#33-commands-for-performance-evaluation)
+   - [3.4 Run you own examples](#34-run-your-own-examples)
 - [4. Documentation](#4-documentation)
 - [5. Tips](#5-tips)
 
@@ -111,12 +112,10 @@ in the `Docker`; the plots are `png` images saved in the directory `Examples/ran
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The definition of the DAFSMs model (Definition 1 of our paper) is implemented by our DSL for DAFSMs. The format in the DSL of a DAFSM is a sequence of lines with each line specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place following Example 1 of our paper, which in our DSL is
+The DAFSMs model (Definition 1 of our paper) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper), which in our DSL is
 
 <pre style="font-size:10px; background-color:#f6f8fa; padding:10px">
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
-</pre>
-<pre style="font-size:11px; background-color:#f6f8fa; padding:10px; margin-top:-25px">
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S1 {True} o > c.acceptOffer() {} S2+
 S1 {True} o > c.rejectOffer() {} S01
@@ -124,41 +123,38 @@ S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 </pre>
 
-The start transition is rendered in our DSL as follows:
+hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
-<pre style="font-size:10px; background-color:#f6f8fa; padding:10px">
-_ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
-</pre>
-
-this corresponds to the transition entering state q<sub>0</sub> in Example 1 of the paper barred for
-
-- the `_description` parameter (omitted in the paper for readability)
-- the name of the initial state (which is immaterial for the analysis)
-- an explicit declaration of the contract variables to capture the assumption on contract variables in the first item of page 3 of the paper.
-
-Conventionally parameters start with `_` to distinguish them from contract variables. 
-
-The above transition has `True` as guard, introduce new participant `o` of role `O`, which `starts` the coordinator `c` by passing a description `string` and a price `int`. These values are assigned to contract variables `description` , `price`, and`offer`.
 
 In general a transition consists of
 
-   - a source and a target state (above `_` and  `S0`, respectively; `_` is a special state used together with the keyword `starts` to identify the creator of the coordinator; cf. comment before Definition 1 of the paper); states with a trailing `+` are final (like `S2+` above)
-   - a guard specified in the notation of `z3`
+   - a source and a target state; a trailing `+` denotes final states (like `S2+` above)
+   - a guard specified in the notation of `Z3`
    - a qualified participant `p : P` corresponding to <em><i>ν</i></em> p : P in the paper, `any p : P`, or just `p`
-   - a call to an operation of the contract similar to the invocation to `starts`
-   - a list of `&`-separate assignments such as `{description := _description & price := _price}` above.
+   - a call to an operation of the contract
+   - a list of `&`-separate assignments.
 
-As seen above, the DAFSM for the simple market place is well-formed. The file `azure/simplemarket_place_edit_1` contain a modified DAFSM for the simple market place contract where the accept transition is replaced with
+The first line of `SMP` is a special transition corresponding to the edge entering the initial state in Example 1 barred for
+
+- the fact that the source state is `_` is used to identify the initial state
+- the additional `_description` parameter, omitted in the paper for readability
+
+The guard `True` in the transition is the *precondition* while the list of assignments `{description := _description & price := _price}` is followed by  an explicit declaration of the contract variables to capture the assumption in the first item of Page 3 of the paper; the transition introduces a fresh participant `o` with role `O` which renders the object-oriented mechanism described just above Definition 1.
+
+Conventionally, parameters start with `_` to distinguish them from contract variables. 
+
+## 3.2. Examples of non well-formed models
+As seen in [section](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
 
 <span style="color:red">`S1 {True} x > c.acceptOffer() {} S2+`</span> 
 
-If we now execute in the `Docker`
+Executing in the `Docker`
 
-   ```bash
-   python3 Main.py --filetype txt "azure/simplemarket_place_edit_1"
-   ```
+```bash
+python3 Main.py --filetype txt "azure/simplemarket_place_edit_1"
+```
 
-we get this output:
+produces
 
 ```
 The Path : _-starts-S0>S0-makeOffer-S1 does not contain the participant x : []
@@ -171,77 +167,72 @@ Error from this stage:S1_acceptOffer()_S2
 
 stating that participant `x` has not been introduced. In fact, the `CallerCheck` finds a path to `S1` where  participant `x` is not introduced (first line of the output above) identified in the trasition from `S1` to `S2` with label `acceptOffer` (second line of the output). The last three lines of the output inform the user that well formedness does not hold for the use of a non introduced participant.
 
-The file `azure/simplemarket_place_edit_2` modifies the original DAFSM of the simple market place contract by replacing the transitions accept and reject respectively with
+The file `azure/simplemarket_place_edit_2` modifies `SMP` by replacing the transitions `acceptOffer` and `rejectOffer` respectively with
 
-<span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span> and
-<span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span> 
+<span style="color:red">`S1 {False} o > c.acceptOffer() {} S01`</span> and <span style="color:red">`S1 {False} o > c.rejectOffer() {} S01`</span> 
 
-Executing the command below from the `Docker` 
+Executing now the command below in the `Docker` 
 
 ```bash
 python3 Main.py --filetype txt "azure/simplemarket_place_edit_2"
 ```
 
-we get the output:
+produces
 
-   ```
-   Error from this state:S01_makeOffer(int _offer)_S1
-   --For _makeOffer_0:   Check result ::  False
-   --- A-Consistency: False
-   
+```
+Error from this state:S01_makeOffer(int _offer)_S1
+--For _makeOffer_0:   Check result ::  False
+--- A-Consistency: False
+
    Simplify of the Not Formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True
    
    (!) Verdict: Not Well Formed
-   ```
+```
 which tells that consistency is violated by the transition 
 
 ```
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 ```
 
-The last but one line of the output yields the simplified `Z3` negation of the formula.
+The simplification operated by `Z3` on the formula in the last but one line of the output yields (the formula) `True`.
 
-The `Main.py` script accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers: the default one is `1` which is set to check well-formedness; the other qualifier is `fsm` which generates a visual representation of a DAFSM as a `png` file. To access the file it is necessary to copy it from the `Docker` with the following command executed in a non-docker shell:
+The `Main.py` script used above accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers; `check_type` defaults to `1` which checks well-formedness and can be set to `fsm` to generate a visual representation of a DAFSM as a `png` file. To access the file it is necessary to copy it from the `Docker` with the following command executed in a non-docker shell:
 
 ```
 docker cp <container-ID>:<path-to-image> <destination-path-on-local-machine>
 ```
 
-The image generated for the simple marketplace DAFSM is below.
+The image generated for `SMP` is below.
 
 ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
 
 
-## 3.2. Commands for performance evaluation
-To evaluate the performances of `TRAC`, we created a randomizer that contains a `Random generator`  that generates random examples, a `Random checker` that checks examples in bulk, and a `Data Plot` that visualizes data from a `csv` file. The following part explains how to execute each and gives available parameters.
+## 3.3. Commands for performance evaluation
+To evaluate the performances of `TRAC`, we created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following we explain how to perform each step.
 
 ---
 ### **Generating random examples**
-To generate DAFSMs examples with `Generate_examples.py`,  you can run the following command:
-
-**Run Generate_examples.py** : Use the command below, adjusting parameters as needed.
+The following command generates 100 ramdom models and saves them in the directory `your_directory_name`:
 
 ```bash
 python3 Generate_examples.py --directory your_directory_name --num_tests 100
 ```
-Replace `your_directory_name` with the desired directory to store test files, and adjust `--num_tests` to the number of examples you wish to generate.
 
-The parameters for `Generate_examples.py` enable customization of the DAFSMs example generation process. If not specified, values for these parameters are generated randomly:
+The generation process can be customised setting optional parameters of `Generate_examples.py`; if not specified,  such parameters default to randomly are generated values:
 
-- `--directory`: Specifies the directory to save generated examples.
-- `--num_tests`: The number of tests to generate.
-- `--num_states`: The number of states per test.
-- `--num_actions`: The number of actions.
-- `--num_vars`: The number of variables.
-- `--max_num_transitions`: The maximum number of transitions.
-- `--max_branching_factor`: The maximum branching factor.
-- `--num_participants`: The number of participants.
-- `--incremental_gen`: Enables incremental generation with num_states ranging from 10 to num_tests with given steps.
-- `--merge_only_csv`: Merges results into a single CSV without generating new tests.
-- `--steps`: The increment steps for generating tests.
-- `--num_example_for_each`: The number of examples to generate for each configuration.
+- `--num_tests` the number of tests to generate
+- `--num_states` the number of states per test
+- `--num_actions` the number of actions
+- `--num_vars` the number of variables
+- `--max_num_transitions` the maximum number of transitions
+- `--max_branching_factor` the maximum branching factor
+- `--num_participants` the number of participants
+- `--incremental_gen` enables incremental generation with num_states ranging from 10 to num_tests with given steps
+- `--merge_only_csv` merges results into a single CSV without generating new tests
+- `--steps` the increment steps for generating tests
+- `--num_example_for_each` the number of examples to generate for each configuration.
 
-To generate the examples we used for `section 4` of the paper, we ran the following command:
+To generate the examples used in Section 4 of the paper, we ran the following command:
 
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5 --num_tests 30 --incremental_gen True
@@ -299,7 +290,7 @@ python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num
 This command allows different plotting configurations, adjusting for different dimensions and aspects of the data captured in the CSV file. All plots are saved in the directory `<directory>`.
 
 
-## 3.3. Run your own examples
+## 3.4. Run your own examples
 Now that the check of some examples is completed, you can design some DAFSMs and check if they are well-formed by giving the name of the file to the following command (`python3 Main.py --filetype txt "xxxxxxxxx"`) 
 
 /!\ All manually executed examples should be placed in the folder  `Examples/dafsms_txt`. You can create sub-dirs, just be assured to run the above command with the exact path `<subdir>/<example>`. 
