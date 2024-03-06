@@ -250,7 +250,7 @@ The overall process allows the auto-generation and checking of DAFSMs models, fa
 The following command configuration allows the check of a set of examples in a given sub-repository `<subdir>` in `Examples/random_txt`:
 
 ```bash
-python3 Random_exec.py --directory <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
+python3 Random_exec.py <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
 ```
 The latter command takes all the models metadata information in file `list_of_files_info.csv` within the `<subdir>`, allocates 5 models to each CPU for verification, and checks each model 10 times to have an average measured time, each CPU will output a `csv` file `list_of_files_info_{id}.csv` at the end, and all generated `csv` will be merged into `merged_list_of_files_info.csv` upon completion of all the examples.
 The checking process can be customized by setting some parameters of `Random_exec.py`. The full list of available parameters follows: 
