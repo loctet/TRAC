@@ -127,8 +127,6 @@ S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 </pre>
-
-
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
 
@@ -259,7 +257,7 @@ where
    - `--number_runs_per_each <num>` specifies how many times to run each model check (default: `10`)
    - `--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).
 
-The command above reads the metadata in `src/Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `src/Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
+The command above reads the metadata in `src/Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `src/Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each set of models'  `<id>` assigned to the CPU. All `csv` files are merged into the file `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
 
 The checking process can be customized by setting the following optional parameters:
 
