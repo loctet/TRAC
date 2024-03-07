@@ -5,21 +5,21 @@
 TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring the consistency of the model. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol.
 
 ## Folder architecture
-The `TRAC` folder architecture is organized as follows:
-|-- docker/                            Constains docker configuration files <br/>
-|-- docs/                                 Contains documentation files. <br/>
-|   |-- html/                            HTML format documentation files. <br/>
-|-- ExperimentalData/         Directory for experimental data. <br/>
-|   |-- tests_dafsm_1/   	Contains data for experimental tests of the paper. <br/>
-|-- images/                             Directory for images used in the readme or documentation. <br/>
-|-- src/                                     Contains source code files. <br/>
-|   |-- Examples/                    Directory for example files. <br/>
-|   |   |-- dafsm_txt/              Holds DAFSM model text files for manual execution. <br/>
-|   |   |-- jsons/                       Stores JSON files. <br/>
-|   |   |-- random_json/         Stores randomly generated JSON files. <br/>
-|   |   |-- random_txt/            Contains randomly generated DAFSM model text files. <br/>
-|   |-- GraphGen/                    `.jar` for graph visualization. <br/>
-|   |-- Z3_models/                  Directory for storing Z3 model files. <br/>
+The `TRAC` folder architecture is organized as follows: <br/>
+|-- docker/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Constains docker configuration files <br/>
+|-- docs/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Contains documentation files. <br/>
+|&emsp;|-- html/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; HTML format documentation files. <br/>
+|-- ExperimentalData/&emsp;&emsp;&emsp;Directory for experimental data. <br/>
+|&emsp;|-- tests_dafsm_1/&emsp;	Contains data for experimental tests of the paper. <br/>
+|-- images/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  Directory for images used in the readme or documentation. <br/>
+|-- src/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Contains source code files. <br/>
+|&emsp;|-- Examples/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  Directory for example files. <br/>
+|&emsp;|&emsp;|-- dafsm_txt/&emsp;&emsp;&emsp;&emsp;  Holds DAFSM model text files for manual execution. <br/>
+|&emsp;|&emsp;|-- jsons/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  Stores JSON files. <br/>
+|&emsp;|&emsp;|-- random_json/&emsp;&emsp;&emsp;Stores randomly generated JSON files. <br/>
+|&emsp;|&emsp;|-- random_txt/&emsp;&emsp;&emsp;&emsp;Contains randomly generated DAFSM model text files. <br/>
+|&emsp;|-- GraphGen/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  `.jar` for graph visualization. <br/>
+|&emsp;|-- Z3_models/&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Directory for storing Z3 model files. <br/>
 
 ## Docker Installation and Running Instructions
 
