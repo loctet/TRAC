@@ -6,6 +6,7 @@ TRAC is a tool designed to enhance the development and verification of coodinati
 
 ## Folder architecture
 The `TRAC` folder architecture is organized as follows:
+|-- docker/                            Constains docker configuration files
 |-- docs/                                 Contains documentation files.
 |   |-- html/                            HTML format documentation files.
 |-- ExperimentalData/         Directory for experimental data.
