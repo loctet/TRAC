@@ -31,7 +31,7 @@ To install and run TRAC using `Docker`:
 # 2. Reproducibility
 
 ## 2.1 How Table 1 has been created
-We want to highlight the fact that we spotted some errors in Table 1<span style="-typora-class: textPaperPage;"> </span>  and the table in this section contains updated information for `Simple Marketplace, Defective Component Counter, Frequent Flyer Rewards Calculator, and Asset Transfer`.
+We first point out that when preparing this artifact we found a few errors in Table 1<span style="-typora-class: textPaperPage;"> </span>.  Table below has therefore been updated with the correct information. The examples affected by changes are `Simple Marketplace, Defective Component Counter, Frequent Flyer Rewards Calculator, and Asset Transfer`.
 
 We now describe how the information has been determined. 
 We recall that Table 1<span style="-typora-class: textPaperPage;"> </span> reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
