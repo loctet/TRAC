@@ -31,7 +31,9 @@ To install and run TRAC using `Docker`:
 # 2. Reproducibility
 
 ## 2.1 How Table 1 has been created
-We now describe how the information in Table 1<span style="-typora-class: textPaperPage;"> </span> has been determined. 
+We want to highlight the fact that we spotted some errors in Table 1<span style="-typora-class: textPaperPage;"> </span>  and the table in this section contains updated information for `Simple Marketplace, Defective Component Counter, Frequent Flyer Rewards Calculator, and Asset Transfer`.
+
+We now describe how the information has been determined. 
 We recall that Table 1<span style="-typora-class: textPaperPage;"> </span> reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
 
 - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
@@ -48,12 +50,10 @@ For each smart contract, the table below reports
 - where the features are met in the `Solidity` implementation in the Azure repository
 - the lines in the DAFSM model where the feature is captured (if at all) 
 
-Features `RR` and `MRP`  are not explicitly handled by `TRAC` and therefore not present in the table below.
-
-`Simple Marketplace,` `Hello Blockchain`, `Bazaar`, and `Ping Pong` lines in Table 1<span style="-typora-class: textPaperPage;"> </span> are wrongly specified, the features in the table below match exactly what has been implemented in the Azure repository.
+Features `RR` and `MRP`  are not explicitly handled by `TRAC` and therefore not present in the column `How TRAC handles it` in the table below.
 
 
-|Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
+|Example (link to .sol )| Line in Code for the feature | How TRAC handles it |
 |---|---|---|
 |[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Lines 21, 44<br/>RR: Line 60|BI:  [Line 1, 2, 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt#L2) |
 |[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI:  Lines 19, 39|BI:  [Line 1, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt) |
