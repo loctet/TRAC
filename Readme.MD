@@ -6,20 +6,20 @@ TRAC is a tool designed to enhance the development and verification of coodinati
 
 ## Folder architecture
 The `TRAC` folder architecture is organized as follows:
-|-- docker/                            Constains docker configuration files
-|-- docs/                                 Contains documentation files.
-|   |-- html/                            HTML format documentation files.
-|-- ExperimentalData/         Directory for experimental data.
-|   |-- tests_dafsm_1/   	Contains data for experimental tests of the paper.
-|-- images/                             Directory for images used in the readme or documentation.
-|-- src/                                     Contains source code files.
-|   |-- Examples/                    Directory for example files.
-|   |   |-- dafsm_txt/              Holds DAFSM model text files for manual execution.
-|   |   |-- jsons/                       Stores JSON files.
-|   |   |-- random_json/         Stores randomly generated JSON files.
-|   |   |-- random_txt/            Contains randomly generated DAFSM model text files.
-|   |-- GraphGen/                    `.jar` for graph visualization.
-|   |-- Z3_models/                  Directory for storing Z3 model files.
+|-- docker/                            Constains docker configuration files <br/>
+|-- docs/                                 Contains documentation files. <br/>
+|   |-- html/                            HTML format documentation files. <br/>
+|-- ExperimentalData/         Directory for experimental data. <br/>
+|   |-- tests_dafsm_1/   	Contains data for experimental tests of the paper. <br/>
+|-- images/                             Directory for images used in the readme or documentation. <br/>
+|-- src/                                     Contains source code files. <br/>
+|   |-- Examples/                    Directory for example files. <br/>
+|   |   |-- dafsm_txt/              Holds DAFSM model text files for manual execution. <br/>
+|   |   |-- jsons/                       Stores JSON files. <br/>
+|   |   |-- random_json/         Stores randomly generated JSON files. <br/>
+|   |   |-- random_txt/            Contains randomly generated DAFSM model text files. <br/>
+|   |-- GraphGen/                    `.jar` for graph visualization. <br/>
+|   |-- Z3_models/                  Directory for storing Z3 model files. <br/>
 
 ## Docker Installation and Running Instructions
 
