@@ -18,7 +18,7 @@ The `TRAC` folder architecture is organized as follows: <br/>
 |&emsp;|&emsp;|-- jsons/&emsp;Stores JSON files. <br/>
 |&emsp;|&emsp;|-- random_json/&emsp;Stores randomly generated JSON files. <br/>
 |&emsp;|&emsp;|-- random_txt/&emsp;Contains randomly generated DAFSM model text files. <br/>
-|&emsp;|-- GraphGen/&emsp;`.jar` for graph visualization. <br/>
+|&emsp;|-- GraphGen/&emsp;Contains `.jar` for graph visualization. <br/>
 |&emsp;|-- Z3_models/&emsp;Directory for storing Z3 model files. <br/>
 
 ## Docker Installation and Running Instructions
@@ -54,7 +54,7 @@ To run the `Simple Marketplace` examples example with TRAC:
 
 1. **Navigate to the TRAC Directory**: Open a terminal and change directory `cd TRAC/src`.
 
-2. **Locate the Example**: The `simplemarket_place` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already in `src/Examples/dafsms_txt/azure` directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) 
+2. **Locate the Example**: The `Simple Marketplace` example taken from [Azure repository](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) is already in `src/Examples/dafsms_txt/azure` directory as well as [other Azure blockchain-workbench examples](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples) 
 
    All manually executed examples should be kept in the folder  `src/Examples/dafsms_txt` you can create subdirs, just be assured to give the exact path to the command `Main.py`.
 
@@ -72,21 +72,16 @@ To run the `Simple Marketplace` examples example with TRAC:
    ____________________
 
 ```
-_ {True} o:O > starts(c,string _description, int _price) \
-        {description := _description & price := _price} \
-        {string description, int price, int offer} S0
+_ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S1 {True} o > c.acceptOffer() {} S2+
 S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 ```
-
 hereafter called `SMP`.
 
-
 In general, a transition consists of
-
    - a source and a target state; a trailing `+` denotes final states (like `S2+` above)
    - a guard specified in the notation of `Z3`
    - a qualified participant `p : P` corresponding to <em><i>&#x3BD;</i></em> p : P, `any p : P`, or just `p` 
@@ -94,7 +89,6 @@ In general, a transition consists of
    - a list of `&`-separate assignments.
 
 The first line of `SMP` is a special transition corresponding to the edge entering the initial state in Example 1 barred for
-
 - the fact that the source state is `_` is used to identify the initial state
 - the additional `_description` parameter, omitted in the paper for readability
 
@@ -153,14 +147,10 @@ Settings of `TRAC` can be configured in the file `src/Settings.py`. This include
 
 The `Main.py`, can take some configurations as follows:
 
-- `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for TRAC to analyze.
-- `check_type`: Optional. Defines the type of check to perform on the input file. It can be one of four options:
-  - `1` for Well-Formedness Check,
-  - `fsm` for printing the Finite State Machine (FSM). The default is `1`.
-- `--filetype`: Optional. Indicates the type of the input file, either `json` or `txt`. The default is `json`.
-- `--non_stop`: Optional. Determines the mode of checking, where `1` (default) continues checking even after errors are found, and `2` stops immediately when an error is detected.
-- `--time_out`: Optional. Sets a timeout for the operation in seconds. The default is `0`, meaning no timeout.
-This detailed explanation provides a comprehensive guide on how to utilize `Main.py` for different operations within the TRAC tool.
+- `file_name`: Specifies the name of the file (JSON or TXT) to process, without its extension. This is the primary input for TRAC to verifiy
+- `check_type [1|fsm]`: optional parameters where `<chk>` can take two qualifiers; `check_type` defaults to `1` which checks well-formedness and can be set to `fsm` to generate a visual representation of a DAFSM as a `png` file
+- `--filetype [json|txt]`: Optional. Indicates the type of the input file (default: `json`)
+- `--non_stop [1|2]`: Optional. Determines the mode of checking, if set to `1` continues checking even after errors are found, and `2` stops immediately when an error is detected (default: `1`).
 
 ## Commands for performance evaluation
 
@@ -192,8 +182,7 @@ Well-formedness check of the models starts immediately after the generation phas
 It is possible to check existing generated models stored in `src/Examples/random_txt/<subdir>` with the following command
 
 ```bash
-python3 Random_exec.py <subdir> --number_test_per_cpu 5 --number_runs_per_each 10\
-	--time_out 300000000000
+python3 Random_exec.py <subdir> --number_test_per_cpu 5 --number_runs_per_each 10 --time_out 300000000000
 ```
 
 where 
@@ -215,8 +204,7 @@ To preserve data `Random_exec.py` stores results in `src/Examples/random_txt/<su
 Data are plotted using `Plot_data.py`
 
 ```bash
-python3 Plot_data.py <directory> --shape <shape> [--file <file_name>] [--fields <fields_to_plot>]\
-	[--pl_lines <lines_to_plot>] [--type_plot <plot_type>]
+python3 Plot_data.py <directory> --shape <shape> [--file <file_name>] [--fields <fields_to_plot>] [--pl_lines <lines_to_plot>] [--type_plot <plot_type>]
 ```
 
 where
@@ -232,15 +220,9 @@ where
 To generate the plots of Section 4<span style="-typora-class: textPaperPage;"> </span>, we ran the following commands:
 
 ```bash
-python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
-	--field num_states,num_transitions,num_paths\
-	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
-    --shape 2d --type_plot scatter --scale linear
+python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info	--field num_states,num_transitions,num_paths	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale linear
 
-python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
-	--field num_states,num_transitions,num_paths\
-	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
-    --shape 2d --type_plot scatter --scale log
+python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths --pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter --scale log
 ```
 
 All generated plots are stored in the directory `src/Examples/random_txt/test_dafsms_1/`. 
