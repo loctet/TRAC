@@ -7,19 +7,8 @@
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
 
-## Table of content 
-- [1. Installation](#1-installation)
-- [2. Reproducibility](#2-reproducibility)
-   - [2.1 How table 1 has been created](#21-how-table-1-has-been-created)
-   - [2.2 How to check well formedness of the Azure benchmarks](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks)
-   - [2.3 How to check the randomly generated models ](#23-how-to-check-the-randomly-generated-models)
-- [3. Usage](#3-usage)
-   - [3.1 Format of DAFSMs](#31-format-of-dafsms)
-   - [3.2 Examples of non well-formed models](#32-examples-of-non-well-formed-models)
-   - [3.3 Commands for performance evaluation](#33-commands-for-performance-evaluation)
-   - [3.4 Run you own examples](#34-run-your-own-examples)
-- [4. Further information](#4-further-information)
-- [5. Tips](#5-tips)
+
+[TOC]
 
 # 1. Installation
 Follow the instructions at [https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
@@ -105,8 +94,10 @@ The latter command above specifies the target directory `tests_dafsms_1`, the nu
 
 The plots can be obtained by executing 
 ```bash
-python3 ./plot_data.py examples_1 --file merged_list_of_files_info --field num_states,num_transitions,num_paths\
-	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time --shape 2d --type_plot scatter
+python3 ./plot_data.py examples_1 --file merged_list_of_files_info\
+	--field num_states,num_transitions,num_paths\
+	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
+    --shape 2d --type_plot scatter
 ```
 in the `Docker`; the plots are `png` images saved in the directory `Examples/random_txt/tests_dafsms_1`.
 
@@ -115,7 +106,7 @@ in the `Docker`; the plots are `png` images saved in the directory `Examples/ran
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The DAFSMs model (Definition 1 of our paper<span style="-typora-class: textPaperPage;"> </span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
+The DAFSMs model (Definition 1 of our <span style="-typora-class: textPaperPage;">paper</span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
 <pre style="-typora-class: transitionB;">
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -125,6 +116,7 @@ S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 </pre>
+
 
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
@@ -304,7 +296,7 @@ where `containerID` is the `Docker` identity of the `loctet/trac_dafsms:v1` imag
 
 
 ## 3.4. Run your own examples
-Designing some DAFSM and checking them can be done by executing (`python3 Main.py --filetype txt "file_name"`)  where `file_name` is the file where the DAFSM is stored and specifying an alternative base directory `<directory>` if the default one is not used.
+Designing some DAFSM and checking them can be done by executing using the `Main.py` on the file where the DAFSM is stored and specifying an alternative base directory `<directory>` if the default one is not used.
 
 Further models can be found in `src/Examples/other_tests`.
 
@@ -341,9 +333,9 @@ Below is the description of the header of the `csv` files:
 
 The complete documentation of `TRAC` includes detailed code explanations and usage instructions. After downloading, unzip the file to access the Sphinx-generated documentation. This documentation is available at [GitHub repository](https://github.com/loctet/TRAC/tree/main/docs/trac-html-doc.zip) and provides further insights on features of `TRAC`.
 
-
-# 5. Tips
-Each of the commands - `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py` - is equipped with a `--help` option. When using the `--help` option, detailed usage instructions and available options for each command will be displayed. 
+Commands  `Main.py`, `Generate_examples.py`, `Random_exec.py`, and `Plot_data.py` feature a `--help` option, e.g.,
 ```bash
    python3 Main.py --help
 ```
+
+ prints a description of the available options and the usage of `Main.py`.
