@@ -1,6 +1,6 @@
 # Data-aware coordination with `TRAC`
 
-## Artefact submission for the COORDINATION 2024 paper #8
+## Artefact submission for the COORDINATION 2024 paper #8<span style="-typora-class: textPaperPage;"> </span>
 
 <span style="-typora-class: authors;">Joao Afonso, Elvis Konjoh Selabi, Maurizio Murgia, Antonio Ravara, and Emilio Tuosto</span>
 
@@ -63,7 +63,7 @@ For each smart contract, the table below reports
 
 ## 2.2. How to check the well-formedness of the Azure benchmarks
 
-The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `Examples/dafsms_txt/azure`.
+The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `src/Examples/dafsms_txt/azure`.
 
 To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done with the `Docker` commands below on the  [`simple-marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
    ```bash
@@ -99,7 +99,7 @@ python3 ./plot_data.py examples_1 --file merged_list_of_files_info\
 	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
     --shape 2d --type_plot scatter
 ```
-in the `Docker`; the plots are `png` images saved in the directory `Examples/random_txt/tests_dafsms_1`.
+in the `Docker`; the plots are `png` images saved in the directory `src/Examples/random_txt/tests_dafsms_1`.
 
 
 
@@ -206,7 +206,7 @@ To evaluate the performances of `TRAC`, we created a randomizer that contains a 
 
 
 ### **Generating random examples**
-The following command generates 100 random models, saves them in the directory `Examples/random_txt/your_sub_dir_name`, checks for the well-formedness of the models, and collects performance data in `csv` files:
+The following command generates 100 random models, saves them in the directory `src/Examples/random_txt/your_sub_dir_name`, checks for the well-formedness of the models, and collects performance data in `csv` files:
 
 ```bash
 python3 Generate_examples.py --directory your_sub_dir_name --num_tests 100
@@ -231,12 +231,12 @@ To generate the models used in Section 4 of the paper<span style="-typora-class:
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5\
 	--num_tests 30 --incremental_gen True
 ```
-<span style="-typora-class: textRed;">**Warning**:</span> the directory `Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper<span style="-typora-class: textPaperPage;"> </span>.
+<span style="-typora-class: textRed;">**Warning**:</span> the directory `src/Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper<span style="-typora-class: textPaperPage;"> </span>.
 
 Well-formedness check of the models starts immediately after the generation phase is completed. The results of each check are stored in a `csv` file together with metadata for the performance evaluation. (The full description of the metadata is in [section 4 below](#4-documentation).)
 
 
-It is possible to check existing generated models stored in `Examples/random_txt/<subdir>` with the following command
+It is possible to check existing generated models stored in `src/Examples/random_txt/<subdir>` with the following command
 
 ```bash
 python3 Random_exec.py <subdir> --number_test_per_cpu 5 --number_runs_per_each 10\
@@ -248,14 +248,14 @@ where
    - `--number_runs_per_each <num>` specifies how many times to run each model check (default: `10`)
    - `--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).
 
-The command above reads the metadata in `Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
+The command above reads the metadata in `src/Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `src/Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
 
 The checking process can be customized by setting the following optional parameters:
 
-   - `--merge_csv [True|False]` if set to `True`, merges THE generated `csv` files into `Examples/random_txt/<subdir>/merged_list_of_files_info.csv` (default: `False`)
-   - `--add_path [True|False]` if set to `True`, counts the number path for each model in the `Examples/random_txt/<subdir>/list_of_files_info.csv` (default: `False`)
+   - `--merge_csv [True|False]` if set to `True`, merges THE generated `csv` files into `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` (default: `False`)
+   - `--add_path [True|False]` if set to `True`, counts the number path for each model in the `src/Examples/random_txt/<subdir>/list_of_files_info.csv` (default: `False`)
 
-To preserve data `Random_exec.py` stores results in `Examples/random_txt/<subdir>/<time>` where `<time>` is the time when the execution started.
+To preserve data `Random_exec.py` stores results in `src/Examples/random_txt/<subdir>/<time>` where `<time>` is the time when the execution started.
 
 
 Data are plotted using `Plot_data.py`
@@ -265,7 +265,7 @@ python3 Plot_data.py <directory> --shape <shape> [--file <file_name>] [--fields 
 	[--pl_lines <lines_to_plot>] [--type_plot <plot_type>]
 ```
 where
-   - `<directory>` is the sub-directory of `Examples/random_txt/<subdir>/` containing the `csv` files
+   - `<directory>` is the sub-directory of `src/Examples/random_txt/<subdir>/` containing the `csv` files
    - `--shape [2d|3d]` sets the plot shape
    - `--file <str>` specify the name of the `csv` file (without the extension) (default: `merged_list_of_files_info`)
    - `--fields <list>` sets the column(s) in the `csv` file to plot (default: `num_states`)
@@ -287,7 +287,7 @@ python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
     --shape 2d --type_plot scatter --scale log
 ```
 
-All generated plots are stored in the directory `Examples/random_txt/test_dafsms_1/`. To visualise these plots it is necessary to copy them to a directory outside of `Docker` executing the following commands from a non-docker shell:
+All generated plots are stored in the directory `src/Examples/random_txt/test_dafsms_1/`. To visualise these plots it is necessary to copy them to a directory outside of `Docker` executing the following commands from a non-docker shell:
 ```bash
 docker ps  
 docker cp <containerID>:/home/TRAC/src/Examples/random_txt/<directory> <localPath>
@@ -296,7 +296,7 @@ where `containerID` is the `Docker` identity of the `loctet/trac_dafsms:v1` imag
 
 
 ## 3.4. Run your own examples
-Designing some DAFSM and checking them can be done by executing using the `Main.py` on the file where the DAFSM is stored and specifying an alternative base directory `<directory>` if the default one is not used.
+Designing some DAFSM and checking them can be done by executing using the `Main.py` on the file where the DAFSM is stored and specifying an alternative base directory that can be set in`src/Settings.py` if the default one (`src/Examples/dafsms_txt`) is not used.
 
 Further models can be found in `src/Examples/other_tests`.
 

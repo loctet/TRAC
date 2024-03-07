@@ -12,16 +12,16 @@ from MiniTimer import *
 class TransitionProcessor(MiniTimer):
     """
     Processes transitions for a finite state machine, including checking for determinism,
-    action consistency, and transforming FSM transitions into Z3 solver format.
+    action consistency, and transforming DAFSM transitions into Z3 solver format.
 
     Inherits from MiniTimer for performance measurement.
     """
 
     def __init__(self, data, log = True, non_stop = True, time_out = 0):
         """
-        Initializes the transition processor with FSM data and configuration settings.
+        Initializes the transition processor with DAFSM data and configuration settings.
 
-        :param data: FSM data to be processed.
+        :param data: DAFSM data to be processed.
         :type data: dict
         :param log: If logging is enabled.
         :type log: bool

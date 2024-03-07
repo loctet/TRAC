@@ -170,9 +170,9 @@ def get_generated_stuffs(actions, states, participants, num_vars, roles):
 
     :param actions: A list of available actions for transitions.
     :type actions: list
-    :param states: A list of available states in the FSM.
+    :param states: A list of available states in the DAFSM.
     :type states: list
-    :param participants: A list of available participants involved in the FSM.
+    :param participants: A list of available participants involved in the DAFSM.
     :type participants: list
     :param num_vars: The number of variables involved in transition conditions.
     :type num_vars: int
@@ -191,15 +191,15 @@ def generate_transitions(num_states, num_actions, num_vars, max_branching_factor
     """
     Generates a list of textual transitions and associated statistical data based on specified parameters.
 
-    :param num_states: The number of states in the FSM.
+    :param num_states: The number of states in the DAFSM.
     :type num_states: int
     :param num_actions: The number of actions available for transitions.
     :type num_actions: int
-    :param num_vars: The number of variables involved in the FSM.
+    :param num_vars: The number of variables involved in the DAFSM.
     :type num_vars: int
     :param max_branching_factor: The maximum number of transitions from any given state.
     :type max_branching_factor: int
-    :param num_participants: The number of participants involved in the FSM.
+    :param num_participants: The number of participants involved in the DAFSM.
     :type num_participants: int
     :param max_num_transitions: The maximum number of transitions to be generated.
     :type max_num_transitions: int
@@ -296,27 +296,27 @@ def genFile(directory, subdir_num, max_tests, num_states, num_actions, num_vars,
 
 class RandomTransitionsGenerator:
     """
-    Generates random transitions for FSM testing and stores them in files.
+    Generates random transitions for DAFSM testing and stores them in files.
     
     Initialization parameters define the configuration for transition generation.
     """
     def __init__(self, num_tests, directory, num_states=None, num_actions=None, num_vars=None, max_branching_factor=None, num_participants=None, max_num_transitions = None, steps = s_steps, num_example_for_each = s_num_example_for_each):
         """
-        Generates random transitions for Finite State Machine (FSM) testing and stores them in files.
+        Generates random transitions for DAFSM testing and stores them in files.
 
         :param num_tests: The number of tests to generate.
         :type num_tests: int
         :param directory: The directory where the generated transitions will be stored.
         :type directory: str
-        :param num_states: (Optional) The number of states in the FSM. Defaults to None.
+        :param num_states: (Optional) The number of states in the DAFSM. Defaults to None.
         :type num_states: int or None
-        :param num_actions: (Optional) The number of actions in the FSM. Defaults to None.
+        :param num_actions: (Optional) The number of actions in the DAFSM. Defaults to None.
         :type num_actions: int or None
-        :param num_vars: (Optional) The number of variables in the FSM. Defaults to None.
+        :param num_vars: (Optional) The number of variables in the DAFSM. Defaults to None.
         :type num_vars: int or None
         :param max_branching_factor: (Optional) The maximum branching factor for transitions. Defaults to None.
         :type max_branching_factor: int or None
-        :param num_participants: (Optional) The number of participants in the FSM. Defaults to None.
+        :param num_participants: (Optional) The number of participants in the DAFSM. Defaults to None.
         :type num_participants: int or None
         :param max_num_transitions: (Optional) The maximum number of transitions. Defaults to None.
         :type max_num_transitions: int or None

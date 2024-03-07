@@ -16,9 +16,9 @@ from Z3Runner import Z3Runner
 
 def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_time_out ):
     """ 
-    Counts the number of paths in FSMs defined in text files and updates a CSV data structure with the counts.
+    Counts the number of paths in DAFSMs defined in text files and updates a CSV data structure with the counts.
     
-    :param list_: List of text file paths containing FSM definitions.
+    :param list_: List of text file paths containing DAFSM definitions.
     :type list_: list[str]
 
     :param csv_data: Dictionary mapping text file paths to CSV data rows.
@@ -30,7 +30,7 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
     :param directory: Directory to save the output CSV file.
     :type directory: str
 
-    :param time_out: Timeout limit for processing each FSM.
+    :param time_out: Timeout limit for processing each DAFSM.
     :type time_out: float
     """
     sValidator = The_Validator()
@@ -64,9 +64,9 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
 
 def function_to_run(list_, csv_data, index, directory, number_runs_per_each, time_out = s_time_out ):
     """
-    Processes Finite State Machines (FSMs) defined in text files, runs verification, and updates CSV data with the results.
+    Processes DAFSMs defined in text files, runs verification, and updates CSV data with the results.
 
-    :param list_: List of text file paths containing FSM definitions.
+    :param list_: List of text file paths containing DAFSM definitions.
     :type list_: list[str]
     :param csv_data: Dictionary mapping text file paths to CSV data rows.
     :type csv_data: dict
@@ -74,9 +74,9 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
     :type index: int
     :param directory: Directory to save the output CSV file.
     :type directory: str
-    :param number_runs_per_each: Number of verification runs for each FSM.
+    :param number_runs_per_each: Number of verification runs for each DAFSM.
     :type number_runs_per_each: int
-    :param time_out: Timeout limit for processing each FSM.
+    :param time_out: Timeout limit for processing each DAFSM.
     :type time_out: int
     """
 
@@ -168,17 +168,17 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
        
 class RandomTransitionsExecuter: 
     """
-    Executes verification for randomly generated Finite State Machine (FSM) transitions, storing results in CSV files.
+    Executes verification for randomly generated DAFSM transitions, storing results in CSV files.
 
-    :param directory: Directory where FSM definitions and results are stored.
+    :param directory: Directory where DAFSM definitions and results are stored.
     :type directory: str
     :param merge_csv: Flag to merge individual CSV results into a single file.
     :type merge_csv: bool
     :param number_test_per_cpu: Number of tests to process concurrently per CPU.
     :type number_test_per_cpu: int
-    :param number_runs_per_each: Number of verification runs for each FSM.
+    :param number_runs_per_each: Number of verification runs for each DAFSM.
     :type number_runs_per_each: int
-    :param time_out: Timeout limit for processing each FSM.
+    :param time_out: Timeout limit for processing each DAFSM.
     :type time_out: int
     """
 
@@ -250,7 +250,7 @@ class RandomTransitionsExecuter:
 
     def process_all_txt_files(self):
         """
-        Processes all text files containing FSM definitions for verification.
+        Processes all text files containing DAFSM definitions for verification.
         """
         data = pd.read_csv(os.path.join(self.base_dir, 'list_of_files_info.csv'))
         sorted_data = data.sort_values(by='num_transitions', ascending=True)
@@ -265,7 +265,7 @@ class RandomTransitionsExecuter:
 
     def count_all_path_in_fsm(self):
         """
-        Counts all paths in FSMs defined in text files and updates CSV data with the counts.
+        Counts all paths in DAFSMs defined in text files and updates CSV data with the counts.
         """
         self.csv_data = self.read_csv_data(self.csv_merged_file_path)
         data = pd.read_csv(os.path.join(self.base_dir, 'merged_list_of_files_info.csv'))

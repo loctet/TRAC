@@ -6,9 +6,9 @@ from MiniTimer import MiniTimer
 
 class FSMGraph(MiniTimer):
     """
-    Represents a Finite State Machine (FSM) as a directed graph, providing functionalities for analyzing and manipulating FSM data.
+    Represents a DAFSM as a directed graph, providing functionalities for analyzing and manipulating DAFSM data.
 
-    :param data: FSM data including states and transitions.
+    :param data: DAFSM data including states and transitions.
     :type data: dict
     :param log: Indicates if logging is enabled. Defaults to True.
     :type log: bool, optional
@@ -18,7 +18,7 @@ class FSMGraph(MiniTimer):
 
     def __init__(self, data, log = True, time_out = 0 ):
         """
-        Initializes the FSMGraph with given data, logging preference, and timeout value.
+        Initializes the DAFSMGraph with given data, logging preference, and timeout value.
         """
         self.data = data
         self.graph = nx.MultiDiGraph()  # Using MultiDiGraph to support multiple edges between the same nodes

@@ -87,7 +87,7 @@ class TransactionsGrinder(Logger):
 
     def pre_process_fsm(self):
         """
-        Pre-processes the FSM by converting variable declarations to Z3 declarations
+        Pre-processes the DAFSM by converting variable declarations to Z3 declarations
         and updating transitions with new participants.
         """
         for key in range(len(self.fsm['transitions'])):
@@ -157,7 +157,7 @@ class TransactionsGrinder(Logger):
 
     def get_json_from_file(self):
         """
-        Loads Finite State Machine (FSM) data from a JSON file specified by the constructed full JSON path.
+        Loads DAFSM data from a JSON file specified by the constructed full JSON path.
 
         :return: The content of the JSON file as a list of strings.
         :rtype: list
@@ -184,7 +184,7 @@ class TransactionsGrinder(Logger):
 
     def get_transition_processor(self)->TransitionProcessor:
         """
-        Gets or creates a TransitionProcessor instance for processing Finite State Machine (FSM) transitions.
+        Gets or creates a TransitionProcessor instance for processing DAFSM transitions.
 
         :return: An instance of TransitionProcessor.
         :rtype: TransitionProcessor
@@ -303,7 +303,7 @@ class TransactionsGrinder(Logger):
 
     def check_path_sat(self):
         """
-        Checks path satisfiability of the model by verifying the satisfiability of different paths through the FSM.
+        Checks path satisfiability of the model by verifying the satisfiability of different paths through the DAFSM.
         """
         fsm = self.fsm 
         self.logIt("Checking Path statisfiability of the model----\n\n")

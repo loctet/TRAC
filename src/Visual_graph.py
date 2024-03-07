@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 
 def generate_fsm_graph(fsmTextJson):
     """
-    Generates a finite state machine (FSM) graph from a given JSON string.
+    Generates a DAFSM graph from a given JSON string.
 
-    :param fsmTextJson: A JSON-formatted string containing the definition of the FSM,
+    :param fsmTextJson: A JSON-formatted string containing the definition of the DAFSM,
                         including states, initial state, final states, and transitions.
     :type fsmTextJson: str
-    :return: A directed graph (DiGraph) instance from NetworkX representing the FSM,
+    :return: A directed graph (DiGraph) instance from NetworkX representing the DAFSM,
             where nodes correspond to states and edges to transitions.
     :rtype: nx.DiGraph
     """
@@ -54,12 +54,12 @@ def generate_fsm_graph(fsmTextJson):
 
 def draw_fsm_graph(graph):
     """
-    Draws the finite state machine (FSM) graph using matplotlib.
+    Draws the DAFSM graph using matplotlib.
 
-    :param graph: The directed graph representing the FSM to be drawn.
+    :param graph: The directed graph representing the DAFSM to be drawn.
     :type graph: nx.DiGraph
 
-    This function does not return anything but visualizes the FSM graph using matplotlib,
+    This function does not return anything but visualizes the DAFSM graph using matplotlib,
     with different colors for initial, final, and normal states, and labels for transitions.
     """
 

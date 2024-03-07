@@ -7,7 +7,7 @@ from VariableDeclarationConverter import VariableDeclarationConverter
 
 class PathGenerator :
     """
-    Generates and checks the satisfiability of paths within a finite state machine (FSM) based on a given JSON representation of transitions.
+    Generates and checks the satisfiability of paths within a DAFSM based on a given JSON representation of transitions.
     """
 
     @staticmethod
@@ -41,9 +41,9 @@ class PathGenerator :
     @staticmethod
     def group_transactions(transition_json):
         """
-        Groups transitions from the JSON representation of a Finite State Machine (FSM) into paths from the initial to final states.
+        Groups transitions from the JSON representation of a DAFSM into paths from the initial to final states.
 
-        :param transition_json: The JSON representation of the FSM's transitions.
+        :param transition_json: The JSON representation of the DAFSM's transitions.
         :type transition_json: dict
         :return: A dictionary where keys are string representations of paths and values are lists of transitions for each path.
         :rtype: dict
@@ -117,7 +117,7 @@ class PathGenerator :
     @staticmethod
     def check_path_satisfiability(fsm, file_name):
         """
-        Checks the satisfiability of each path within the Finite State Machine (FSM) and outputs the results to a Python file for execution.
+        Checks the satisfiability of each path within the DAFSM and outputs the results to a Python file for execution.
 
         :param fsm: The finite state machine representation.
         :type fsm: dict
