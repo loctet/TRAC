@@ -70,6 +70,8 @@ To run the `Simple Marketplace` examples example with TRAC:
     The output of the command should be `(!) Verdict: Well Formed`
 
    ____________________
+## Format of a DAFSM
+The DAFSMs model is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract, which in our DSL is
 
 ```
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -105,7 +107,7 @@ To visualise the `SPM` model we can execute the following command:
 The later command will open a window with and interactive image.
 
 
-![Simplemarket_place TRAC DAFSMs](./images/fsm_simplemarke_place.png)
+<img alt="implemarket_place TRAC DAFSMs" src="./images/fsm_simplemarke_place.png" width=400px height=300px>
 
 ## Non-well-formed example
 
