@@ -6,11 +6,10 @@
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
-References to our paper submitted at COORDINATION 2024 are marked with a <span stype="-typora-class: textPaperPage;"> </span>.
+References to our paper submitted at COORDINATION 2024 are marked with a <span style="-typora-class: textPaperPage;"> </span>.
 
+[TOC]
 
-
- 
 
 # 1. Installation
 
@@ -32,9 +31,9 @@ To install and run TRAC using `Docker`:
 # 2. Reproducibility
 
 ## 2.1 How Table 1 has been created
-We now describe how the information in Table 1 of our COORDINATION has
-been determined. 
-We recall that Table 1 reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
+We now describe how the information in Table 1<span style="-typora-class: textPaperPage;"> </span> has been determined. 
+We recall that Table 1<span style="-typora-class: textPaperPage;"> </span> reports how our framework captures the features of the smart contracts in the Azure repository described at the following links:
+
 - [Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain)
 - [Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace)
 - [Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance)
@@ -49,26 +48,30 @@ For each smart contract, the table below reports
 - where the features are met in the `Solidity` implementation in the Azure repository
 - the lines in the DAFSM model where the feature is captured (if at all) 
 
+Features `RR` and `MRP`  are not explicitly handled by `TRAC` and therefore not present in the table below.
+
+`Simple Marketplace,` `Hello Blockchain`, `Bazaar`, and `Ping Pong` lines in Table 1<span style="-typora-class: textPaperPage;"> </span> are wrongly specified, the features in the table below match exactly what has been implemented in the Azure repository.
+
 
 |Example (link to .sol )| Line in Code for the feature | How TRAC handle it |
 |---|---|---|
-|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Lines 21 & 44|BI:  [Line 1, 2 & 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt#L2) |
-|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI:  Lines 19 & 39|Bi:  [Line 1 & 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt) |
+|[Simple Marketplace](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace/ethereum/SimpleMarketplace.sol)|BI :  Lines 21, 44<br/>RR: Line 60|BI:  [Line 1, 2, 6](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/simplemarket_place.txt#L2) |
+|[Hello Blockchain](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/hello-blockchain/HelloBlockchain.sol)|BI:  Lines 19, 39|BI:  [Line 1, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/hello_blockchain.txt) |
 |[Bazaar](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/bazaar-item-listing/ethereum/BazaarItemListing.zip)|ICI:  BazaarItem (Line 78) ItemList(Line 40) <br/>BI :  BazaarItem (Line 76) ItemList(Line 33)| |
-|[Ping Pong](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |BI :  Line 16 & 67<br/>ICI :  Lines 18, 29, 41, 47, 77, 82 & 88| |
+|[Ping Pong](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/ping-pong-game/ethereum/PingPongGame.sol) |BI :  Line 16, 67<br/>ICI :  Lines 18, 29, 41, 47, 77, 82, 88| |
 |[Defective Component Counter](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/defective-component-counter/ethereum/DefectiveComponentCounter.sol)| BI:  Line 17<br>PP: Line 15 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt)<br/>PP: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/defective_component_counter.txt) |
 |[Frequent Flyer Rewards Calculator](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/frequent-flyer-rewards-calculator/ethereum/FrequentFlyerRewardsCalculator.sol)| BI :  Line 20 <br/>PP :  Line 18 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt)<br/>PP:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/frequent_flyer_rewards_calculator.txt) |
 |[Room Thermostat](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/room-thermostat/ethereum/RoomThermostat.sol)| PP :  Line 16 |PP:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/room_thermostat.txt) |
-|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI :  Line 18, <br/>PP: Line 49<br/>RR :  Lines 97 & 171 |BI:  [Lines 1& 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>PP: [Lines 2& 7](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>RR: |
-|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI:  Line 19 <br/>PP:  Line 17, 26 <br/>RR :  Line 38, 51 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>PP:  [Line 1, 2, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>RR: |
-|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI:  Line 32 <br/>PP:  Line 28, 89 <br/>RR :  Line 118, 143 <br/>MRP :  Lines 33, 34, 119 & 142 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>PP:  [Line 1, 5 & 9](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>RR:  <br/>MRP: |
-|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP:  Lines 19, 68 <br/>RR :  Lines 102,126, 127, 139 & 149 <br/>MRP :  Lines 76, 91 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>PP: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>RR:  <br/>MRP: |
+|[Asset Transfer](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/asset-transfer/ethereum/AssetTransfer.sol)| BI :  Line 18, <br/>PP: Line 49<br/>RR :  Lines 97, 171 |BI:  [Lines 1, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt)<br/>PP: [Lines 2, 7](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/asset_transfer.txt) |
+|[Basic Provenance](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/basic-provenance/ethereum/BasicProvenance.sol)| BI:  Line 19 <br/>PP:  Line 17, 26 <br/>RR :  Line 38, 51 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt)<br/>PP:  [Line 1, 2, 3](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/basic_provenance.txt) |
+|[Refrigerated Transportation](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/refrigerated-transportation/ethereum/RefrigeratedTransportation.sol)| BI:  Line 32 <br/>PP:  Line 28, 89 <br/>RR :  Line 118, 143 <br/>MRP :  Lines 33, 34, 119,142 |BI:  [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt)<br/>PP:  [Line 1, 5 , 9](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/refrigirated_transport.txt) |
+|[Digital Locker](https://github.com/Azure-Samples/blockchain/blob/master/blockchain-workbench/application-and-smart-contract-samples/digital-locker/ethereum/DigitalLocker.sol)| BI :  Line 21 <br/>PP:  Lines 19, 68 <br/>RR :  Lines 102,126, 127, 139, 149 <br/>MRP :  Lines 76, 91 |BI: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt)<br/>PP: [Line 1](https://github.com/loctet/TRAC/blob/main/src/Examples/dafsm_txt/azure/digital_locker.txt) |
 
 ## 2.2. How to check the well-formedness of the Azure benchmarks
 
 The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `src/Examples/dafsms_txt/azure`.
 
-To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done with the `Docker` commands below on the  [`Simple Marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
+To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done in the `Docker`  with commands below on the  [`Simple Marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
    ```bash
    cd src
    python3 Main.py --filetype txt "azure/simplemarket_place"
@@ -86,7 +89,7 @@ reporting that the DAFSMs for the `azure/simplemarket_place` is well formed. For
 
 ## 2.3. How to check the randomly generated models 
 
-The 135 randomly generated models used in last part of Section 4 <span style="-typora-class: textPaperPage;"> </span> are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
+The 135 randomly generated models used in the last part of Section 4 <span style="-typora-class: textPaperPage;"> </span> are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
 
    ```bash
    cd src
@@ -115,13 +118,16 @@ in the `Docker`; the plots are `png` images saved in the directory `src/Examples
 The DAFSMs model (Definition 1 <span style="-typora-class: textPaperPage;"> </span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract (following Example 1<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
 <pre style="-typora-class: transitionB;">
-_ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
+_ {True} o:O > starts(c,string _description, int _price) \
+         {description := _description & price := _price} \
+         {string description, int price, int offer} S0
 S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S1 {True} o > c.acceptOffer() {} S2+
 S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 </pre>
+
 
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
@@ -130,8 +136,7 @@ In general, a transition consists of
 
    - a source and a target state; a trailing `+` denotes final states (like `S2+` above)
    - a guard specified in the notation of `Z3`
-     - a qualified participant `p : P` corresponding to <em><i>&#x3BD;</i></em> p : P, `any p : P`, or just `p`  (Definition 1<span style="-typora-class: textPaperPage;"> </span>)
-
+   - a qualified participant `p : P` corresponding to <em><i>&#x3BD;</i></em> p : P, `any p : P`, or just `p`  (Definition 1<span style="-typora-class: textPaperPage;"> </span>)
    - a call to an operation of the contract
    - a list of `&`-separate assignments.
 
@@ -145,7 +150,7 @@ The guard `True` in the transition is the *precondition* while the list of assig
 Conventionally, parameters start with `_` to distinguish them from contract variables. 
 
 ## 3.2. Examples of non well-formed models
-As seen in [Section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
+As seen in [section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
 
 <pre style="-typora-class: transitionLL;">S1 {True} x > c.acceptOffer() {} S2+</pre> 
 
@@ -187,7 +192,7 @@ Error from this state:S01_makeOffer(int _offer)_S1
 --- A-Consistency: False
 
 Simplification of the of the negation of the formula:  Not(And(Not(_offer <= 0), offer == _offer))  ::  True
-   `--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).
+   
 (!) Verdict: Not Well Formed
 ```
 which tells that consistency is violated by the transition 
@@ -202,16 +207,14 @@ The `Main.py` script used above accepts the `check_type <chk>` optional paramete
 
 The image below for `SMP` is generated by invoking the `GraphStream` library ([https://graphstream-project.org/](https://graphstream-project.org/)) from our `GraphGen` component according to Figure 1 <span style="-typora-class: textPaperPage;"> </span>
 
-###### ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
+<img src="./images/fsm_simplemarke_place.png" width=400px height=300px>
 
 (labels are simplified for readability). The description in Section 3.1 <span style="-typora-class: textPaperPage;"> </span> wrongly states that `GraphGen` is "a third-party component", but in fact it should read that `GraphGen` is a wrapper to invoke `GraphStream`. Unfortunately, the image cannot be visualised from inside the `Docker` because `GraphGen` uses the functionality of `GraphStream` that displays the graph in an interactive window. So, to see the model it is necessary to use `TRAC` from outside the `Docker`.
 
 
 ## 3.3. Commands for performance evaluation
-To evaluate the performances of `TRAC`, we`--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).`--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`). created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following, we explain how to perform each step.
+To evaluate the performances of `TRAC`, we created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following, we explain how to perform each step.
 
-
-### Generating random examples
 The following command generates 100 random models, saves them in the directory `src/Examples/random_txt/your_sub_dir_name`, checks for the well-formedness of the models, and collects performance data in `csv` files:
 
 ```bash
@@ -222,7 +225,7 @@ The generation process can be customised setting optional parameters of `Generat
 - `--num_tests <num>` the number of tests to generate
 - `--num_states <num>` the number of states per test
 - `--num_actions <num>` is the number of actions
-- `--num_vars <num>` is the number of v`--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).ariables
+- `--num_vars <num>` is the number of variables
 - `--max_num_transitions <num>` is the maximal number of transitions that should be at least the number of states (minus 1) 
 - `--max_branching_factor <num>` is the maximum branching factor that should be greater or equal to 1; in corner cases, the branching factor is predominant and may lead to exceeding the maximum number of transitions
 - `--num_participants <num>` is the maximum number of participant variables
@@ -237,7 +240,9 @@ To generate the models used in Section 4 <span style="-typora-class: textPaperPa
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5\
 	--num_tests 30 --incremental_gen True
 ```
-<span style="-typora-class: textRed;">**Warning**:</span> the directory `src/Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in Section 4 <span style="-typora-class: textPaperPage;"> </span>.
+<span style="-typora-class: textRed;">**Warning**:</span> 
+
+The directory `src/Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in Section 4 <span style="-typora-class: textPaperPage;"> </span>.
 
 Well-formedness check of the models starts immediately after the generation phase is completed. The results of each check are stored in a `csv` file together with metadata for the performance evaluation. (The full description of the metadata is in [section 4 below](#4-documentation).)
 
@@ -279,7 +284,7 @@ where
    - `--type_plot [line|scatter|bar]` chooses the type of 2D plot (default: `line`)
    - `--scale [log|linear]` scale of the y-axis (default: `log`).
 
-To generate the plots of section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>, we ran the following commands:
+To generate the plots of Section 4<span style="-typora-class: textPaperPage;"> </span>, we ran the following commands:
 
 ```bash
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
@@ -302,11 +307,13 @@ where `containerID` is the `Docker` identity of the `loctet/trac_dafsms:v1` imag
 
 
 ## 3.4. Run your own examples
-Designing some DAFSM and checking them can be done by executing using the `Main.py` on the file where the DAFSM is stored and specifying an alternative base directory that can be set in`src/Settings.py` if the default one (`src/Examples/dafsms_txt`) is not used.
+Designing some DAFSM and checking them can be done by executing the `Main.py` on the file where the DAFSM is stored.
+
+By default, the model should be stored `src/Examples/dafsms_txt`. 
 
 Further models can be found in `src/Examples/other_tests`.
 
-Additional settings can be configured in the file `src/Settings.py`. This includes default directories and other parameters for various commands. For more detailed information about these settings, refer to the [full documentation](#4-further-information).
+Settings of `TRAC` can be configured in the file `src/Settings.py`. This includes default directories where models are stored and default values of parameters for `TRAC's`commands. For more detailed information about these settings, refer to the [full documentation](#4-further-information).
 
 # 4. Further information
 

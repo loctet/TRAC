@@ -15,46 +15,45 @@ s_time_metrics = ['participants_time', 'non_determinism_time', 'a_consistency_ti
 
 # Labels for data analysis
 s_labels = {
-    'num_states' : "Number of states",
-    'average_bf_num' : "Average branching factor",
-    'num_transitions' : "Number of transitions",
-    'num_paths': "Number of paths",
-    'participants_time': "Caller check time",
-    'non_determinism_time': "Non det formula build time",
-    'a_consistency_time' : "Consistency build time",
-    'z3_running_time' : "Z3 running time",
-    'f_building_time' : "Time to build formulae"
+    'num_states' : "Number of states",  # Number of states in the DAFSM
+    'average_bf_num' : "Average branching factor",  # Average branching factor of the DAFSM
+    'num_transitions' : "Number of transitions",  # Number of transitions in the DAFSM
+    'num_paths': "Number of paths",  # Number of paths in the DAFSM
+    'participants_time': "Caller check time",  # Time taken for caller check
+    'non_determinism_time': "Non det formula build time",  # Time taken for non-determinism formula build
+    'a_consistency_time' : "Consistency build time",  # Time taken for consistency build
+    'z3_running_time' : "Z3 running time",  # Time taken for Z3 running
+    'f_building_time' : "Time to build formulae"  # Time taken to build formulae
 }
 
 # Message indicating a well-formed DAFSM
 s_well_formed_message = "(!) Verdict: Well Formed"
 
 # Paths for file handling
-s_z3model_path = "./Z3_models/"
-s_txt_path = "./Examples/dafsm_txt/"
-s_json_path = "./Examples/jsons/"
+s_z3model_path = "./Z3_models/"  # Path to store Z3 model files
+s_txt_path = "./Examples/dafsm_txt/"  # Path to locate DAFSM text files
+s_json_path = "./Examples/jsons/"  # Path to store generated JSON files
 
 # Default settings for processing
-s_non_stop = 1
-s_time_out = 300000000000
+s_non_stop = 1  # Flag to continue processing on errors
+s_time_out = 300000000000  # Timeout limit for processing
 
 # Default parameters for global randomizer
-s_num_tests = None
-s_num_states = None
-s_num_actions = None
-s_num_vars = None
-s_max_num_transitions = None
-s_max_branching_factor = None
-s_num_participants = None
-s_incremental_gen = None
-s_merge_only_csv = None
-s_steps = None
+s_num_tests = None  # Number of tests to be generated
+s_num_states = None  # Number of states in the DAFSM
+s_num_actions = None  # Number of actions in the DAFSM
+s_num_vars = None  # Number of variables in the DAFSM
+s_max_num_transitions = None  # Maximum number of transitions in the DAFSM
+s_max_branching_factor = None  # Maximum branching factor in the DAFSM
+s_num_participants = None  # Number of participants in the DAFSM
+s_incremental_gen = None  # Flag for incremental generation
+s_merge_only_csv = None  # Flag to merge only CSV results
+s_steps = None  # Steps for processing
 
-# Default values for the random generator
-s_number_per_bacth = 5
-s_steps = 5
-s_number_runs_per_each = 10
-s_max_branching_factor = 5
-s_num_example_for_each = 5
-s_number_test_per_cpu = 5
-
+# Default values for various parameters
+s_number_per_bacth = 5  # Number per batch
+s_steps = 5  # Steps for processing
+s_number_runs_per_each = 10  # Number of runs per example
+s_max_branching_factor = 5  # Maximum branching factor
+s_num_example_for_each = 5  # Number of examples for each configuration
+s_number_test_per_cpu = 5  # Number of model to alocate per CPU
