@@ -93,7 +93,8 @@ The 135 randomly generated models used in the last part of Section 4 <span style
 
    ```bash
    cd src
-   python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10 --number_test_per_cpu 5 --time_out 300000000000  
+   python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10\
+   	--number_test_per_cpu 5 --time_out 300000000000  
    ```
 Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12<span style="-typora-class: textPaperPage;"> </span>).
 The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`.
@@ -117,7 +118,7 @@ in the `Docker`; the plots are `png` images saved in the directory `src/Examples
 ## 3.1. Format of DAFSMs
 The DAFSMs model (Definition 1 <span style="-typora-class: textPaperPage;"> </span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract (following Example 1<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
-<pre style="-typora-class: transitionB;">
+```
 _ {True} o:O > starts(c,string _description, int _price) \
          {description := _description & price := _price} \
          {string description, int price, int offer} S0
@@ -126,7 +127,10 @@ S1 {True} o > c.acceptOffer() {} S2+
 S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
-</pre>
+```
+
+
+
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
 
@@ -148,7 +152,7 @@ The guard `True` in the transition is the *precondition* while the list of assig
 Conventionally, parameters start with `_` to distinguish them from contract variables. 
 
 ## 3.2. Examples of non well-formed models
-As seen in [section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
+As seen in [section 2.2](#22-how-to-check-the-well-formedness-of-the-azure-benchmarks), `SMP` is well-formed; we now apply `TRAC` to detect non-well-formed models. The file `azure/simplemarket_place_edit_1` contains a modified DAFSM obtained by replacing the `acceptOffer` transition of `SMP` with
 
 <pre style="-typora-class: transitionLL;">S1 {True} x > c.acceptOffer() {} S2+</pre> 
 
@@ -235,8 +239,8 @@ The generation process can be customised setting optional parameters of `Generat
 To generate the models used in Section 4 <span style="-typora-class: textPaperPage;"> </span>, we ran the following command:
 
 ```bash 
-python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5\
-	--num_tests 30 --incremental_gen True
+python3 Generate_examples.py --directory tests_dafsms_1 --steps 5\
+	--num_example_for_each 5 --num_tests 30 --incremental_gen True
 ```
 <span style="-typora-class: textRed;">**Warning**:</span> 
 
@@ -248,8 +252,8 @@ Well-formedness check of the models starts immediately after the generation phas
 It is possible to check existing generated models stored in `src/Examples/random_txt/<subdir>` with the following command
 
 ```bash
-python3 Random_exec.py <subdir> --number_test_per_cpu 5 --number_runs_per_each 10\
-	--time_out 300000000000
+python3 Random_exec.py <subdir> --number_test_per_cpu 5\
+	--number_runs_per_each 10 --time_out 300000000000
 ```
 where 
 
@@ -270,7 +274,8 @@ To preserve data `Random_exec.py` stores results in `src/Examples/random_txt/<su
 Data are plotted using `Plot_data.py`
 
 ```bash
-python3 Plot_data.py <directory> --shape <shape> [--file <file_name>] [--fields <fields_to_plot>]\
+python3 Plot_data.py <directory> --shape <shape> \
+	[--file <file_name>] [--fields <fields_to_plot>]\
 	[--pl_lines <lines_to_plot>] [--type_plot <plot_type>]
 ```
 where
@@ -287,12 +292,12 @@ To generate the plots of Section 4<span style="-typora-class: textPaperPage;"> <
 ```bash
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
 	--field num_states,num_transitions,num_paths\
-	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
+	--pl_lines participants_time,non_determinism_time,a_consistency_time\
     --shape 2d --type_plot scatter --scale linear
 
 python3 Plot_data.py tests_dafsms_1 --file merged_list_of_files_info\
 	--field num_states,num_transitions,num_paths\
-	--pl_lines participants_time,non_determinism_time,a_consistency_time,z3_running_time\
+	--pl_lines participants_time,non_determinism_time,a_consistency_time\
     --shape 2d --type_plot scatter --scale log
 ```
 
