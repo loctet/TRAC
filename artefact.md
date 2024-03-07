@@ -6,11 +6,14 @@
 
 This document specifies the instructions for the AEC of COORDINATION 2024 for the evaluation of our artefact submission. We set a `Docker` container for `TRAC` in order to simplify the work of the AEC (the `README` file at [https://github.com/loctet/TRAC](https://github.com/loctet/TRAC) contains the instructions for the manual installation procedure).
 
+References to our paper submitted at COORDINATION 2024 are marked with a <span stype="-typora-class: textPaperPage;"> </span>.
 
 
-[TOC]
+
+ 
 
 # 1. Installation
+
 Follow the instructions at [https://docs.docker.com/](https://docs.docker.com/) to install `Docker` on your system.
 
 To install and run TRAC using `Docker`:
@@ -83,17 +86,17 @@ reporting that the DAFSMs for the `azure/simplemarket_place` is well formed. For
 
 ## 2.3. How to check the randomly generated models 
 
-The 135 randomly generated models used in last part of Section 4 of our paper<span style="-typora-class: textPaperPage;"> </span> are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
+The 135 randomly generated models used in last part of Section 4 <span style="-typora-class: textPaperPage;"> </span> are in `src/Examples/random_txt/tests_dafsm_1` splitted in sub-directories each containing 5 DAFSMs and a `list_of_files_info.csv` file with metadata on the DAFSMs (we detail the metadata in [section 4 below](#4-documentation)). Our performance analysis can be reproduced by executing the following commands in the `Docker`:
 
    ```bash
    cd src
    python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10 --number_test_per_cpu 5 --time_out 300000000000  
    ```
-Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper<span style="-typora-class: textPaperPage;"> </span>).
+Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12<span style="-typora-class: textPaperPage;"> </span>).
 The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`.
 
 <span style="-typora-class: textRed;">**Warning**:</span> 
-Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper<span style="-typora-class: textPaperPage;"> </span>.
+Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3<span style="-typora-class: textPaperPage;"> </span>.
 
 The plots can be obtained by executing 
 ```bash
@@ -109,7 +112,7 @@ in the `Docker`; the plots are `png` images saved in the directory `src/Examples
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The DAFSMs model (Definition 1 of our <span style="-typora-class: textPaperPage;">paper</span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
+The DAFSMs model (Definition 1 <span style="-typora-class: textPaperPage;"> </span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract (following Example 1<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
 <pre style="-typora-class: transitionB;">
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -127,16 +130,16 @@ In general, a transition consists of
 
    - a source and a target state; a trailing `+` denotes final states (like `S2+` above)
    - a guard specified in the notation of `Z3`
-   - a qualified participant `p : P` corresponding to <em><i>ν</i></em> p : P in the paper<span style="-typora-class: textPaperPage;"> </span>, `any p : P`, or just `p`
+   - a qualified participant `p : P` corresponding to <em><i>ν</i></em> p : P, `any p : P`, or just `p`  (Definition 1<span style="-typora-class: textPaperPage;"> </span>)
    - a call to an operation of the contract
    - a list of `&`-separate assignments.
 
 The first line of `SMP` is a special transition corresponding to the edge entering the initial state in Example 1 barred for
 
 - the fact that the source state is `_` is used to identify the initial state
-- the additional `_description` parameter, omitted in the paper<span style="-typora-class: textPaperPage;"> </span> for readability
+- the additional `_description` parameter, omitted in the paper for readability
 
-The guard `True` in the transition is the *precondition* while the list of assignments `{description := _description & price := _price}` is followed by an explicit declaration of the contract variables to capture the assumption in the first item of Page 3 of the paper<span style="-typora-class: textPaperPage;"> </span>; the transition introduces a fresh participant `o` with role `O` which renders the object-oriented mechanism described just above Definition 1.
+The guard `True` in the transition is the *precondition* while the list of assignments `{description := _description & price := _price}` is followed by an explicit declaration of the contract variables to capture the assumption in the first item of Page 3 <span style="-typora-class: textPaperPage;"> </span>; the transition introduces a fresh participant `o` with role `O` which renders the object-oriented mechanism described just above Definition 1<span style="-typora-class: textPaperPage;"> </span>.
 
 Conventionally, parameters start with `_` to distinguish them from contract variables. 
 
@@ -196,18 +199,18 @@ The simplification operated by `Z3` on the negation of the formula in the last b
 
 The `Main.py` script used above accepts the `check_type <chk>` optional parameters where `<chk>` can take two qualifiers; `check_type` defaults to `1` which checks well-formedness and can be set to `fsm` to generate a visual representation of a DAFSM as a `png` file.
 
-The image below for `SMP` is generated by invoking the `GraphStream` library ([https://graphstream-project.org/](https://graphstream-project.org/)) from our `GraphGen` component according to Figure 1 in the paper<span style="-typora-class: textPaperPage;"> </span>
+The image below for `SMP` is generated by invoking the `GraphStream` library ([https://graphstream-project.org/](https://graphstream-project.org/)) from our `GraphGen` component according to Figure 1 <span style="-typora-class: textPaperPage;"> </span>
 
 ###### ![Simplemarket_place `TRAC` DAFSMs](./images/fsm_simplemarke_place.png) 
 
-(labels are simplified for readability). The description in Section 3.1 of the paper<span style="-typora-class: textPaperPage;"> </span> wrongly states that `GraphGen` is "a third-party component", but in fact it should read that `GraphGen` is a wrapper to invoke `GraphStream`. Unfortunately, the image cannot be visualised from inside the `Docker` because `GraphGen` uses the functionality of `GraphStream` that displays the graph in an interactive window. So, to see the model it is necessary to use `TRAC` from outside the `Docker`.
+(labels are simplified for readability). The description in Section 3.1 <span style="-typora-class: textPaperPage;"> </span> wrongly states that `GraphGen` is "a third-party component", but in fact it should read that `GraphGen` is a wrapper to invoke `GraphStream`. Unfortunately, the image cannot be visualised from inside the `Docker` because `GraphGen` uses the functionality of `GraphStream` that displays the graph in an interactive window. So, to see the model it is necessary to use `TRAC` from outside the `Docker`.
 
 
 ## 3.3. Commands for performance evaluation
 To evaluate the performances of `TRAC`, we created a randomizer that contains a generator of random models in our DSL, a program that applies `TRAC` on the generated models, and a visualiser to plot data from `csv` files. In the following, we explain how to perform each step.
 
 
-### **Generating random examples**
+### Generating random examples
 The following command generates 100 random models, saves them in the directory `src/Examples/random_txt/your_sub_dir_name`, checks for the well-formedness of the models, and collects performance data in `csv` files:
 
 ```bash
@@ -227,13 +230,13 @@ The generation process can be customised setting optional parameters of `Generat
 - `--merge_only_csv [True|False]` if set to `True` merges results into a single `csv` file; all other parameters are ignored when this is flag is used (default: `False`)
 - `--num_example_for_each <num>` is the number of models to generate for each configuration (default:`5`).
 
-To generate the models used in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>, we ran the following command:
+To generate the models used in Section 4 <span style="-typora-class: textPaperPage;"> </span>, we ran the following command:
 
 ```bash 
 python3 Generate_examples.py --directory tests_dafsms_1 --steps 5 --num_example_for_each 5\
 	--num_tests 30 --incremental_gen True
 ```
-<span style="-typora-class: textRed;">**Warning**:</span> the directory `src/Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in our paper<span style="-typora-class: textPaperPage;"> </span>.
+<span style="-typora-class: textRed;">**Warning**:</span> the directory `src/Examples/random_txt/tests_dafsms_1` in the `Docker` is populated with the models and `csv` files generated for the experiments reported in the paper<span style="-typora-class: textPaperPage;"> </span>. Executing the command above in the `Docker` would overwrite the files generated for the experiments in Section 4 <span style="-typora-class: textPaperPage;"> </span>.
 
 Well-formedness check of the models starts immediately after the generation phase is completed. The results of each check are stored in a `csv` file together with metadata for the performance evaluation. (The full description of the metadata is in [section 4 below](#4-documentation).)
 
@@ -250,7 +253,7 @@ where
    - `--number_runs_per_each <num>` specifies how many times to run each model check (default: `10`)
    - `--time_out <num>` sets a timeout limit to perform each model check (default: `300000000000`).
 
-The command above reads the metadata in `src/Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4 of the paper<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `src/Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
+The command above reads the metadata in `src/Examples/random_txt/<subdir>/list_of_files_info.csv`, allocates 5 models to each CPU and performs the check as described in Section 4<span style="-typora-class: textPaperPage;"> </span>. Each CPU will output a `csv` file `src/Examples/random_txt/<subdir>/list_of_files_info_<id>.csv` for each model `<id>` assigned to the CPU. All `csv` files are merged into the file `src/Examples/random_txt/<subdir>/merged_list_of_files_info.csv` upon completion of the evaluation.
 
 The checking process can be customized by setting the following optional parameters:
 
