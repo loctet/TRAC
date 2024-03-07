@@ -1,3 +1,5 @@
+from Settings import s_well_formed_message, s_non_well_formed_message
+
 class MessagesTemplates:
     """
     Provides templates for generating Z3 solver function definitions, result checks,
@@ -77,7 +79,7 @@ def {item['snameF']}(infos = False):
 
 
         return f"""
-    print("\\n(!) Verdict: "+ ("Well Formed" if  check_resut == True else "Not Well Formed"))
+    print("\\n"+ ("{s_well_formed_message}" if  check_resut == True else "{s_non_well_formed_message}"))
         """
         
     @staticmethod

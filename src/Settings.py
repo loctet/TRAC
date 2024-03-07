@@ -1,19 +1,16 @@
 def _():
     """
     This file defines settings to customise TRAC. 
-    It includes configurations for CSV headers to structure output data, time metrics to measure different phases of processing or verification, labels for more human-readable reporting, and default values for generating or testing DAFSMs. 
-    Additionally, it specifies paths for model storage and example directories, along with parameters to control the generation and testing process, such as the number of tests, states, actions, variables, and the branching factor. 
-    This setup is essential for systematic analysis, benchmarking, and documentation of DAFSM behaviors, performance, and verification outcomes.
     """
     pass
 
-# CSV headers for data storage
+# CSV headers metadata
 s_csv_headers = ["path", "num_states", "num_actions", "num_vars", "max_branching_factor", "num_participants", "num_transitions", "seed_num", "min_param_num", "average_param_num", "max_param_num", "min_bf_num", "average_bf_num", "max_bf_num", "num_paths",  "verdict", "participants_time", "non_determinism_time", "a_consistency_time", "f_building_time", "building_time", "z3_running_time", "total", "is_time_out"]
 
-# Time metrics for analysis
+# Time metrics for reporting
 s_time_metrics = ['participants_time', 'non_determinism_time', 'a_consistency_time', 'z3_running_time']
 
-# Labels for data analysis
+# Labels for data repporting plots
 s_labels = {
     'num_states' : "Number of states",  # Number of states in the DAFSM
     'average_bf_num' : "Average branching factor",  # Average branching factor of the DAFSM
@@ -29,6 +26,9 @@ s_labels = {
 # Message indicating a well-formed DAFSM
 s_well_formed_message = "(!) Verdict: Well Formed"
 
+# Message indicating a non well-formed DAFSM
+s_non_well_formed_message = "(!) Verdict: Non Well Formed"
+
 # Paths for file handling
 s_z3model_path = "./Z3_models/"  # Path to store Z3 model files
 s_txt_path = "./Examples/dafsm_txt/"  # Path to locate DAFSM text files
@@ -38,7 +38,7 @@ s_json_path = "./Examples/jsons/"  # Path to store generated JSON files
 s_non_stop = 1  # Flag to continue processing on errors
 s_time_out = 300000000000  # Timeout limit for processing
 
-# Default parameters for global randomizer
+# Default parameters for global randomizer. If set to None then they will be randomly generated
 s_num_tests = None  # Number of tests to be generated
 s_num_states = None  # Number of states in the DAFSM
 s_num_actions = None  # Number of actions in the DAFSM

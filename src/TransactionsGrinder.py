@@ -7,7 +7,7 @@ from VariableDeclarationConverter import VariableDeclarationConverter
 from Logger import Logger
 from Z3Runner import Z3Runner
 from Fbuilder import Fbuilder
-from Settings import s_json_path, s_txt_path, s_z3model_path
+from Settings import s_json_path, s_txt_path, s_z3model_path, s_well_formed_message
 
 class TransactionsGrinder(Logger):
     """
@@ -259,7 +259,7 @@ class TransactionsGrinder(Logger):
                 self.info["t_building"] += self.get_time() - s_t
                 Z3Runner.execute_model(self,self.get_full_z3model_path())
             if not self.non_stop: 
-                print("(!) Verdict: Well Formed\n")
+                print(s_well_formed_message)
             
             self.logIt("End----\n\n")
         except Exception as e:  
