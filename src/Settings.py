@@ -1,6 +1,6 @@
 def _():
     """
-    This file defines various settings and labels for reporting and analyzing the performance and characteristics of DAFSM. 
+    This file defines settings to customise TRAC. 
     It includes configurations for CSV headers to structure output data, time metrics to measure different phases of processing or verification, labels for more human-readable reporting, and default values for generating or testing DAFSMs. 
     Additionally, it specifies paths for model storage and example directories, along with parameters to control the generation and testing process, such as the number of tests, states, actions, variables, and the branching factor. 
     This setup is essential for systematic analysis, benchmarking, and documentation of DAFSM behaviors, performance, and verification outcomes.

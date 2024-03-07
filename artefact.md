@@ -65,7 +65,7 @@ For each smart contract, the table below reports
 
 The DAFSM models for each smart contract but for `Bazaar` and `Ping Pong` of the Azure repository can be found in the directory `src/Examples/dafsms_txt/azure`.
 
-To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done with the `Docker` commands below on the  [`simple-marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
+To check a model with `TRAC`, navigate to the directory `src` and execute the `Main.py` as done with the `Docker` commands below on the  [`Simple Marketplace`](https://github.com/Azure-Samples/blockchain/tree/master/blockchain-workbench/application-and-smart-contract-samples/simple-marketplace) smart contract:
    ```bash
    cd src
    python3 Main.py --filetype txt "azure/simplemarket_place"
@@ -78,7 +78,7 @@ Checking the well formness of the model----
 
 (!) Verdict: Well Formed
    ```
-reporting that the DAFSMs for the `simplemarket_place` is well formed. For the other smart contracts it is enough to execute the python script on the corresponding DAFSM.
+reporting that the DAFSMs for the `azure/simplemarket_place` is well formed. For the other smart contracts it is enough to execute the python script on the corresponding DAFSM.
 
 
 ## 2.3. How to check the randomly generated models 
@@ -90,7 +90,10 @@ The 135 randomly generated models used in last part of Section 4 of our paper<sp
    python3 Random_exec.py tests_dafsms_1 --number_runs_per_each 10 --number_test_per_cpu 5 --time_out 300000000000  
    ```
 Note that the results may vary due to different hardware/software configurations than those we used (cf. page 12 of the paper<span style="-typora-class: textPaperPage;"> </span>).
-The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`. Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper<span style="-typora-class: textPaperPage;"> </span>.
+The latter command above specifies the target directory `tests_dafsms_1`, the number of repetitions for each experiment, the number of experiments analyzed by each cpu, and the time out in nanoseconds. While running the checks further `csv` files will be generated and finally merged into a single file called `src/Examples/random_txt/tests_dafsm_1/merged_list_of_files_info.csv`.
+
+<span style="-typora-class: textRed;">**Warning**:</span> 
+Notice if the target directory in the command above is not changed, this `csv` file will be overwritten at each execution. The current content of the `csv` files when starting the `Docker` contains the values plotted in Figures 2 and 3 of our paper<span style="-typora-class: textPaperPage;"> </span>.
 
 The plots can be obtained by executing 
 ```bash
@@ -106,7 +109,7 @@ in the `Docker`; the plots are `png` images saved in the directory `src/Examples
 # 3. Usage
 
 ## 3.1. Format of DAFSMs
-The DAFSMs model (Definition 1 of our <span style="-typora-class: textPaperPage;">paper</span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Market Place contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
+The DAFSMs model (Definition 1 of our <span style="-typora-class: textPaperPage;">paper</span>) is renderer in `TRAC` with a DSL which represents a DAFSM as sequences of lines, each specifying a transition of the DAFSM. We explain the format of transitions through the Simple Marketplace contract (&#8594; following Example 1 of our paper<span style="-typora-class: textPaperPage;"> </span>), which in our DSL is
 
 <pre style="-typora-class: transitionB;">
 _ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0
@@ -116,7 +119,6 @@ S1 {True} o > c.rejectOffer() {} S01
 S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1
 S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1
 </pre>
-
 
 hereafter called `SMP`; the names of states in `SMP` differ from those in Example 1, but this is immaterial for the analysis.
 
