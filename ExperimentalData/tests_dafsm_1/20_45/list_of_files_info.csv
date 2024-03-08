@@ -1,6 +1,0 @@
-path,num_states,num_actions,num_vars,max_branching_factor,num_participants,num_transitions,seed_num,min_param_num,average_param_num,max_param_num,min_bf_num,average_bf_num,max_bf_num,num_paths,verdict,participants_time,non_determinism_time,a_consistency_time,building_time,z3_running_time,total
-./examples/random_txt/tests_dafsm_2/20_45/test_gen_0.txt,20,17,30,5,7,47,17887775293209937237,0,8.212765957446809,27,0,2.35,5
-./examples/random_txt/tests_dafsm_2/20_45/test_gen_1.txt,20,17,30,5,7,47,2015331383793910454,0,9.53191489361702,29,0,2.35,5
-./examples/random_txt/tests_dafsm_2/20_45/test_gen_2.txt,20,17,30,5,7,48,1538180993006992687,0,8.854166666666666,30,0,2.4,5
-./examples/random_txt/tests_dafsm_2/20_45/test_gen_3.txt,20,17,30,5,7,48,13645035504372842225,0,9.375,29,0,2.4,5
-./examples/random_txt/tests_dafsm_2/20_45/test_gen_4.txt,20,17,30,5,7,49,8895923611448608527,0,9.061224489795919,28,0,2.45,5
