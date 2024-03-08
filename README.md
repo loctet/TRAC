@@ -8,7 +8,6 @@ TRAC is a tool designed to enhance the development and verification of coodinati
 The `TRAC` folder architecture is organized as follows: <br/>
 |-- docker/&emsp;Constains docker configuration files <br/>
 |-- docs/&emsp;Contains documentation files. <br/>
-|&emsp;|-- html/&emsp; HTML format documentation files. <br/>
 |-- ExperimentalData/&emsp;Directory for experimental data. <br/>
 |&emsp;|-- tests_dafsm_1/&emsp;Contains data for experimental tests of the paper. <br/>
 |-- images/&emsp;Directory for images used in the readme or documentation. <br/>
@@ -16,7 +15,6 @@ The `TRAC` folder architecture is organized as follows: <br/>
 |&emsp;|-- Examples/&emsp;Directory for example files. <br/>
 |&emsp;|&emsp;|-- dafsm_txt/&emsp;Holds DAFSM model text files for manual execution. <br/>
 |&emsp;|&emsp;|-- jsons/&emsp;Stores JSON files. <br/>
-|&emsp;|&emsp;|-- random_json/&emsp;Stores randomly generated JSON files. <br/>
 |&emsp;|&emsp;|-- random_txt/&emsp;Contains randomly generated DAFSM model text files. <br/>
 |&emsp;|-- GraphGen/&emsp;Contains `.jar` for graph visualization. <br/>
 |&emsp;|-- Z3_models/&emsp;Directory for storing Z3 model files. <br/>
