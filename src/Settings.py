@@ -50,7 +50,7 @@ s_incremental_gen = None  # Flag for incremental generation
 s_merge_only_csv = None  # Flag to merge only CSV results
 s_steps = None  # Steps for processing
 
-# Default values for various parameters
+# Default values for the random generator
 s_number_per_bacth = 5  # Number per batch
 s_steps = 5  # Steps for processing
 s_number_runs_per_each = 10  # Number of runs per example
