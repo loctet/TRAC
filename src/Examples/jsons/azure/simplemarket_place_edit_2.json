@@ -23,9 +23,7 @@
                 "o": "O"
             },
             "caller": {
-                "o": [
-                    ""
-                ]
+                "o": []
             },
             "actionLabel": "starts",
             "preCondition": "True",

@@ -24,9 +24,7 @@
                 "p1": "P"
             },
             "caller": {
-                "p1": [
-                    ""
-                ]
+                "p1": []
             },
             "actionLabel": "starts",
             "preCondition": "True",
