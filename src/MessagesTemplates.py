@@ -53,15 +53,15 @@ def {item['snameF']}(infos = False):
             print("--For {item['snameF']}: "," Check result :: ", result)
 
         if not part_result :
-            print(f"--- Participants       : {{part_result}}")
+            print(f"--- CallerCheck       : {{part_result}}")
 
         if  not eps_result :
-            print ("--- Non Determinism  : ", ({item['epsformula']}))
+            print ("--- DetCheck  : ", ({item['epsformula']}))
             
         if not post_result: 
             print(f"--- A-Consistency: {{post_result}}")
             solver_{item['snameF']}2.add(Not({item['sformula']}))
-            print("\\nSimplification of the of the negation of the formula: ", simplify(Not({item['sformula']})), " :: ", solver_{item['snameF']}2.check() == z3.sat)
+            print("Simplification of the of the negation of the formula: ", simplify(Not({item['sformula']})), " :: ", solver_{item['snameF']}2.check() == z3.sat)
             
           
                    
@@ -117,10 +117,11 @@ def reset_deploy_vars():
         :rtype: str
         """
 
-        partern = "r'[^\[\]{}()]*[^\[\]{}()\s]'"
+        pattern = r"[^\[\]{}()]*[^\[\]{}()\s]"
+
         return f"""
     # Define a regular expression pattern to match variable names inside brackets or parentheses
-    pattern = {partern}
+    pattern = r"{pattern}"
     # Use re.search to find the first match in the expression
     match = re.search(pattern, "{variable_name.strip()}")
     

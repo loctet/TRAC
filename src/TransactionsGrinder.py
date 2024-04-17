@@ -8,6 +8,7 @@ from Logger import Logger
 from Z3Runner import Z3Runner
 from Fbuilder import Fbuilder
 from Settings import s_json_path, s_txt_path, s_z3model_path, s_well_formed_message
+from deepdiff import DeepDiff
 
 class TransactionsGrinder(Logger):
     """
@@ -137,23 +138,23 @@ class TransactionsGrinder(Logger):
     
     def group_transactions(self, transitions):
         """
-        Groups transactions by their "to" state for processing.
+        Groups transactions by their "from" state for processing.
 
         :param transitions: A list of transactions to group.
         :type transitions: list
-        :return: A dictionary of transactions grouped by "to" state.
+        :return: A dictionary of transactions grouped by "from" state.
         :rtype: dict
         """
 
         # Create a dictionary to store transitions grouped by "to" state
-        transitions_by_to_state = {}
+        transitions_by_from_state = {}
         # Group transitions by "to" state
         for transition in transitions:
-            to_state = transition["from"]
-            if to_state not in transitions_by_to_state:
-                transitions_by_to_state[to_state] = []
-            transitions_by_to_state[to_state].append(transition)
-        return transitions_by_to_state
+            from_state = transition["from"]
+            if from_state not in transitions_by_from_state:
+                transitions_by_from_state[from_state] = []
+            transitions_by_from_state[from_state].append(transition)
+        return transitions_by_from_state
 
     def get_json_from_file(self):
         """
@@ -219,13 +220,12 @@ class TransactionsGrinder(Logger):
 
         try:
             self.start_time()
-            fsm = self.fsm 
-            transitions = fsm['transitions']
+            transitions = self.fsm['transitions']
             # Example usage
-            declarations_str = fsm['statesDeclaration']
+            declarations_str = self.fsm['statesDeclaration']
             
             self.logIt("Checking the well formness of the model----\n")
-            self.transition_processor = self.get_transition_processor()
+            self.get_transition_processor()
             log = self.log
             if not self.non_stop:
                 self.log = False
@@ -235,6 +235,39 @@ class TransactionsGrinder(Logger):
             setattr(self.transition_processor, 'deploy_init_var_val', deploy_init_var_val)
             setattr(self.transition_processor, 'var_names', var_names)
             
+            self.transition_processor.append(result)
+            list_of_node = set("_")
+            while list_of_node:
+                state = list_of_node.pop()
+                # Get all outgoing edges from the state with data
+                transitions = self.transition_processor.fsmGraph.graph.out_edges(state, data=True)
+                for _, _, transition in transitions:
+                    outgoingTransitions = []
+                    list_of_node.add(transition['to'])
+                    for _,_,t in self.transition_processor.fsmGraph.graph.out_edges(transition['to'], data=True):
+                        outgoingTransitions.append(t.copy())
+                        
+                    self.transition_processor.process(transition, outgoingTransitions)
+                    self.update_data([0])
+                    if not self.non_stop and (self.should_stop_if_time_out(self) or self.should_stop(self.get_full_z3model_path(), transition, self)):  
+                        return
+                    
+                    if len(self.transition_processor.fsmGraph.graph.out_edges(transition['to'])) == 0 and transition['to'] not in self.fsm['finalStates']:
+                        self.logIt(f"Warning: {transition['to']} is not a final state but has no trasitions from {transition['to']}")
+                
+                    
+            if run and self.non_stop:
+                self.log = log
+                s_t = self.get_time()
+                Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), False)
+                self.info["t_building"] += self.get_time() - s_t
+                Z3Runner.execute_model(self,self.get_full_z3model_path())
+            if not self.non_stop: 
+                print(s_well_formed_message)
+            
+            self.logIt("End----\n\n")
+
+            """
             self.transition_processor.append(result)
             grouped_transitions, grouped_transitions_copy = self.get_grouped_transaction(transitions)
             data = grouped_transitions_copy.pop("_", [])
@@ -247,7 +280,7 @@ class TransactionsGrinder(Logger):
                     if not self.non_stop and (self.should_stop_if_time_out(self) or self.should_stop(self.get_full_z3model_path(), transition, self)):  
                         return
                     
-                    if transition['to'] not in grouped_transitions and transition['to'] not in fsm['finalStates']:
+                    if transition['to'] not in grouped_transitions and transition['to'] not in self.fsm['finalStates']:
                         self.logIt(f"Warning: {transition['to']} is not a final state but has no trasitions from {transition['to']}")
                 
                 _, data = grouped_transitions_copy.popitem() if len(grouped_transitions_copy) > 0 else ["", []]
@@ -262,6 +295,7 @@ class TransactionsGrinder(Logger):
                 print(s_well_formed_message)
             
             self.logIt("End----\n\n")
+            """
         except Exception as e:  
             traceback.print_exc()
             raise Exception(f"Error while grinding: {e}")

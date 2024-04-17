@@ -28,6 +28,8 @@ class FSMGraph(MiniTimer):
         self.time_out = time_out
         self.timed_out = False
         self.nb_path = 0
+
+        self.graph.out_edges()
         
     def _construct_graph(self):
         """
@@ -48,11 +50,8 @@ class FSMGraph(MiniTimer):
         :param transition: Contains transition details.
         :type transition: dict
         """
-        # Define a unique key for each transition to distinguish between multiple edges between the same nodes
-        transition_key = f"{transition['actionLabel']}_{time.time_ns()}"
-
         # Add the transition as an edge with all its data as attributes
-        self.graph.add_edge(transition['from'], transition['to'], key=transition_key, **transition)
+        self.graph.add_edge(transition['from'], transition['to'], **transition)
 
     def get_outgoing_transitions(self, state):
         """
