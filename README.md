@@ -42,7 +42,7 @@ TRAC can also be cloned directly from its GitHub repository for those who prefer
 Before installing TRAC, ensure Python 3.6 or later is installed on your system. TRAC relies on several Python packages for its operation. Use the following pip command to install the necessary dependencies:
 
 ```bash
-pip install z3-solver matplotlib numpy plotly pandas networkx
+pip install z3-solver matplotlib numpy plotly pandas networkx graphviz
 ```
 Also make sure the `java JRE` is installed to run the `java` command. This is used to show a visual view of the DAFSMs.
 
