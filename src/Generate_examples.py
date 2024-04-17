@@ -238,14 +238,19 @@ def generate_transitions(num_states, num_actions, num_vars, max_branching_factor
         transitions.append(generate_a_transition(state_variables, params, participant, role, to_state, from_state, action))
     r_num_trans = num_states-1
 
-    while r_num_trans <= max_num_transitions:
+    while r_num_trans < max_num_transitions:
         from_state = list_not_visited.pop() if len(list_not_visited) > 0 else choice(states)
         list_visited.add(from_state)
         num_transitions = randint(1, max_branching_factor)
         min_bf_num = min(min_bf_num, num_transitions)
         max_bf_num = max(max_bf_num, num_transitions)
-        r_num_trans += num_transitions
-
+        if num_transitions + r_num_trans > max_num_transitions:
+            num_transitions = max_num_transitions - r_num_trans
+            r_num_trans = max_num_transitions
+        else:
+            r_num_trans += num_transitions
+        
+        
         for _ in range(num_transitions):
             action, to_state, participant, params, role= get_generated_stuffs(actions, states, participants, num_vars, roles)
             list_not_visited.add(to_state)
