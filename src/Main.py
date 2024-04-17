@@ -1,6 +1,5 @@
 import os
 import argparse
-import json
 from TransactionsGrinder import TransactionsGrinder
 from VariableDeclarationConverter import VariableDeclarationConverter
 from The_Validator import *
@@ -34,7 +33,7 @@ def main():
     """)
     parser.add_argument('file_name', type=str, help='The name of the JSON or TXT file for processing (without extension).')
     parser.add_argument('check_type', nargs='?', default='1', choices=['1', '2', '3', 'fsm', 'fsm2'], help='The type of check to perform: 1 - Well-Formedness, 2 - Individual Function, 3 - Path Check, fsm - Print DAFSM')
-    parser.add_argument('--filetype', choices=['json', 'txt'], default='json', help='Specify the file type (json or txt). Default is json.')
+    parser.add_argument('--filetype', choices=['json', 'txt'], default='txt', help='Specify the file type (json or txt). Default is json.')
     parser.add_argument('--non_stop', default= s_non_stop, choices=['1', '2'], help='Checking And Stopping Immediately When Error Default is non_stop = 1, 2 means stop mode.')
     parser.add_argument('--time_out', type=int, default = 0, help='Time out number')
 
@@ -70,7 +69,7 @@ def main():
         trGrinder.check_path_sat()
     elif args.check_type == 'fsm':
         print("--Generating the visual DAFSM")
-        os.system(f"java -jar ./GraphGen/GraphGen.jar -i {trGrinder.get_full_json_path()} -visualize ")
+        generate_visual_fsm(trGrinder.get_full_json_path(), trGrinder.get_full_png_path())
         clear()
         print(f"--Generated the visual DAFSM")
     elif args.check_type == 'fsm2':
