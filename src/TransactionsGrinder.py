@@ -236,25 +236,23 @@ class TransactionsGrinder(Logger):
             setattr(self.transition_processor, 'var_names', var_names)
             
             self.transition_processor.append(result)
-            list_of_node = set("_")
-            while list_of_node:
-                state = list_of_node.pop()
-                # Get all outgoing edges from the state with data
-                transitions = self.transition_processor.fsmGraph.graph.out_edges(state, data=True)
-                for _, _, transition in transitions:
-                    outgoingTransitions = []
-                    list_of_node.add(transition['to'])
-                    for _,_,t in self.transition_processor.fsmGraph.graph.out_edges(transition['to'], data=True):
-                        outgoingTransitions.append(t.copy())
-                        
+            grouped_transitions, grouped_transitions_copy = self.get_grouped_transaction(transitions)
+            data = grouped_transitions_copy.pop("_", [])
+
+            while data:
+                for transition in data:
+                    outgoingTransitions = grouped_transitions.get(transition['to'], [])
                     self.transition_processor.process(transition, outgoingTransitions)
                     self.update_data([0])
                     if not self.non_stop and (self.should_stop_if_time_out(self) or self.should_stop(self.get_full_z3model_path(), transition, self)):  
                         return
                     
-                    if len(self.transition_processor.fsmGraph.graph.out_edges(transition['to'])) == 0 and transition['to'] not in self.fsm['finalStates']:
+                    if transition['to'] not in grouped_transitions and transition['to'] not in self.fsm['finalStates']:
                         self.logIt(f"Warning: {transition['to']} is not a final state but has no trasitions from {transition['to']}")
                 
+                _, data = grouped_transitions_copy.popitem() if len(grouped_transitions_copy) > 0 else ["", []]
+
+            
                     
             if run and self.non_stop:
                 self.log = log

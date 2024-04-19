@@ -104,11 +104,13 @@ class The_Validator:
             "transitions": [],
             "rPAssociation": []  # Update as necessary if associations are provided
         }
-
+        errors = []
         # Read transitions from a text file and parse them
         with open(transitions_txt_path, 'r') as file:
             lines = file.readlines()
+            counter = 0
             for line in lines:
+                counter += 1
                 transition, states_declaration = self.parse_transition(line.strip())
                 if transition:
                     contract_structure['transitions'].append(transition)
@@ -118,6 +120,8 @@ class The_Validator:
                     contract_structure['finalStates'].extend(transition['finalStates'])
                     if states_declaration:  # Only the deploy transition will have this
                         contract_structure['statesDeclaration'] = states_declaration
+                elif not transition and line.split() and line.find("#") != 0:
+                    errors.append(f"Line {counter}: Transition {line.replace("\n", "")}")
 
         # Remove duplicates and sort states and final states
         contract_structure['states'] = sorted(set(filter(None, contract_structure['states'])))
@@ -131,4 +135,6 @@ class The_Validator:
         # Write the JSON structure to a file
         with open(json_output_path, 'w') as json_file:
             json.dump(contract_structure, json_file, indent=4)
+
+        return errors
 

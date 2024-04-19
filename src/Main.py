@@ -48,8 +48,10 @@ def main():
 
         print("--Parsing Txt to generate Json file")
         sParser = The_Validator()
-        sParser.transitions_to_json(trGrinder.get_full_txt_path(), trGrinder.get_full_json_path())
-        print()
+        errors = sParser.transitions_to_json(trGrinder.get_full_txt_path(), trGrinder.get_full_json_path())
+        if errors :
+            print(f"List of parsing errors(not a valid transitions): \n {'\n '.join(errors)}")
+            exit()
         file_name = f"{file_name}"
 
         #setattr(trGrinder, "file_name", file_name)

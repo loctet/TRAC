@@ -50,7 +50,7 @@ def {item['snameF']}(infos = False):
     if infos :
         if not result:
             print()
-            print("--For {item['snameF']}: "," Check result :: ", result)
+            print("--For {item['sTransition']}: " if non_stop else "--","Check result :: ", result)
 
         if not part_result :
             print(f"--- CallerCheck       : {{part_result}}")
@@ -117,11 +117,11 @@ def reset_deploy_vars():
         :rtype: str
         """
 
-        pattern = r"[^\[\]{}()]*[^\[\]{}()\s]"
+        pattern_ = "r'[^\[\]{}()]*[^\[\]{}()\s]'"
 
         return f"""
     # Define a regular expression pattern to match variable names inside brackets or parentheses
-    pattern = r"{pattern}"
+    pattern = "{pattern_}"
     # Use re.search to find the first match in the expression
     match = re.search(pattern, "{variable_name.strip()}")
     

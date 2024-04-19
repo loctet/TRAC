@@ -31,7 +31,7 @@ class TransitionProcessor(MiniTimer):
         :type time_out: int
         """
 
-        self.str_code = ""
+        self.str_code = f"non_stop = {non_stop}\n"
         self.solvers = {}
         self.deploy_init_var_val = {}
         self.var_names = {}
@@ -297,7 +297,8 @@ class TransitionProcessor(MiniTimer):
             'sglobalVars': global_vars,
             'sformula': sformula,
             'sparticipants': formula_for_participant_check,
-            'epsformula': thesis_non_eps
+            'epsformula': thesis_non_eps,
+            'sTransition' : f"{transition['from']} {transition['actionLabel']} {transition['to']}"
         }
         # Append the result to the solvers dictionary for the current action, and update the latest processed transition.
         self.solvers[action].append(result)
