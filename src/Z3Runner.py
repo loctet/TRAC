@@ -36,7 +36,7 @@ class Z3Runner:
             print(e)
        
         checker.logIt(checker.output) 
-        checker.logIt(f"\n(Check the generated file  {path} to find the z3 code generated)\n") 
+        #checker.logIt(f"\n(Check the generated file  {path} to find the z3 code generated)\n") 
         return Z3Runner.analyser(checker.output)
     
     @staticmethod

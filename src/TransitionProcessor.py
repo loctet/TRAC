@@ -31,13 +31,13 @@ class TransitionProcessor(MiniTimer):
         :type time_out: int
         """
 
-        self.str_code = ""
+        self.str_code = f"non_stop = {non_stop}\n"
         self.solvers = {}
         self.deploy_init_var_val = {}
         self.var_names = {}
         self.solvers['start'] = []
         self.solvers['starts'] = [] 
-        self.fsmGraph = FSMGraph(data, log, time_out)
+        self.fsmGraph : FSMGraph = FSMGraph(data, log, time_out)
         self.non_stop = non_stop
         self.log = log
         self.infos = {}
@@ -168,7 +168,7 @@ class TransitionProcessor(MiniTimer):
                 else :
                     actions.append(transition['actionLabel'])
             else:
-                actions.append(hashlib.md5(f"{transition['actionLabel']}".encode()).hexdigest())
+                actions.append(hashlib.md5(f"{transition['actionLabel']}_{transition['newParticipants'][list(transition['newParticipants'].keys())[0]]}".encode()).hexdigest())
 
         for i, action in enumerate(actions):
             indexes[action].append(i)
@@ -206,7 +206,7 @@ class TransitionProcessor(MiniTimer):
         """
 
         if formula == "False":
-            print(f"Error from this stage:{transition['from']}_{transition['actionLabel']}({transition['input']})_{transition['to']}")
+            print(f"Error:{transition['from']}_{transition['actionLabel']}({transition['input']})_{transition['to']}")
             print(f"Participant: {participant} not introduced")
             if self.non_stop:
                 return True
@@ -297,7 +297,8 @@ class TransitionProcessor(MiniTimer):
             'sglobalVars': global_vars,
             'sformula': sformula,
             'sparticipants': formula_for_participant_check,
-            'epsformula': thesis_non_eps
+            'epsformula': thesis_non_eps,
+            'sTransition' : f"{transition['from']} {transition['actionLabel']} {transition['to']}"
         }
         # Append the result to the solvers dictionary for the current action, and update the latest processed transition.
         self.solvers[action].append(result)

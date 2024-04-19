@@ -156,5 +156,5 @@ class PathGenerator :
             except FileNotFoundError:
                 print(f"Error: The file '{file_name}' does not exist.")
             
-        print(f"\n(Check the generated file  {file_name}_path.py to fine the z3 code generated)\n") 
+        #print(f"\n(Check the generated file  {file_name}_path.py to fine the z3 code generated)\n") 
             
