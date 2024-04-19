@@ -47,10 +47,9 @@ def main():
         if not os.path.isfile(trGrinder.get_full_txt_path()):
             exitWithMessage(f"{trGrinder.get_full_txt_path()} does not exist")
 
-        print("--Parsing Txt to generate Json file")
+        print("Parsing Txt to generate Json file----")
         sParser = The_Validator()
         sParser.transitions_to_json(trGrinder.get_full_txt_path(), trGrinder.get_full_json_path())
-        print()
         file_name = f"{file_name}"
 
         #setattr(trGrinder, "file_name", file_name)

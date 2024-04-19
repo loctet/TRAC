@@ -191,7 +191,7 @@ class FSMGraph(MiniTimer):
                 break  # Caller is introduced in this path, no need to check further 
             
         if not caller_introduced:
-            self.error = (f"Participant {caller}{':' + callerRoles[:] if callerRoles else ''} in not introduce in the following path: {self.printPathTrace(path)}")
+            self.error = (f"    Participant {caller}{':' + callerRoles[:] if callerRoles else ''} in not introduce in the following path: {self.printPathTrace(path)}")
             return False  # Caller was not introduced in at least one path
     
         return True

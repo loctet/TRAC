@@ -224,7 +224,7 @@ class TransactionsGrinder(Logger):
             # Example usage
             declarations_str = fsm['statesDeclaration']
             
-            self.logIt("Checking the well formness of the model----\n")
+            self.logIt("Checking well-formedness of the model----")
             self.transition_processor = self.get_transition_processor()
             log = self.log
             if not self.non_stop:
