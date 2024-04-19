@@ -24,10 +24,10 @@ s_labels = {
 }
 
 # Message indicating a well-formed DAFSM
-s_well_formed_message = "(!) Verdict: Well Formed"
+s_well_formed_message = "(!) Verdict: Well-Formed"
 
 # Message indicating a non well-formed DAFSM
-s_non_well_formed_message = "(!) Verdict: Non Well Formed"
+s_non_well_formed_message = "(!) Verdict: Not Well-Formed"
 
 # Paths for file handling
 s_z3model_path = "./Z3_models/"  # Path to store Z3 model files
