@@ -129,7 +129,7 @@ class CSVDataPlotter:
                 plt.yscale(scale)
                 plt.xscale("linear")
                 plt.colorbar(label="Branching factor", orientation="vertical") 
-                image_name = self.csv_file_path.replace(".csv",  f'_{line}__with_{field}_{time.time()}_2d.png')
+                image_name = self.csv_file_path.replace(".csv",  f'_{line}__with_{field}_{typeP}_{scale}_2d_{time.time()}.png')
                 plt.savefig(image_name)
                 print(f"image create: {image_name}")
                 #plt.show()
