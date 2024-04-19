@@ -28,6 +28,7 @@ class FSMGraph(MiniTimer):
         self.time_out = time_out
         self.timed_out = False
         self.nb_path = 0
+        self.error = ""
         
     def _construct_graph(self):
         """
@@ -190,8 +191,7 @@ class FSMGraph(MiniTimer):
                 break  # Caller is introduced in this path, no need to check further 
             
         if not caller_introduced:
-            if self.log:
-                print(f"The Path : {self.printPathTrace(path)} does not contain the participant {caller} : {callerRoles[:]}") 
+            self.error = (f"Participant {caller}{':' + callerRoles[:] if callerRoles else ''} in not introduce in the following path: {self.printPathTrace(path)}")
             return False  # Caller was not introduced in at least one path
     
         return True
@@ -207,6 +207,6 @@ class FSMGraph(MiniTimer):
         """
         result = []
         for _, _, transition in path:
-            result.append(f"{transition['from']}-{transition['actionLabel']}-{transition['to']}")
+            result.append(f"-{transition['originInvoker']}-{transition['actionLabel']}->{transition['to']}")
         
-        return ">".join(result)
+        return "_" + "".join(result)

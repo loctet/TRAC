@@ -23,15 +23,15 @@
                 "o": "O"
             },
             "caller": {
-                "o": [
-                    ""
-                ]
+                "o": []
             },
             "actionLabel": "starts",
             "preCondition": "True",
             "postCondition": "description := _description & price := _price",
             "input": "string _description, int _price",
-            "externalAction": false
+            "originInvoker": "o:O",
+            "externalAction": false,
+            "line": "_ {True} o:O > starts(c,string _description, int _price) {description := _description & price := _price} {string description, int price, int offer} S0\n"
         },
         {
             "from": "S0",
@@ -48,7 +48,9 @@
             "preCondition": "_offer > 0",
             "postCondition": "offer := _offer",
             "input": "int _offer",
-            "externalAction": false
+            "originInvoker": "b:B",
+            "externalAction": false,
+            "line": "S0 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1\n"
         },
         {
             "from": "S1",
@@ -65,7 +67,9 @@
             "preCondition": "True",
             "postCondition": "",
             "input": "",
-            "externalAction": false
+            "originInvoker": "x",
+            "externalAction": false,
+            "line": "S1 {True} x > c.acceptOffer() {} S2+\n"
         },
         {
             "from": "S1",
@@ -80,7 +84,9 @@
             "preCondition": "True",
             "postCondition": "",
             "input": "",
-            "externalAction": false
+            "originInvoker": "o",
+            "externalAction": false,
+            "line": "S1 {True} o > c.rejectOffer() {} S01\n"
         },
         {
             "from": "S01",
@@ -97,7 +103,9 @@
             "preCondition": "_offer > 0",
             "postCondition": "offer := _offer",
             "input": "int _offer",
-            "externalAction": false
+            "originInvoker": "any  b:B",
+            "externalAction": false,
+            "line": "S01 {_offer > 0} any b:B > c.makeOffer(int _offer) {offer := _offer} S1\n"
         },
         {
             "from": "S01",
@@ -114,7 +122,9 @@
             "preCondition": "_offer > 0",
             "postCondition": "offer := _offer",
             "input": "int _offer",
-            "externalAction": false
+            "originInvoker": "b:B",
+            "externalAction": false,
+            "line": "S01 {_offer > 0} b:B > c.makeOffer(int _offer) {offer := _offer} S1\n"
         }
     ],
     "rPAssociation": []

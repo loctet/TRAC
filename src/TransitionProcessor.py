@@ -298,7 +298,9 @@ class TransitionProcessor(MiniTimer):
             'sformula': sformula,
             'sparticipants': formula_for_participant_check,
             'epsformula': thesis_non_eps,
-            'sTransition' : f"{transition['from']} {transition['actionLabel']} {transition['to']}"
+            'sTransition' : transition,
+            'transitionShort' : f"{transition['from']} {transition['actionLabel']} {transition['to']}",
+            'sCallerCheckError' : self.fsmGraph.error
         }
         # Append the result to the solvers dictionary for the current action, and update the latest processed transition.
         self.solvers[action].append(result)

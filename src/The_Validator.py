@@ -54,6 +54,7 @@ class The_Validator:
                 "preCondition": pre_condition,
                 "postCondition": post_condition,
                 "input": params,
+                'originInvoker': f'{participant}:{role}',
                 "externalAction": False
             }
             return transition, states_variables_declaration
@@ -73,6 +74,7 @@ class The_Validator:
                 "preCondition": pre_condition,
                 "postCondition": post_condition,
                 "input": params,
+                'originInvoker': f"{any_keyword + ' ' if any_keyword else ''}{participant}{':'+role if role else ''}",
                 "externalAction": False
             }
             return transition, None
@@ -111,6 +113,7 @@ class The_Validator:
             for line in lines:
                 transition, states_declaration = self.parse_transition(line.strip())
                 if transition:
+                    transition["line"] = line
                     contract_structure['transitions'].append(transition)
                     if transition['from'] and transition['from'] != "_":
                         contract_structure['states'].append(transition['from'])
