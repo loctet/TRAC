@@ -57,7 +57,7 @@ def {item['snameF']}(infos = False):
             print("{item['sCallerCheckError']}")
 
         if  not eps_result :
-            print ("{{:<20}}: {{}} {{}}".format("--- DetCheck", eps_result, "(problem is in state" + "{item['sTransition']['to']})"))
+            print ("{{:<20}}: {{}} {{}}".format("--- DetCheck", eps_result, "(problem is in state" + " {item['sTransition']['to']})"))
             
         if not post_result: 
             print("{{:<20}}: {{}}".format("--- A-Consistency", post_result))
