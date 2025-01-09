@@ -1,0 +1,6 @@
+z3-solver
+matplotlib
+numpy
+plotly
+pandas
+networkx
