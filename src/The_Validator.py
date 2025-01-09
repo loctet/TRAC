@@ -24,7 +24,7 @@ class The_Validator:
             r'(\w+)\s*{(.*)}\s+(any\s+)?(\w*):?(\w*)\s+>\s+(\w+)\.(\w+)\((.*)\)\s*{(.*)}\s+(\w+)(\+?)'
         )
 
-    def parse_transition(self, line):
+    def parse_transition(self, line, line_number):
         """
         Parses a single line of text representing a transition into a structured dictionary.
 
@@ -35,6 +35,8 @@ class The_Validator:
         :rtype: tuple[dict, str]
         """
 
+        if line[0] in ["", "#"] :
+            return None, None
         
         # Check for deploy transition
         match = self.deploy_pattern.match(line)
@@ -79,7 +81,8 @@ class The_Validator:
             }
             return transition, None
 
-        return None, None
+        
+        raise Exception(f"Error parsing file line {line_number + 1}, transition : {line}")
 
     # Main function to convert the transitions text to JSON format
     def transitions_to_json(self, transitions_txt_path, json_output_path):
@@ -106,17 +109,20 @@ class The_Validator:
             "transitions": [],
             "rPAssociation": []  # Update as necessary if associations are provided
         }
+        has_starts = False
 
         # Read transitions from a text file and parse them
         with open(transitions_txt_path, 'r') as file:
             lines = file.readlines()
-            for line in lines:
-                transition, states_declaration = self.parse_transition(line.strip())
+            for line_number, line in enumerate(lines):
+                transition, states_declaration = self.parse_transition(line.strip(), line_number)
                 if transition:
                     transition["line"] = line
                     contract_structure['transitions'].append(transition)
                     if transition['from'] and transition['from'] != "_":
                         contract_structure['states'].append(transition['from'])
+                    else :
+                        has_starts = True
                     contract_structure['states'].append(transition['to'])
                     contract_structure['finalStates'].extend(transition['finalStates'])
                     if states_declaration:  # Only the deploy transition will have this
@@ -129,6 +135,8 @@ class The_Validator:
        
         contract_structure['initialState'] = self.initialStage
         
+        if not has_starts :
+            raise "Dafsm has no starts transition"
         
 
         # Write the JSON structure to a file

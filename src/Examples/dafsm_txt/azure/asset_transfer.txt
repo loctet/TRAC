@@ -29,7 +29,7 @@ S3 {True} a > c.MarkAppraised() {} S4
 S4 {True} o > c.reject() {} S01
 S4 {True} b > c.RescindOffer() {OfferPrice := 0} S01
 S4 {True} o > c.terminate() {} S9+
-S4 {True} any o:O > c.accept() {} S5
+S4 {True} any o:O > c.acceptOffer() {} S5
 S4 {True} b > c.accept() {} S8
 #another comment line 
 S5 {True} b > c.RescindOffer() {OfferPrice := 0} S01
