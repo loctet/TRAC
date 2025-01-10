@@ -35,7 +35,7 @@ class The_Validator:
         :rtype: tuple[dict, str]
         """
 
-        if line[0] in ["", "#"] :
+        if not line or line[0] in ["", "#"] :
             return None, None
         
         # Check for deploy transition
