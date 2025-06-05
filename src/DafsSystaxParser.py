@@ -1,4 +1,82 @@
+from pprint import pprint
 import re
+
+import re
+
+def extract_transitions(text: str):
+    # Match pattern: [from] ... [to]
+    pattern = re.compile(r"\[(\w+\+?)\](.*?)\[(\w+\+?)\]", re.DOTALL)
+
+    transitions = []
+    for match in pattern.finditer(text):
+        from_state = match.group(1)
+        data = match.group(2)
+        to_state = match.group(3)
+
+        # Clean the data: remove newlines, excessive spaces
+        cleaned_data = ' '.join(data.strip().split())
+
+        # Format result
+        transition_line = f"[{from_state}] {cleaned_data} [{to_state}]"
+        transitions.append(transition_line)
+    return transitions
+
+
+def extract_braces_content(text):
+    # This pattern matches everything between { and }, non-greedy
+    pattern = r'\{(.*?)\}'
+    matches = re.findall(pattern, text, flags=re.DOTALL)
+    return [match.strip() for match in matches if match.strip()]
+
+def parse_transitions(input_text: str, contract_name: str, roles: list[str]):
+    transition_pattern_with_guard = re.compile(
+        r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*:?\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*\{(.*?)\}\s*\[(\w+\+?)\]"
+    )
+
+    # Rebuild output lines with guard support
+    transitions = []
+
+    for match in transition_pattern_with_guard.findall(input_text):
+        source, guard, party_type, party_name, role, op, param_str, assigns, target = match
+
+        # Construct participant string
+        participant_str = f"{party_name}".strip() if party_type == "new" or not party_type else f"{party_type} {party_name}".strip()
+
+        # Format parameters (support participant roles)
+        formatted_params = []
+        for param in param_str.split(','):
+            param = param.strip()
+            if not param:
+                continue
+            parts = param.split()
+            if len(parts) == 2:
+                typ, var = parts
+                if typ in roles:
+                    formatted_params.append(f"participant {typ} {var}")
+                else:
+                    formatted_params.append(f"{typ} {var}")
+            else:
+                formatted_params.append(param)
+
+
+        # Format assignments
+        assign_list = [a.strip() for a in assigns.split(';') if a.strip()]
+        assign_str = ' & '.join(assign_list)
+
+        # Format transition line
+        transition_line = f"{source}"
+        if guard:
+            transition_line += f" {{{guard}}}"
+        else :
+            transition_line += f" {{True}}"
+        transition_line += f" {participant_str}"
+        if role:
+            transition_line += f":{role}"
+        transition_line += f" > {contract_name}.{op}({', '.join(formatted_params)})"
+        transition_line += f" {{{assign_str}}} {target}"
+        transitions.append(transition_line.strip())
+
+    return transitions
 
 class DafsnSyntaxPerser :
     @staticmethod
@@ -10,9 +88,12 @@ class DafsnSyntaxPerser :
 
         # 2. Parse dafsm header
         header_line = lines[1]
-        header_match = re.match(r"dafsm (\w+)\((.*?)\) by (\w+) ?: (\w+)", header_line)
-        contract_name, params_str, caller, caller_role = header_match.groups()
+        header_match = re.match(r"dafsm (\w+)\((.*?)\) by (\w+) (\w+)", header_line)
+        contract_name, params_str, caller_role, caller = header_match.groups()
 
+        if not caller_role in roles :
+            raise Exception(f"{caller_role} should be in the list of roles {roles}")
+        
         # 3. Format parameters
         params = []
         for param in params_str.split(','):
@@ -27,10 +108,15 @@ class DafsnSyntaxPerser :
             params.append(param_fmt)
 
         # 4. Extract assignments, declarations, and guard
-        assignments_block = lines[2:7]
+        _blocks = extract_braces_content(input_text.split("[")[0])
+        assignments_block = []
+        if _blocks :
+            assignments_block = _blocks[0].strip().splitlines()
+            
         assignments = []
         typed_vars = {}
-        guard = ""
+        guard = "True"
+        
 
         for line in assignments_block:
             line = line.strip()
@@ -60,51 +146,10 @@ class DafsnSyntaxPerser :
         initial_line += "{" + '; '.join(types) + "} "
         initial_line += f"{initial_state}"
 
+        
+        
         # 8. Parse and format regular transitions
-        transition_pattern_with_guard = re.compile(
-            r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*:?\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*\{(.*?)\}\s*\[(\w+\+?)\]"
-        )
-
-        # Rebuild output lines with guard support
-        output_lines = []
-
-        for match in transition_pattern_with_guard.findall(input_text):
-            source, guard, party_type, party_name, role, op, param_str, assigns, target = match
-
-            # Construct participant string
-            participant_str = f"{party_name}".strip() if party_type == "new" or not party_type else f"{party_type} {party_name}".strip()
-
-            # Format parameters (support participant roles)
-            formatted_params = []
-            for param in param_str.split(','):
-                param = param.strip()
-                if not param:
-                    continue
-                parts = param.split()
-                if len(parts) == 2:
-                    typ, var = parts
-                    if typ in roles:
-                        formatted_params.append(f"participant {typ} {var}")
-                    else:
-                        formatted_params.append(f"{typ} {var}")
-                else:
-                    formatted_params.append(param)
-
-            # Format assignments
-            assign_list = [a.strip() for a in assigns.split(';') if a.strip()]
-            assign_str = ' & '.join(assign_list)
-
-            # Format transition line
-            transition_line = f"{source}"
-            if guard:
-                transition_line += f" {{{guard}}}"
-            else :
-                transition_line += f" {{True}}"
-            transition_line += f" {participant_str}"
-            if role:
-                transition_line += f":{role}"
-            transition_line += f" > {contract_name}.{op}({', '.join(formatted_params)})"
-            transition_line += f" {{{assign_str}}} {target}"
-            output_lines.append(transition_line.strip())
-
-        return ("\n".join([initial_line] + output_lines))
+        transitions = parse_transitions("\n".join(extract_transitions(input_text)), contract_name, roles)
+        
+        
+        return ("\n".join([initial_line] + transitions))

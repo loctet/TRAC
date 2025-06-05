@@ -1,3 +1,5 @@
+import io
+import sys
 from box import Box
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
@@ -48,16 +50,35 @@ def process():
                 "check_type": 1                
             }
             
-            
+            printed_output = ""
             # Process the DAFS text using the existing backend
+            # === Start capturing stdout ===
+            original_stdout = sys.stdout
+            sys.stdout = io.StringIO()
+
+            # Process the DAFSM
             trGrinder = process_dafsm(Box(args))
+
+            # Capture all print output
+            printed_output = sys.stdout.getvalue()
+
+            # Restore stdout
+            sys.stdout = original_stdout
             
             generate_visual_fsm(trGrinder.get_full_json_path(), trGrinder.get_full_png_path())
             
+            json_transitons = ""
+            with open(trGrinder.get_full_json_path()) as f: 
+                json_transitons = f.read()
+            
+            trGrinder.delete_files()
+            print(printed_output)
             # Return the relative URL path for the image
             return jsonify({
                 'status': 'success',
-                'graph_data': trGrinder.get_full_png_path()
+                'printed_output': printed_output,
+                'graph_data': trGrinder.get_full_png_path(),
+                'json_transitions': str(json_transitons)
             })
             
         except Exception as e:

@@ -9,7 +9,7 @@ def generate_visual_fsm(json_file_path, output_file_path):
         data = json.load(file)
 
     # Extract FSM details from the JSON data
-    initial_state = ["_"]
+    initial_state = data['initialState']
     final_states = data['finalStates']
 
     # Create a directed graph using Graphviz
