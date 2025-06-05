@@ -101,12 +101,11 @@ class TransitionProcessor(MiniTimer):
             try:
                 inputs[i] = ";".join([ item for item in inputs[i].split(";") if item.strip() != ""] + [ f"{self.var_names[item.replace('_old', '')]} {item}"  for item in PatternChecker.get_all_old_variables(otherPrecs[i])])
             except Exception as e:
-                print(f"KeyError: {e}")
-                exit()
+                raise Exception(f"KeyError: {e}")
         return inputs
 
     # AConsistencyCheck formula gen
-    def a_consistency_check(self, preC, _postC_A, otherPrecs, inputs):
+    def a_consistency_check(self, preC, _postC_A, otherPrecs, inputs, global_vars = []):
         """
         Generates a formula for action consistency check (AConsistencyCheck formula generation).
         AConsistency Check Implementation
@@ -126,7 +125,15 @@ class TransitionProcessor(MiniTimer):
         hypothesis = f"And({preC},{_postC_A})"
         thesis = f'Or({",".join([self.quantifier_closure(otherPrecs[i], self.get_vars_names_from_input(inputs[1][i]), "Exists") for i in range(len(otherPrecs))])})' if len(otherPrecs) > 0 else "True"
     
-        return f'Not(Implies({hypothesis}, {thesis}))'
+        
+        global_vars = [val.replace("global", "").strip() 
+            for val in (global_vars.split() if isinstance(global_vars, str) else []) 
+            if val.replace("global", "").strip()]
+        
+        #the current guard should ne satisfiable 
+        guard_hypothesis = self.quantifier_closure(hypothesis, global_vars + list(self.get_vars_names_from_input(inputs[0])), "Exists")
+        
+        return f'Not(And({guard_hypothesis} , Implies({hypothesis}, {thesis})))'
     
     #NDetCheck formula gen
     def n_det_check(self, curent_transition, other_transitions, processed_data):
@@ -281,7 +288,7 @@ class TransitionProcessor(MiniTimer):
 
         # Timing and checking for action consistency within the transitions.  # AConsistencyCheck
         self.start_time()
-        sformula = self.a_consistency_check(preC, _postC_A, otherPrecs, inputs)
+        sformula = self.a_consistency_check(preC, _postC_A, otherPrecs, inputs, global_vars)
         self.infos["a_consistency"] = self.get_ellapsed_time()
 
         # Generate a unique identifier for the function related to the current action and solver iteration.

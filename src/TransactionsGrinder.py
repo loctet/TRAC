@@ -310,3 +310,10 @@ class TransactionsGrinder(Logger):
         PathGenerator.check_path_satisfiability(fsm, self.file_name)
 
         self.logIt("End----\n\n")
+        
+    def delete_files(self):
+        os.remove(self.get_full_json_path())
+        os.remove(self.get_full_txt_path())
+        os.remove(self.get_full_txt_path().replace(".txt", ".dafsm"))
+        os.remove(self.get_full_z3model_path())
+        os.remove(self.get_full_png_path().replace(".png", ""))
