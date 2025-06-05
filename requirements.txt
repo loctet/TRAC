@@ -4,3 +4,8 @@ numpy
 plotly
 pandas
 networkx
+flask
+flask-cors
+werkzeug
+graphviz
+python-box

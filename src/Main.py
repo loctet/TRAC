@@ -6,7 +6,7 @@ from TransactionsGrinder import TransactionsGrinder
 from VariableDeclarationConverter import VariableDeclarationConverter
 from The_Validator import *
 from Settings import *
-from Visual_graph import *
+from Visual_GraphVix import *
 from Helpers import clear
 
 def exitWithMessage(message):
@@ -42,27 +42,7 @@ def update_paths(file_name, filetype):
     }
     return updated_paths
 
-def main():
-    """
-    Processes a given JSON or TXT file based on the specified check type and other command-line arguments.
-
-    This script supports performing well-formedness checks, individual function checks, path checks on the specified file,
-    and generating a visual representation of the DAFSM defined in the file.
-    """
-    parser = argparse.ArgumentParser(description="""Process a JSON or TXT file.\n
-    Examples:\n
-    python main.py examplefile - Performs a Well-Formedness Check on examplefile.json.\n
-    python main.py examplefile 2 - Performs an Individual Function Check on examplefile.json.\n
-    python main.py examplefile 3 --filetype txt - Performs a Path Check on examplefile.txt.\n
-    python main.py examplefile fsm --filetype json - Prints DAFSM for examplefile.json.\n
-    """)
-    parser.add_argument('file_name', type=str, help='The name of the JSON or TXT file for processing (with full path).')
-    parser.add_argument('check_type', nargs='?', default='1', choices=['1', '2', '3', 'fsm', 'fsm2'], help='The type of check to perform: 1 - Well-Formedness, 2 - Individual Function, 3 - Path Check, fsm - Print DAFSM')
-    parser.add_argument('--filetype', choices=['json', 'txt', 'dafsm'], default='dafsm', help='Specify the file type (json or txt). Default is txt.')
-    parser.add_argument('--non_stop', default=s_non_stop, choices=['1', '2'], help='Checking And Stopping Immediately When Error Default is non_stop = 1, 2 means stop mode.')
-    parser.add_argument('--time_out', type=int, default=0, help='Time out number')
-
-    args = parser.parse_args()
+def processfile(args) :
 
     if not os.path.isfile(args.file_name):
         exitWithMessage(f"{args.file_name} does not exist")
@@ -97,6 +77,8 @@ def main():
         with open(trGrinder.get_full_txt_path(), "w") as f:
             f.write(parsed)
             
+        args.filetype = "txt"
+            
 
     if args.filetype == "txt":
         if not os.path.isfile(trGrinder.get_full_txt_path()):
@@ -126,10 +108,34 @@ def main():
         print(f"--Generated the visual DAFSM")
     elif args.check_type == 'fsm2':
         print("--Generating the visual DAFSM")
-        draw_fsm_graph(generate_fsm_graph(''.join(input_text)))
+        generate_visual_fsm(trGrinder.get_full_json_path(), trGrinder.get_full_png_path())
     else:
         # Perform all checks if no specific check type is provided
         trGrinder.tr_grinding(True)
+        
+    return trGrinder
+ 
+def main():
+    """
+    Processes a given JSON or TXT file based on the specified check type and other command-line arguments.
+
+    This script supports performing well-formedness checks, individual function checks, path checks on the specified file,
+    and generating a visual representation of the DAFSM defined in the file.
+    """
+    parser = argparse.ArgumentParser(description="""Process a JSON or TXT file.\n
+    Examples:\n
+    python main.py examplefile - Performs a Well-Formedness Check on examplefile.json.\n
+    python main.py examplefile 2 - Performs an Individual Function Check on examplefile.json.\n
+    python main.py examplefile 3 --filetype txt - Performs a Path Check on examplefile.txt.\n
+    python main.py examplefile fsm --filetype json - Prints DAFSM for examplefile.json.\n
+    """)
+    parser.add_argument('file_name', type=str, help='The name of the JSON or TXT file for processing (with full path).')
+    parser.add_argument('check_type', nargs='?', default='1', choices=['1', '2', '3', 'fsm', 'fsm2'], help='The type of check to perform: 1 - Well-Formedness, 2 - Individual Function, 3 - Path Check, fsm - Print DAFSM')
+    parser.add_argument('--filetype', choices=['json', 'txt', 'dafsm'], default='dafsm', help='Specify the file type (json or txt). Default is txt.')
+    parser.add_argument('--non_stop', default=s_non_stop, choices=['1', '2'], help='Checking And Stopping Immediately When Error Default is non_stop = 1, 2 means stop mode.')
+    parser.add_argument('--time_out', type=int, default=0, help='Time out number')
+
+    processfile(parser.parse_args())
 
 if __name__ == "__main__":
     main()

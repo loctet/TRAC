@@ -157,3 +157,4 @@ docs/*.rst
 docs/*.bat
 docs/*.py
 docs/MAKEFILE
+src/WebExamples
