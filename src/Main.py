@@ -1,6 +1,7 @@
 import os
 import argparse
 import json
+from DafsSystaxParser import *
 from TransactionsGrinder import TransactionsGrinder
 from VariableDeclarationConverter import VariableDeclarationConverter
 from The_Validator import *
@@ -30,15 +31,15 @@ def update_paths(file_name, filetype):
     - dict: A dictionary with updated paths and cleaned file name.
     """
     file_dir = os.path.dirname(file_name)
-    base_name = os.path.splitext(os.path.basename(file_name))[0]
+    base_name, extension = os.path.splitext(os.path.basename(file_name))
 
     updated_paths = {
         "s_z3model_path": os.path.join(file_dir, "Z3_models/"),
         "s_txt_path": os.path.join(file_dir),
         "s_json_path": os.path.join(file_dir, ""),
-        "file_name": base_name
+        "file_name": base_name,
+        "extension": extension
     }
-
     return updated_paths
 
 def main():
@@ -57,12 +58,15 @@ def main():
     """)
     parser.add_argument('file_name', type=str, help='The name of the JSON or TXT file for processing (with full path).')
     parser.add_argument('check_type', nargs='?', default='1', choices=['1', '2', '3', 'fsm', 'fsm2'], help='The type of check to perform: 1 - Well-Formedness, 2 - Individual Function, 3 - Path Check, fsm - Print DAFSM')
-    parser.add_argument('--filetype', choices=['json', 'txt'], default='txt', help='Specify the file type (json or txt). Default is txt.')
+    parser.add_argument('--filetype', choices=['json', 'txt', 'dafsm'], default='dafsm', help='Specify the file type (json or txt). Default is txt.')
     parser.add_argument('--non_stop', default=s_non_stop, choices=['1', '2'], help='Checking And Stopping Immediately When Error Default is non_stop = 1, 2 means stop mode.')
     parser.add_argument('--time_out', type=int, default=0, help='Time out number')
 
     args = parser.parse_args()
 
+    if not os.path.isfile(args.file_name):
+        exitWithMessage(f"{args.file_name} does not exist")
+            
     # Update paths and file name based on input
     paths = update_paths(args.file_name, args.filetype)
 
@@ -72,6 +76,9 @@ def main():
     s_json_path = paths["s_json_path"]
 
     file_name = paths["file_name"]
+    
+    
+        
 
     trGrinder = TransactionsGrinder(
         file_name, 
@@ -81,6 +88,15 @@ def main():
         txt_path=s_txt_path,
         json_path=s_json_path
     )
+    
+    if args.filetype == "dafsm"  or paths["extension"] == "dafsm" :
+        content = ""
+        with open(args.file_name) as f:
+            content = f.read()
+        parsed = DafsnSyntaxPerser.parse(content)
+        with open(trGrinder.get_full_txt_path(), "w") as f:
+            f.write(parsed)
+            
 
     if args.filetype == "txt":
         if not os.path.isfile(trGrinder.get_full_txt_path()):
@@ -89,6 +105,7 @@ def main():
         print("Parsing Txt to generate Json file----")
         sParser = The_Validator()
         sParser.transitions_to_json(trGrinder.get_full_txt_path(), trGrinder.get_full_json_path())
+        
     elif not os.path.isfile(trGrinder.get_full_json_path()):
         exitWithMessage(f"{trGrinder.get_full_json_path()} does not exist")
 

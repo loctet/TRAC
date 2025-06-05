@@ -223,7 +223,6 @@ class TransitionProcessor(MiniTimer):
         :param outgoingTransitions: List of outgoing transitions.
         :type outgoingTransitions: list
         """
-
         # Initialize necessary variables from the current transition and collect inputs and preconditions from all outgoing transitions.
         preC = transition['preCondition']
         action = transition['actionLabel']
@@ -287,6 +286,7 @@ class TransitionProcessor(MiniTimer):
 
         # Generate a unique identifier for the function related to the current action and solver iteration.
         name_func = f'_{action}_{len(self.solvers[action])}'
+        
         
         # Prepare the final result with all necessary information for the solver to process.
         result = {
