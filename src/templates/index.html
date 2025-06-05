@@ -145,7 +145,7 @@
       } else {
 
         validationResult.innerHTML = `
-          <div class="alert alert-${data.printed_output.indexOf('Well-Formed')>=0 ? "success" : "danger"}">
+          <div class="alert alert-${data.printed_output.indexOf('(!) Verdict: Well-Formed')>=0 ? "success" : "danger"}">
             DAFSM parsed successfully!
             <pre>${data.printed_output}</pre>
           </div>

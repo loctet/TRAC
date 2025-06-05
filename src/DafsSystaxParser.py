@@ -28,17 +28,21 @@ def extract_braces_content(text):
     matches = re.findall(pattern, text, flags=re.DOTALL)
     return [match.strip() for match in matches if match.strip()]
 
-def parse_transitions(input_text: str, contract_name: str, roles: list[str]):
+def parse_transitions(input_text_list, contract_name: str, roles: list[str]):
     transition_pattern_with_guard = re.compile(
-        r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*:?\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*\{(.*?)\}\s*\[(\w+\+?)\]"
+        r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*:?\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*(\{.*?\})?\s*\[(\w+\+?)\]"
     )
 
     # Rebuild output lines with guard support
     transitions = []
+    for input_text in input_text_list:
+        match = transition_pattern_with_guard.findall(input_text)
+        if not match :
+            raise Exception(f"Error parsing transition : {input_text}")
+        source, guard, party_type, party_name, role, op, param_str, assigns, target = match[0]
 
-    for match in transition_pattern_with_guard.findall(input_text):
-        source, guard, party_type, party_name, role, op, param_str, assigns, target = match
-
+        if assigns:
+            assigns = assigns.replace("{", "").replace("}", "")
         # Construct participant string
         participant_str = f"{party_name}".strip() if party_type == "new" or not party_type else f"{party_type} {party_name}".strip()
 
@@ -149,7 +153,7 @@ class DafsnSyntaxPerser :
         
         
         # 8. Parse and format regular transitions
-        transitions = parse_transitions("\n".join(extract_transitions(input_text)), contract_name, roles)
+        transitions = parse_transitions(extract_transitions(input_text), contract_name, roles)
         
         
         return ("\n".join([initial_line] + transitions))
