@@ -36,7 +36,7 @@ def extract_braces_content(text):
 
 def parse_transitions(input_text_list, contract_name: str, roles: list[str]):
     transition_pattern_with_guard = re.compile(
-        r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*:?\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*(\{.*?\})?\s*\[(\w+\+?)\]"
+        r"\[(\w+\+?)\]\s*(?:\{(.*?)\})?\s*(?:(new|any)?\s*(\w+))?\s*\s*(\w+)?\s*>\s*(\w+)\((.*?)\)\s*(\{.*?\})?\s*\[(\w+\+?)\]"
     )
 
     # Rebuild output lines with guard support
@@ -45,8 +45,8 @@ def parse_transitions(input_text_list, contract_name: str, roles: list[str]):
         match = transition_pattern_with_guard.findall(input_text)
         if not match :
             raise Exception(f"Error parsing transition : {input_text}")
-        source, guard, party_type, party_name, role, op, param_str, assigns, target = match[0]
-
+        source, guard, party_type, role, party_name, op, param_str, assigns, target = match[0]
+       
         if assigns:
             assigns = assigns.replace("{", "").replace("}", "")
         # Construct participant string

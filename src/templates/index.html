@@ -74,6 +74,7 @@
             
           <textarea id="dafs-input" class="form-control" placeholder="Enter your DAFSM specification here..."></textarea>
           <button id="validate-btn" class="btn btn-primary mt-3 w-100">Validate</button>
+          <button id="download-btn" class="btn btn-success mt-2 w-100">Download as .trac</button>
         </div>
       </div>
     </div>
@@ -205,6 +206,30 @@
         };
         reader.readAsText(file);
     });
-  </script>
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+        const dafsText = document.getElementById('dafs-input').value.trim();
+        
+        if (!dafsText) {
+            alert("The DAFSM specification is empty. Please enter or load content first.");
+            return;
+        }
+
+        const blob = new Blob([dafsText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        filename = prompt("Enter the filename")
+
+        a.href = url;
+        a.download = `${filename}.trac`;  
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+</script>
+
 </body>
 </html>
