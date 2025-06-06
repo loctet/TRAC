@@ -1,0 +1,11 @@
+
+roles B O
+dafsm simplemarketplace(int p) by O o { 
+int price := p; 
+int offer := 0;
+}
+[q0] new b:B > makeOffer(int _offer) {offer := _offer} [q1]
+[q1] o > accept() {} [q2+]
+[q1] o > reject() {} [q11]
+[q11] new b:B > makeOffer(int _offer) {offer := _offer} [q1]
+[q11] any b:B > makeOffer(int _offer) {offer := _offer} [q1]
