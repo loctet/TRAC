@@ -163,7 +163,9 @@
             let table = '<table class="table table-bordered table-striped transition-table">';
             table += '<thead><tr><th>From</th><th>Guard</th><th>Caller</th><th>Role</th><th>Action</th><th>Params</th><th>Assignments</th><th>To</th></tr></thead><tbody>';
             j.transitions.forEach(tr => {
-              table += `<tr>
+              table += `
+                <tr><td colspan="8">${tr.line}</td></tr>
+                <tr>
                 <td><code style="color:#6c757d;">${tr.from}</code></td>
                 <td><code style="color:#d63384;">${tr.preCondition}</code></td>
                 <td><code style="color:#0d6efd;">${tr.originInvoker.split(':')[0]}</code></td>
@@ -185,6 +187,7 @@
       validationResult.innerHTML = `
         <div class="alert alert-danger">
           <strong>Error:</strong> Failed to process DAFSM specification. Please try again.
+          <pre>Error: ${error}</pre>
         </div>
       `;
       console.error('Error:', error);

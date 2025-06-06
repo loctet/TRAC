@@ -62,6 +62,7 @@ def {item['snameF']}(infos = False):
         if not post_result: 
             print("{{:<20}}: {{}}".format("--- A-Consistency", post_result))
             solver_{item['snameF']}2.add(Not({item['sformula']}))
+            #print({item['sformula']})
             #print("Simplification of the of the negation of the formula: ", simplify(Not({item['sformula']})), " :: ", solver_{item['snameF']}2.check() == z3.sat)
             
           

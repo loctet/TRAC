@@ -130,10 +130,10 @@ class TransitionProcessor(MiniTimer):
             for val in (global_vars.split() if isinstance(global_vars, str) else []) 
             if val.replace("global", "").strip()]
         
-        #the current guard should ne satisfiable 
-        guard_hypothesis = self.quantifier_closure(hypothesis, global_vars + list(self.get_vars_names_from_input(inputs[0])), "Exists")
-        
-        return f'Not(And({guard_hypothesis} , Implies({hypothesis}, {thesis})))'
+        #the current guard should ne satisfiable since we want the existential we nagte with universal  
+        guard_hypothesis = self.quantifier_closure(hypothesis, global_vars + list(self.get_vars_names_from_input(inputs[0])), "ForAll")
+        return f'And({guard_hypothesis}, Not(Implies({hypothesis}, {thesis})))'
+        #return f'Not(And({guard_hypothesis} , Implies({hypothesis}, {thesis})))'
     
     #NDetCheck formula gen
     def n_det_check(self, curent_transition, other_transitions, processed_data):

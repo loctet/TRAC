@@ -1,7 +1,13 @@
 from pprint import pprint
 import re
 
-import re
+def remove_comments(text):
+    # Remove single-line comments (// ...)
+    text = re.sub(r'//.*', '', text)
+    # Remove multi-line comments (/* ... */)
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
+    return text
+
 
 def extract_transitions(text: str):
     # Match pattern: [from] ... [to]
@@ -85,6 +91,7 @@ def parse_transitions(input_text_list, contract_name: str, roles: list[str]):
 class DafsnSyntaxPerser :
     @staticmethod
     def parse(input_text: str) -> str :
+        input_text = remove_comments(input_text)
         # 1. Parse roles
         lines = input_text.strip().splitlines()
         roles_line = lines[0]
