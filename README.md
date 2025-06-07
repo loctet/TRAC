@@ -65,14 +65,6 @@ TRAC/
      dot -V
      ```
 
-3. **Java Runtime Environment (JRE)**
-   - Required for graph generation
-   - Download and install from [Oracle JRE](https://www.java.com/download/) or [OpenJDK](https://adoptium.net/)
-   - Verify installation:
-     ```bash
-     java -version
-     ```
-
 ### Environment Setup
 
 1. **Clone the Repository**
