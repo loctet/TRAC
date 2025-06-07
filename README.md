@@ -17,7 +17,7 @@ TRAC is a tool designed to enhance the development and verification of coodinati
 
 ## Folder structure
 
-```
+`
 TRAC/
 ├── src/                    # Source code
 │   ├── Examples/           # Example DAFSM specifications
@@ -29,7 +29,7 @@ TRAC/
 │   ├── WebExamples/        # Web app generated files
 │   ├── templates/          # Web interface templates
 │   └── azure/              # Azure blockchain examples
-```
+`
 
 
 ## Installation
