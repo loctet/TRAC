@@ -207,9 +207,16 @@
                         </div>
 
                         <!-- Replace textarea with div that will contain CodeMirror -->
+                        <div class="alert alert-info" role="alert">
+                            Ctrl-Enter => Validate; Ctrl-D => Download; Ctrl-/ => Comment
+                        </div>
                         <div id="dafs-input-container"></div>
-                        <button id="validate-btn" class="btn btn-primary mt-3 w-100">Validate</button>
-                        <button id="download-btn" class="btn btn-success mt-2 w-100">Download as .trac</button>
+
+                        
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button id="validate-btn" class="btn btn-primary">Validate</button>
+                            <button id="download-btn" class="btn btn-success">Download</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -260,6 +267,9 @@
                 'Ctrl-Enter': function (cm) {
                     document.getElementById('validate-btn').click();
                 },
+                'Ctrl-D': function (cm) {
+                    document.getElementById('download-btn').click();
+                },
                 'Ctrl-/': 'toggleComment'
             },
             placeholder: 'Enter your DAFSM specification here...'
@@ -307,7 +317,7 @@
                     }
 
                     // Keywords
-                    if (stream.match(/\b(if|dafsm|by)\b/)) {
+                    if (stream.match(/\b(if|dafsm|by|roles)\b/)) {
                         return "dafsm-keyword";
                     }
 

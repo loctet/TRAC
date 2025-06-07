@@ -1,10 +1,10 @@
-# TRAC (Transition-based Reachability Analysis for Contracts)
+# INTRODUCTION 
 
-TRAC is a powerful tool for analyzing and verifying Distributed Abstract Finite State Machine (DAFSM) specifications. It provides both command-line and web-based interfaces for validating the well-formedness of coordination protocols and smart contracts.
+TRAC is a tool designed to enhance the development and verification of coodination protocols. It focuses on analyzing the well-formedness of DAFSMs, ensuring the consistency of the model. This tool is instrumental in identifying potential issues early in the development lifecycle, making it a valuable asset for developers and researchers aiming to validate the logical consistency within a protocol.
 
 ## Features
 
-- **DAFSM Validation**: Checks well-formedness of DAFSM specifications including:
+- **DAFSM Validation**: Checks well-formedness of DAFSM specifications[(The full paper)](https://link.springer.com/chapter/10.1007/978-3-031-62697-5_13) including :
   - Participant consistency
   - Non-determinism
   - Action consistency
@@ -13,14 +13,9 @@ TRAC is a powerful tool for analyzing and verifying Distributed Abstract Finite 
 - **Multiple Interfaces**:
   - Command-line interface for batch processing and automation
   - Web interface for interactive validation and visualization
-- **Support for Complex Specifications**:
-  - Variable declarations and assignments
-  - Guard conditions
-  - Role-based participant management
-  - Array and basic type support
-  - If statements in assignment blocks
 
-## Architecture
+
+## Folder structure
 
 ```
 TRAC/
@@ -36,18 +31,73 @@ TRAC/
 │   └── azure/              # Azure blockchain examples
 ```
 
+
 ## Installation
 
 ### Prerequisites
-- Python 3.7 or higher
-- pip (Python package manager)
 
-Refer e.g. to this link to `https://realpython.com/installing-python/` to install python.
+1. **Python Installation**
+   - Install Python 3.7 or higher from [python.org](https://www.python.org/downloads/)
+   - For detailed installation instructions, refer to [Real Python's Installation Guide](https://realpython.com/installing-python/)
+   - Ensure Python is added to your system's PATH during installation
+   - Verify installation by running:
+     ```bash
+     python --version
+     pip --version
+     ```
 
-### Dependencies
-```bash
-pip install -r requirements.txt
-```
+2. **Graphviz Installation**
+   - Required for graph visualization
+   - Windows:
+     - Download and install from [Graphviz Download Page](https://graphviz.org/download/)
+     - Add Graphviz to system PATH
+   - Linux:
+     ```bash
+     sudo apt-get install graphviz  # Ubuntu/Debian
+     sudo yum install graphviz      # CentOS/RHEL
+     ```
+   - macOS:
+     ```bash
+     brew install graphviz
+     ```
+   - Verify installation:
+     ```bash
+     dot -V
+     ```
+
+3. **Java Runtime Environment (JRE)**
+   - Required for graph generation
+   - Download and install from [Oracle JRE](https://www.java.com/download/) or [OpenJDK](https://adoptium.net/)
+   - Verify installation:
+     ```bash
+     java -version
+     ```
+
+### Environment Setup
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/loctet/TRAC.git
+   cd TRAC
+   git checkout TRAC_v1
+   ```
+
+2. **Create and Activate Virtual Environment in repository**
+   - Windows:
+     ```bash
+     python -m venv venv
+     .\venv\Scripts\activate
+     ```
+   - Linux/macOS:
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 Required packages (will be installed by the previous command):
 - z3-solver: For constraint solving
@@ -57,18 +107,94 @@ Required packages (will be installed by the previous command):
 - matplotlib: Plotting
 - numpy: Numerical operations
 - box: Configuration management
+- graphviz: Python bindings for Graphviz
+
+### Verify Installation
+1. **Test Web Interface**
+   ```bash
+   python web_app.py
+   ```
+   Then open `http://localhost:5000` in your browser.
+
+2. **Test Command-Line Interface**
+   ```bash
+   .\trac --help
+   ```
+   This should display the help message with available options.
+
 
 
 ## Usage
 
-TRAC can be used in two modes: command-line and web interface.
+TRAC can be used in two modes: web interface and command-line.
 
-```bash
-cd src
+### 1. Web Interface
+
+#### Web Interface Features
+- Text input for DAFSM specifications
+- Real-time validation 
+- Graph visualization
+- Error reporting
+- Transitions view
+- Import/Export functionality:
+  - Import DAFSM specifications from text files
+  - Download validated specifications
+  - Export graph visualizations
+  - Save JSON representations
+
+#### Using the Web Interface
+1. **Input Methods**:
+   - Direct text input in the editor
+   - Import from text file:
+     - Click "Import" button
+     - Select a .dafsm or .txt or .trac file
+     - File content will be loaded into the editor
+   - Paste from clipboard
+2. Click *Validate* to process
+3. **View results**:
+   - Analysis result
+   - Generated Visual representation of the FSM graph
+   - Transition view
+   - Any error messages
+4. **Export Options**:
+   - *Download* validated specification as .dafsm file
+
+
+## DAFSM Specification Format
+
+### Basic Structure
+```
+roles O B                    // Role declarations space separated
+dafsm ContractName(param1, param2) by role caller    // Contract header
+{
+    // Variable declarations and assignments
+    type var1;
+    type var2 := value;
+    if condition
+}           // Initial state
+[State1] {guard} (any|new Role) p > op(params) {assignments} [State2]    // Transitions
 ```
 
-### 1. Command-Line Interface
+### Supported Types
+- Basic types: `int`, `string`, `bool`, `float`
+- Arrays: `array Int`, `array String`
+- Role types: Any declared role name
 
+### Example
+```
+roles O B
+dafsm Marketplace(string _desc, int _price) by O o
+{
+    string description;
+    int price := _price;
+    if _price > 0
+}
+[S0]
+[S0] {price > 0} new B b > makeOffer(int _offer) {offer := _offer} [S1]
+[S1] {True} o > acceptOffer() {} [S2+]
+```
+
+### 2. Command-Line Interface
 
 #### Basic Usage
 ```bash
@@ -104,82 +230,10 @@ cd src
 .\trac --filetype txt "Examples/dafsm_txt/azure/simplemarket_place" 3 --time_out 30
 ```
 
-### 2. Web Interface
 
-#### Starting the Web Server
-```bash
-python web_app.py
-```
-Then open `http://localhost:5000` in your browser.
-
-#### Web Interface Features
-- Text input for DAFSM specifications
-- Real-time validation
-- Interactive graph visualization
-- Error reporting
-- JSON transition view
-
-#### Using the Web Interface
-1. Enter your DAFSM specification in the text area
-2. Click "Validate DAFS" to process
-3. View results:
-   - Validation status
-   - Generated FSM graph
-   - JSON representation of transitions
-   - Any error messages
-
-## DAFSM Specification Format
-
-### Basic Structure
-```
-roles O B                    // Role declarations
-dafsm ContractName(param1, param2) by role caller    // Contract header
-{
-    // Variable declarations and assignments
-    type var1;
-    type var2 := value;
-    if condition
-}           // Initial state
-[State1] {guard} (any|new Role) p > op(params) {assignments} [State2]    // Transitions
-```
-
-### Supported Types
-- Basic types: `int`, `string`, `bool`
-- Arrays: `array Int`, `array String`
-- Role types: Any declared role name
-
-### Example
-```
-roles O B
-dafsm Marketplace(string _desc, int _price) by O o
-{
-    string description;
-    int price := _price;
-    if _price > 0
-}
-[S0]
-[S0] {price > 0} new B b > makeOffer(int _offer) {offer := _offer} [S1]
-[S1] {True} o > acceptOffer() {} [S2+]
-```
 
 ## Performance Evaluation
-
-TRAC includes tools for performance evaluation:
-
-1. Generate test cases:
-```bash
-python Generate_examples.py --directory test_dir --num_tests 100
-```
-
-2. Run performance tests:
-```bash
-python Random_exec.py test_dir --number_test_per_cpu 5 --number_runs_per_each 10
-```
-
-3. Plot results:
-```bash
-python Plot_data.py test_dir --shape 2d --type_plot scatter
-```
+[View the main branch](https://github.com/loctet/TRAC/)
 
 ## Error Handling
 
