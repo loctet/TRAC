@@ -1,3 +1,0 @@
-_ {True} o:O > starts(c) {} {} S0
-S0 {True} p:P > c.f1() {} S1+
-S0 {True} any p:O > c.f1() {} S1+

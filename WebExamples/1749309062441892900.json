@@ -1,0 +1,92 @@
+{
+    "id": "basicprovenance",
+    "initialState": "q0",
+    "statesDeclaration": "",
+    "states": [
+        "q0",
+        "q1",
+        "q2"
+    ],
+    "finalStates": [
+        "q2"
+    ],
+    "transitions": [
+        {
+            "from": "_",
+            "to": "q0",
+            "initialStates": [
+                "q0"
+            ],
+            "finalStates": [],
+            "newParticipants": {
+                "i": "ICP"
+            },
+            "caller": {
+                "i": []
+            },
+            "actionLabel": "starts",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "participant O o",
+            "originInvoker": "i:ICP",
+            "externalAction": false,
+            "line": "_ {True} i:ICP > starts(basicprovenance, participant O o) {} {} q0\n"
+        },
+        {
+            "from": "q0",
+            "to": "q1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "i": []
+            },
+            "actionLabel": "transfert",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "participant CP p",
+            "originInvoker": "i",
+            "externalAction": false,
+            "line": "q0 {True} i > basicprovenance.transfert(participant CP p) {} q1\n"
+        },
+        {
+            "from": "q1",
+            "to": "q1",
+            "initialStates": [],
+            "finalStates": [],
+            "newParticipants": {},
+            "caller": {
+                "p": [
+                    "CP"
+                ]
+            },
+            "actionLabel": "transfert",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "participant CP p",
+            "originInvoker": "any  p:CP",
+            "externalAction": false,
+            "line": "q1 {True} any p:CP > basicprovenance.transfert(participant CP p) {} q1\n"
+        },
+        {
+            "from": "q1",
+            "to": "q2",
+            "initialStates": [],
+            "finalStates": [
+                "q2"
+            ],
+            "newParticipants": {},
+            "caller": {
+                "o": []
+            },
+            "actionLabel": "complete",
+            "preCondition": "True",
+            "postCondition": "",
+            "input": "",
+            "originInvoker": "o",
+            "externalAction": false,
+            "line": "q1 {True} o > basicprovenance.complete() {} q2+"
+        }
+    ],
+    "rPAssociation": []
+}

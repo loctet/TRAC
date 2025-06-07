@@ -19,16 +19,15 @@ TRAC is a tool designed to enhance the development and verification of coodinati
 
 ```
 TRAC/
-├── src/                    # Source code
-│   ├── Examples/           # Example DAFSM specifications
-│   │   ├── dafsm_txt/      # Text-based DAFSM examples
-│   │   ├── jsons/          # JSON representations
-│   │   └── random_txt/     # Generated test cases
-│   ├── GraphGen/           # Graph visualization tools
-│   ├── Z3_models/          # Z3 solver model files
-│   ├── WebExamples/        # Web app generated files
-│   ├── templates/          # Web interface templates
-│   └── azure/              # Azure blockchain examples
+│── Examples/           # Example DAFSM specifications
+│   ├── dafsm_txt/      # Text-based DAFSM examples
+│   ├── jsons/          # JSON representations
+│   └── random_txt/     # Generated test cases
+│── GraphGen/           # Graph visualization tools
+│── Z3_models/          # Z3 solver model files
+│── WebExamples/        # Web app generated files
+│── templates/          # Web interface templates
+│── azure/              # Azure blockchain examples
 ```
 
 

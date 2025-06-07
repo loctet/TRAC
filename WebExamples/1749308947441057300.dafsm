@@ -1,0 +1,6 @@
+
+roles ICP CP O
+dafsm basicprovenance(O o) by ICP i {}
+[q0] i > transfert(CP p) {} [q1]
+[q1] any CP p > transfert(CP p) {} [q1]
+[q1] o > complete() [q2+]

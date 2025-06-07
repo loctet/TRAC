@@ -1,0 +1,14 @@
+digraph FSM {
+	_ [color=black]
+	q0 [color=black]
+	_ -> q0 [label=starts]
+	q0 [color=green]
+	q1 [color=black]
+	q0 -> q1 [label=transfert]
+	q1 [color=black]
+	q1 [color=black]
+	q1 -> q1 [label=transfert]
+	q1 [color=black]
+	q2 [color=red]
+	q1 -> q2 [label=complete]
+}
