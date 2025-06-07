@@ -46,6 +46,13 @@ def parse_transitions(input_text_list, contract_name: str, roles: list[str]):
         if not match :
             raise Exception(f"Error parsing transition : {input_text}")
         source, guard, party_type, role, party_name, op, param_str, assigns, target = match[0]
+        
+        if (not role and not party_name) or (party_type and role and not party_name) :
+            raise Exception(f"Error parsing transition : {input_text}")
+       
+        if role and not party_name:
+            party_name = role 
+            role = ""
        
         if assigns:
             assigns = assigns.replace("{", "").replace("}", "")

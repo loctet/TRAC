@@ -11,7 +11,7 @@ dafsm Wallet(int _initial, int _deadline) by Creator c {
 {balance := balance + _amount} 
 [qu]
 
-[qu] {And( _time <= deadline, _amount> 0)} any u : User > Withdraw(int _amount, int _time) {
+[qu] {And( _time <= deadline, _amount> 0)} any User u > Withdraw(int _amount, int _time) {
   balance := balance - _amount;
 } 
 [qu]

@@ -13,15 +13,15 @@ dafsm Voting(int _deadline, int _time) by Creator c {
   int c_approvals := 0;
   if And(_deadline > _time, _deadline > 0)
 }
-[q0] {deadline >= _time} new v : Voter > vote(int _time) 
+[q0] {deadline >= _time} new Voter v > vote(int _time) 
 { voters := voters +1 } 
 [q0]
 
 [q0] {deadline < _time} c > closevoting(Consultant c1, Consultant c2, Consultant c3, int _time) {} 
 [q1]
 
-[q1] {c_approvals < 2} any c : Consultant > validate() {c_approvals := c_approvals +1 } [q1]
+[q1] {c_approvals < 2} any Consultant c > validate() {c_approvals := c_approvals +1 } [q1]
 
-[q1] {c_approvals == 2} any c : Consultant > validate() {c_approvals := c_approvals +1 } [q2]
+[q1] {c_approvals == 2} any Consultant c > validate() {c_approvals := c_approvals +1 } [q2]
 
 [q2] {c_approvals == 3} c > Close(int _time) {} [qf+]
