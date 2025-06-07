@@ -42,6 +42,8 @@ TRAC/
 - Python 3.7 or higher
 - pip (Python package manager)
 
+Refer e.g. to this link to `https://realpython.com/installing-python/` to install python.
+
 ### Dependencies
 ```bash
 pip install -r requirements.txt
