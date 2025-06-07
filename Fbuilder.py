@@ -71,4 +71,4 @@ class Fbuilder :
 
         # Open the file for writing and write the code
         with open(file_name, "w") as file:
-            file.write(f"from z3 import * \n# setting path\nsys.path.append('../../') \nfrom Extension import *\n\n{str_code}")
+            file.write(f"from z3 import * \n# setting path\nsys.path.append('../') \nfrom Extension import *\n\n{str_code}")

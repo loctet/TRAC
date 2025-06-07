@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from Settings import s_well_formed_message
 
@@ -31,15 +32,30 @@ class Z3Runner:
             # Extract directory and filename
             dir_path = os.path.dirname(path)
             file_name = os.path.basename(path)
+            
+            # Target directory
+            target_dir = "./Z3_models"
 
-            # Run the script in its directory
+            # 1. Create directory if it doesn't exist
+            os.makedirs(target_dir, exist_ok=True)
+
+            # 2. Copy file to target directory
+            target_path = os.path.join(target_dir, file_name)
+            shutil.copy2(path, target_path)
+
+            # 3. Run the script from the target directory
             result = subprocess.run(
                 ["python3", file_name],
-                cwd=dir_path,  # Change working directory
+                cwd=target_dir,  # Run from Z3_models directory
                 capture_output=True,
                 text=True
             )
+
+            # Store the output
             checker.output = result.stdout
+
+            # Clean up by removing the copied file
+            os.remove(target_path)
 
         except FileNotFoundError:
             print(f"Error: The file '{path}' does not exist.")

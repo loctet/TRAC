@@ -1,4 +1,0 @@
-_ {True} i:ICP > starts(basicprovenance, participant O o) {} {} q0
-q0 {True} i > basicprovenance.transfert(participant CP p) {} q1
-q1 {True} any p:CP > basicprovenance.transfert(participant CP p) {} q1
-q1 {True} o > basicprovenance.complete() {} q2+

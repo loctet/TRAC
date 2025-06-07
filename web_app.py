@@ -71,7 +71,7 @@ def process():
             with open(trGrinder.get_full_json_path()) as f: 
                 json_transitons = f.read()
             
-            #trGrinder.delete_files()
+            trGrinder.delete_files()
             print(printed_output)
             # Return the relative URL path for the image
             return jsonify({
