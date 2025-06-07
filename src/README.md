@@ -24,8 +24,8 @@ TRAC is a powerful tool for analyzing and verifying Distributed Abstract Finite 
 
 ```
 TRAC/
-├── src/                      # Source code
-│   ├── Examples/            # Example DAFSM specifications
+├── src/                    # Source code
+│   ├── Examples/           # Example DAFSM specifications
 │   │   ├── dafsm_txt/      # Text-based DAFSM examples
 │   │   ├── jsons/          # JSON representations
 │   │   └── random_txt/     # Generated test cases
@@ -34,15 +34,12 @@ TRAC/
 │   ├── WebExamples/        # Web app generated files
 │   ├── templates/          # Web interface templates
 │   └── azure/              # Azure blockchain examples
-├── docs/                    # Documentation
-└── docker/                 # Docker configuration
 ```
 
 ## Installation
 
 ### Prerequisites
 - Python 3.7 or higher
-- Java Runtime Environment (JRE)
 - pip (Python package manager)
 
 ### Dependencies
@@ -50,7 +47,7 @@ TRAC/
 pip install -r requirements.txt
 ```
 
-Required packages:
+Required packages (will be installed by the previous command):
 - z3-solver: For constraint solving
 - flask: Web application framework
 - flask-cors: Cross-origin resource sharing
@@ -59,15 +56,21 @@ Required packages:
 - numpy: Numerical operations
 - box: Configuration management
 
+
 ## Usage
 
 TRAC can be used in two modes: command-line and web interface.
 
+```bash
+cd src
+```
+
 ### 1. Command-Line Interface
+
 
 #### Basic Usage
 ```bash
-python Main.py [options] <file_name>
+.\trac [options] <file_name>
 ```
 
 #### Options
@@ -86,17 +89,17 @@ python Main.py [options] <file_name>
 
 1. Basic well-formedness check:
 ```bash
-python Main.py --filetype txt "Examples/dafsm_txt/azure/simplemarket_place"
+.\trac--filetype txt "Examples/dafsm_txt/azure/simplemarket_place"
 ```
 
 2. Generate FSM visualization:
 ```bash
-python Main.py --filetype txt "Examples/dafsm_txt/azure/simplemarket_place" fsm
+.\trac --filetype txt "Examples/dafsm_txt/azure/simplemarket_place" fsm
 ```
 
 3. Path check with timeout:
 ```bash
-python Main.py --filetype txt "Examples/dafsm_txt/azure/simplemarket_place" 3 --time_out 30
+.\trac --filetype txt "Examples/dafsm_txt/azure/simplemarket_place" 3 --time_out 30
 ```
 
 ### 2. Web Interface
@@ -127,16 +130,15 @@ Then open `http://localhost:5000` in your browser.
 
 ### Basic Structure
 ```
-roles O B                    # Role declarations
-dafsm ContractName(param1, param2) by role caller    # Contract header
+roles O B                    // Role declarations
+dafsm ContractName(param1, param2) by role caller    // Contract header
 {
-    # Variable declarations and assignments
+    // Variable declarations and assignments
     type var1;
     type var2 := value;
     if condition
-}
-[InitialState]              # Initial state
-[State1] {guard} p:Role > op(params) {assignments} [State2]    # Transitions
+}           // Initial state
+[State1] {guard} (any|new Role) p > op(params) {assignments} [State2]    // Transitions
 ```
 
 ### Supported Types
@@ -147,15 +149,15 @@ dafsm ContractName(param1, param2) by role caller    # Contract header
 ### Example
 ```
 roles O B
-dafsm Marketplace(string _desc, int _price) by O owner
+dafsm Marketplace(string _desc, int _price) by O o
 {
     string description;
     int price := _price;
     if _price > 0
 }
 [S0]
-[S0] {price > 0} b:B > makeOffer(int _offer) {offer := _offer} [S1]
-[S1] {True} o:O > acceptOffer() {} [S2+]
+[S0] {price > 0} new B b > makeOffer(int _offer) {offer := _offer} [S1]
+[S1] {True} o > acceptOffer() {} [S2+]
 ```
 
 ## Performance Evaluation
@@ -186,11 +188,3 @@ TRAC provides detailed error reporting for:
 - Non-deterministic transitions
 - Action consistency problems
 - Path reachability issues
-
-## Contributing
-
-Please refer to the documentation in the `docs/` directory for detailed information about contributing to TRAC.
-
-## License
-
-[Add license information here] 
