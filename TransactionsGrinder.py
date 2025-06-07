@@ -316,4 +316,6 @@ class TransactionsGrinder(Logger):
         os.remove(self.get_full_txt_path())
         os.remove(self.get_full_txt_path().replace(".txt", ".dafsm"))
         os.remove(self.get_full_z3model_path())
-        os.remove(self.get_full_png_path().replace(".png", ""))
+        
+        if os.path.exists(self.get_full_png_path().replace(".png", "")):
+            os.remove(self.get_full_png_path().replace(".png", ""))

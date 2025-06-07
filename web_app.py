@@ -65,7 +65,7 @@ def process():
             # Restore stdout
             sys.stdout = original_stdout
             
-            generate_visual_fsm(trGrinder.get_full_json_path(), trGrinder.get_full_png_path())
+            #generate_visual_fsm(trGrinder.get_full_json_path(), trGrinder.get_full_png_path())
             
             json_transitons = ""
             with open(trGrinder.get_full_json_path()) as f: 
@@ -77,7 +77,7 @@ def process():
             return jsonify({
                 'status': 'success',
                 'printed_output': printed_output,
-                'graph_data': trGrinder.get_full_png_path(),
+                #'graph_data': trGrinder.get_full_png_path(),
                 'json_transitions': str(json_transitons)
             })
             
