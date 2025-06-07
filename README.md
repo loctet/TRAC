@@ -136,7 +136,7 @@ TRAC can be used in two modes: web interface and command-line.
 1. **Input Methods**:
    - Direct text input in the editor
    - Import from text file:
-     - Click "Import" button
+     - Click "Chose File" button
      - Select a .dafsm or .txt or .trac file
      - File content will be loaded into the editor
    - Paste from clipboard
