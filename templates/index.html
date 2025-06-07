@@ -98,7 +98,7 @@
     <!-- Add Graphviz JS files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
-    
+
     <!-- Add CodeMirror JS files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
@@ -152,7 +152,7 @@
 
         async function renderGraph(transitions, initstates, finalstates) {
             try {
-                console.log(initstates, finalstates)
+                //console.log(initstates, finalstates)
                 const dot = generateDotFromTransitions(transitions, initstates, finalstates);
                 const graphContainer = document.getElementById('graph-container');
                 graphContainer.innerHTML = '';
@@ -293,7 +293,7 @@
 
         document.getElementById('validate-btn').addEventListener('click', async () => {
             const dafsText = editor.getValue(); // Get value from editor instead of textarea
-            console.log(dafsText)
+            //console.log(dafsText)
             const loading = document.getElementById('loading');
             const resultContainer = document.getElementById('result-container');
             const validationResult = document.getElementById('validation-result');
@@ -348,7 +348,7 @@
                     if (data.json_transitions) {
                         const j = JSON.parse(data.json_transitions);
                         if (j.transitions && j.transitions.length > 0) {
-                            console.log(j)
+                            //console.log(j)
                             await renderGraph(j.transitions, [j.initialState], j.finalStates);
                             let table = '<table class="table table-bordered table-striped transition-table">';
                             table += '<thead><tr><th>From</th><th>Guard</th><th>Caller</th><th>Role</th><th>Action</th><th>Params</th><th>Assignments</th><th>To</th></tr></thead><tbody>';
