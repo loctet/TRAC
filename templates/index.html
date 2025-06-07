@@ -7,7 +7,6 @@
     <title>DAFSM Validator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://unpkg.com/cytoscape@3.24.0/dist/cytoscape.min.js"></script>
     <!-- Add CodeMirror CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
@@ -96,6 +95,10 @@
         </div>
     </div>
 
+    <!-- Add Graphviz JS files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/viz.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viz.js/2.1.2/full.render.js"></script>
+    
     <!-- Add CodeMirror JS files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
@@ -105,69 +108,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/display/autorefresh.min.js"></script>
 
     <script>
-        function generateCytoscapeElements(transitions, initstates, finalstates) {
-            const elements = [];
-            const states = new Set();
-
+        // Initialize Graphviz renderer
+        let viz = new Viz();
+        
+        function generateDotFromTransitions(transitions, initstates, finalstates) { 
+            let dot = 'digraph G {\n';
+            dot += '  rankdir=LR;\n';
+            dot += '  node [shape=circle, style=filled, fillcolor=white, fontcolor=black, width=0.4, height=0.4, fixedsize=true, fontsize=10, margin=0.05];\n';
+            dot += '  edge [fontsize=8];\n\n';
+            
             // Collect all unique states from transitions
+            const states = new Set();
             transitions.forEach(tr => {
                 states.add(tr.from);
                 states.add(tr.to);
             });
 
-            // Add nodes with styles
+            // Add nodes with styles based on initial and final states
             states.forEach(state => {
-                let style = {
-                'background-color': 'white',
-                'color': 'black',
-                'label': state,
-                'width': 40,
-                'height': 40,
-                'font-size': 10,
-                'text-valign': 'center',
-                'text-halign': 'center',
-                'shape': 'ellipse',
-                'border-width': 1,
-                'border-color': 'black',
-                'font-weight': 'normal'
-                };
-
                 if (initstates.includes(state)) {
-                // Initial state: green border
-                style['border-color'] = 'green';
-                style['border-width'] = 3;
+                    // Initial state: white bg, black text, green border
+                    dot += `  "${state}" [label="${state}", fillcolor=white, fontcolor=black, color=green, penwidth=3];\n`;
                 } else if (finalstates.includes(state)) {
-                // Final state: red background, white text
-                style['background-color'] = 'red';
-                style['color'] = 'white';
-                style['border-color'] = 'black';
-                style['border-width'] = 1;
-                style['font-weight'] = 'bold';
+                    // Final state: red bg, white text, default border
+                    dot += `  "${state}" [label="${state}", fillcolor=red, fontcolor=white, color=black];\n`;
+                } else {
+                    // Normal state: white bg, black text, default border
+                    dot += `  "${state}" [label="${state}", fillcolor=white, fontcolor=black, color=black];\n`;
                 }
-
-                elements.push({
-                data: { id: state, label: state },
-                style: style
-                });
             });
 
-            // Add edges with labels and tooltip as title
+            // Add edges
             transitions.forEach(tr => {
-                elements.push({
-                data: {
-                    source: tr.from,
-                    target: tr.to,
-                    label: tr.actionLabel,
-                    title: tr.line  // tooltip can be used in some cytoscape extensions or by custom handlers
-                }
-                });
+                let edgeLabel = `${tr.actionLabel}`;
+                // Add edge with tooltip
+                dot += `  "${tr.from}" -> "${tr.to}" [label="${edgeLabel}", title="${tr.line}"];\n`;
             });
 
-            return elements;
+            dot += '}\n';
+            return dot;
         }
 
 
-
+        async function renderGraph(transitions, initstates, finalstates) {
+            try {
+                console.log(initstates, finalstates)
+                const dot = generateDotFromTransitions(transitions, initstates, finalstates);
+                const graphContainer = document.getElementById('graph-container');
+                graphContainer.innerHTML = '';
+                
+                const result = await viz.renderString(dot, {
+                    engine: 'dot',
+                    format: 'svg',
+                    totalMemory: 100000000
+                });
+                
+                graphContainer.innerHTML = result;
+                
+                // Add tooltips to nodes and edges
+                const svg = graphContainer.querySelector('svg');
+                svg.setAttribute('class', 'viz-graph');
+                
+                // Make the graph responsive
+                svg.setAttribute('width', '100%');
+                svg.setAttribute('height', '100%');
+                svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+                
+            } catch (error) {
+                console.error('Error rendering graph:', error);
+                document.getElementById('graph-container').innerHTML = 
+                    '<div class="alert alert-danger">Error rendering graph visualization</div>';
+            }
+        }
         // Initialize CodeMirror editor
         const editor = CodeMirror(document.getElementById('dafs-input-container'), {
             lineNumbers: true,
@@ -329,54 +341,15 @@
 
                     wellformness.innerHTML = ``
 
+                    /*if (data.graph_data) {
+                        graphContainer.innerHTML = `<img src="${data.graph_data}" class="img-fluid rounded" alt="Graph Visualization"/>`;
+                    }*/
+
                     if (data.json_transitions) {
                         const j = JSON.parse(data.json_transitions);
                         if (j.transitions && j.transitions.length > 0) {
-                            
-                            const cy = cytoscape({
-                                container: document.getElementById('graph-container'),
-
-                                elements: generateCytoscapeElements(j.transitions, [j.initialState], j.finalStates),
-
-                                style: [
-                                    {
-                                    selector: 'node',
-                                    style: {
-                                        'label': 'data(label)',
-                                        'background-color': 'data(background-color)',
-                                        'color': 'data(color)',
-                                        'border-width': 'data(border-width)',
-                                        'border-color': 'data(border-color)',
-                                        'font-weight': 'data(font-weight)',
-                                        'width': 'data(width)',
-                                        'height': 'data(height)',
-                                        'text-valign': 'center',
-                                        'text-halign': 'center',
-                                        'shape': 'ellipse',
-                                        'font-size': 'data(font-size)'
-                                    }
-                                    },
-                                    {
-                                    selector: 'edge',
-                                    style: {
-                                        'label': 'data(label)',
-                                        'curve-style': 'bezier',
-                                        'target-arrow-shape': 'triangle',
-                                        'font-size': 8,
-                                        'text-rotation': 'autorotate',
-                                        'color': '#555'
-                                    }
-                                    }
-                                ],
-
-                                layout: {
-                                    name: 'breadthfirst',  // or 'preset' to manually set positions
-                                    directed: true,
-                                    padding: 10
-                                }
-                                });
-
-
+                            console.log(j)
+                            await renderGraph(j.transitions, [j.initialState], j.finalStates);
                             let table = '<table class="table table-bordered table-striped transition-table">';
                             table += '<thead><tr><th>From</th><th>Guard</th><th>Caller</th><th>Role</th><th>Action</th><th>Params</th><th>Assignments</th><th>To</th></tr></thead><tbody>';
                             j.transitions.forEach(tr => {
