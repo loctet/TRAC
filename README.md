@@ -130,9 +130,7 @@ TRAC can be used in two modes: web interface and command-line.
 - Transitions view
 - Import/Export functionality:
   - Import DAFSM specifications from text files
-  - Download validated specifications
-  - Export graph visualizations
-  - Save JSON representations
+  - Download validated specificationss
 
 #### Using the Web Interface
 1. **Input Methods**:
