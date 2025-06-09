@@ -36,7 +36,10 @@
         .cm-dafsm-param-type { color: #B48EAD; }
         .cm-dafsm-declaration { color: #A3BE8C; }
         .cm-dafsm-assignment { color: #EBCB8B; }
-        .cm-dafsm-arrow { color: #EBCB8B; font-weight: bold;}     
+        .cm-dafsm-arrow { color: #EBCB8B; font-weight: bold;}   
+        .cm-dafsm-arrow { color: #EBCB8B; font-weight: bold;}   
+        .cm-dafsm-contract { color: #99047e; font-weight: bold;}   
+        .cm-dafsm-final-state { color: #a3be8c; font-weight: bold; }   
 
     </style>
 </head>
@@ -200,10 +203,40 @@
             placeholder: 'Enter your DAFSM specification here...'
         });
 
-        CodeMirror.defineMode("dafsm", function () {
+        /*
+        Here is the explanation of the syntax:
+        The first line is the list of roles and each of these will be a type:
+        roles a b c ...
+
+        dafsm (contractname)(parameters) by (role) (caller) {
+        (type varname)(:= expression);
+        (type varname)(:= expression);
+        if (guard)
+        }
+
+        For the other parts, it can be spread across multiple lines:
+        [(state)] {guard} (participant(can be new|any|empty party example any p | new p | p))
+        (: (role) (this can be empty)) > (operation)(parameters) 
+        {assignments (; separated list varname := expression)} 
+        [(state)]
+        */
+        CodeMirror.defineMode("dafsm", function() {
+            // Initialize roles as a Set
+            const roles = new Set();
+
             return {
-                token: function (stream, state) {
+                token: function(stream, state) {
                     if (stream.eatSpace()) return null;
+
+                    // Track if we're in roles declaration
+                    if (stream.sol()) {
+                        state.inRolesDeclaration = stream.string.trim().startsWith('roles');
+                        if (state.inRolesDeclaration) {
+                            // Clear roles when we start a new roles declaration
+                            roles.clear();
+                        }
+                    }
+
                     // Comments
                     if (stream.match("//")) {
                         stream.skipToEnd();
@@ -222,42 +255,92 @@
                         }
                         return "comment";
                     }
-                    // [q1], [q2+]
-                    if (stream.match(/\[\w+\+?\]/)) {
+
+                    // Contract name - only after dafsm keyword
+                    if (state.inDafsmDeclaration && stream.match(/\b([a-zA-Z_][a-zA-Z0-9_]*)\s*/)) {
+                        state.inDafsmDeclaration = false;
+                        return "dafsm-contract";
+                    }
+
+                    // States - [q1], [q2+]
+                    if (stream.match(/\[([a-zA-Z0-9_]+)(\+)?\]/)) {
+                        // Check if it's a final state (has +)
+                        if (stream.current().endsWith('+]')) {
+                            return "dafsm-final-state";
+                        }
                         return "dafsm-state";
                     }
+                    
                     // Guard block: { ... } before the action
                     if (stream.match(/\{[^{}]*\}/)) {
                         return "dafsm-guard";
                     }
-                    // Optional party type: new or any
-                    if (stream.match(/\b(new|any)\b/)) {
-                        return "dafsm-party-type";
-                    }
-                    // Keywords
+                    
+                    // Keywords - match these before other patterns
                     if (stream.match(/\b(if|dafsm|by|roles)\b/)) {
+                        if (stream.current() === 'dafsm') {
+                            state.inDafsmDeclaration = true;
+                        }
                         return "dafsm-keyword";
                     }
+
                     // Types
                     if (stream.match(/\b(int|string|float|array|bool)\b/)) {
                         return "dafsm-keyword";
                     }
-                    // Role (starts with uppercase)
-                    if (stream.match(/\b[A-Z][a-zA-Z0-9_]*\b/)) {
+                    
+                    // Role identifiers in roles declaration (can be any case)
+                    if (state.inRolesDeclaration && stream.match(/\b[a-zA-Z][a-zA-Z0-9_]*\b/)) {
+                        // Don't match True/False
+                        if (stream.current() === 'True' || stream.current() === 'False') {
+                            return null;
+                        }
+                        // Add to roles set
+                        roles.add(stream.current());
                         return "dafsm-role";
                     }
-                    // Party name (lowercase, right after role)
-                    if (stream.match(/\b[a-z][a-zA-Z0-9_]*\b/)) {
-                        return "dafsm-party";
+
+                    // Role identifiers in transitions (must be in roles set)
+                    if (stream.match(/\b[a-zA-Z][a-zA-Z0-9_]*\b/)) {
+                        const word = stream.current();
+                        if (roles.has(word)) {
+                            return "dafsm-role";
+                        }
+                        // Check if it's a party name
+                        if (stream.string.slice(stream.start - 4, stream.start).match(/\b(new|any)\s+$/)) {
+                            return "dafsm-party";
+                        }
+                        return null;
                     }
+
+                    // Party identifiers (lowercase)
+                    if (stream.match(/\b[a-z][a-zA-Z0-9_]*\b/)) {
+                        // Check if preceded by 'new' or 'any'
+                        if (stream.string.slice(stream.start - 4, stream.start).match(/\b(new|any)\s+$/)) {
+                            return "dafsm-party";
+                        }
+                        // Check if it's a party name after a role
+                        if (stream.string.slice(stream.start - 1, stream.start).match(/[A-Z][a-zA-Z0-9_]*\s+$/)) {
+                            return "dafsm-party";
+                        }
+                        return null;
+                    }
+
+                    // Party type modifiers
+                    if (stream.match(/\b(new|any)\b/)) {
+                        return "dafsm-party-type";
+                    }
+                    
                     // Arrow >
                     if (stream.match(">")) {
                         return "dafsm-arrow";
                     }
+                    
                     // Operation and parameters
                     if (stream.match(/\b\w+\s*\([^)]*\)/)) {
                         return "dafsm-operation";
                     }
+                    
                     // Variable declaration: int x;
                     if (stream.match(/\b(int|bool|string|float)\s+\w+\s*;/)) {
                         return "dafsm-declaration";
@@ -277,13 +360,20 @@
                     if (stream.sol() && stream.match(/if\s+.+/)) {
                         return "dafsm-guard";
                     }
+                    
                     // Fallback
                     stream.next();
                     return null;
                 },
-                startState: function () {
-                    return { inComment: false };
+                
+                startState: function() {
+                    return { 
+                        inComment: false,
+                        inRolesDeclaration: false,
+                        inDafsmDeclaration: false
+                    };
                 },
+                
                 lineComment: "//"
             };
         });
