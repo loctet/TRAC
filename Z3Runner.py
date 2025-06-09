@@ -27,7 +27,6 @@ class Z3Runner:
         """
 
         try:
-            print(path)
             checker.logIt("Execution by Z3\n")
             # Extract directory and filename
             dir_path = os.path.dirname(path)

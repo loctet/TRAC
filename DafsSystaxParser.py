@@ -128,18 +128,21 @@ class DafsnSyntaxPerser :
         # 4. Extract assignments, declarations, and guard
         _blocks = extract_braces_content(input_text.split("[")[0])
         assignments_block = []
-        if _blocks :
-            assignments_block = _blocks[0].strip().splitlines()
-            
         assignments = []
         typed_vars = {}
         guard = "True"
-        
-
+       
+        if _blocks :
+            guard_lines = _blocks[0].strip().split("if")
+            if guard_lines:
+                assignments_block = guard_lines[0].strip().replace("\n", "").split(";")
+                if len(guard_lines) == 2 :
+                    guard = re.search(r"if (.*)", f"if {guard_lines[1]}").group(1)
+                              
         for line in assignments_block:
             line = line.strip()
             if ":=" in line:
-                match = re.match(r"(.*?) (.*?) *:= *(.*);", line)
+                match = re.match(r"(.*?) (.*?) *:= *(.*)", line)
                 if match:
                     typ, var, expr = match.groups()
                     assignments.append(f"{var}:= {expr}")
@@ -149,9 +152,6 @@ class DafsnSyntaxPerser :
                 if match:
                     typ, var = match.groups()
                     typed_vars[var.strip()] = typ.strip()
-            elif re.match(r"if (.*)", line):
-                guard = re.search(r"if (.*)", line).group(1)
-
         # 5. Generate variable type list (all declared variables)
         types = [f"{typ} {var}" for var, typ in typed_vars.items()]
 
