@@ -108,6 +108,10 @@ Required packages (will be installed by the previous command):
    Then open `http://localhost:5000` in your browser.
 
 2. **Test Command-Line Interface**
+  ```bash
+  chmod +x ./trac 
+  ```
+  Grant execcution mode to the TRAC file command
    ```bash
    .\trac --help
    ```
