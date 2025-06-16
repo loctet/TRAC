@@ -147,8 +147,8 @@ class DafsnSyntaxPerser :
                     typ, var, expr = match.groups()
                     assignments.append(f"{var}:= {expr}")
                     typed_vars[var] = typ
-            elif re.match(r"(.*?) (.*);", line):
-                match = re.match(r"(.*?) (.*);", line)
+            elif re.match(r"(.*?) (.*)", line):
+                match = re.match(r"(.*?) (.*)", line)
                 if match:
                     typ, var = match.groups()
                     typed_vars[var.strip()] = typ.strip()
