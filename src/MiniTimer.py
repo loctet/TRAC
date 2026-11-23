@@ -49,40 +49,36 @@ class MiniTimer:
         return time.perf_counter_ns()
 
 
-def measure_time(target, key, accumulate=False):
+def measure_time(store_attr, key):
     """
-    Decorator factory that measures the execution time of a function in nanoseconds
-    and stores the result in a dictionary.
+    Decorator factory for methods: measures the execution time of the method in
+    nanoseconds and stores it in ``getattr(self, store_attr)[key]``.
 
-    The timestamp is kept in a local variable for the duration of the call, instead of
-    being stored on a shared timer object. This makes measurements independent from each
-    other, so nested or repeated calls cannot overwrite one another.
+    The start timestamp is a local variable of each call, not shared timer state, so nested
+    or repeated measurements cannot overwrite one another. The dictionary is looked up after
+    the call, so the method can replace it (for example to reset its times) while it runs.
+    The time is recorded even if the method raises an exception.
 
-    :param target: Either the name of an instance attribute holding the target dictionary
-                   (the wrapped function is then expected to be a method), or a callable
-                   receiving the same arguments as the wrapped function and returning the
-                   target dictionary.
-    :type target: str | callable
+    Example::
+
+        @measure_time("infos", "non_determinism")
+        def n_det_check(self, ...):
+            ...
+
+    :param store_attr: Name of the instance attribute holding the target dictionary.
+    :type store_attr: str
     :param key: Key under which the elapsed time is stored.
     :type key: str
-    :param accumulate: If True, add the elapsed time to the existing value instead of
-                       replacing it. Useful when timing several runs of the same function.
-    :type accumulate: bool
     """
 
     def decorator(func):
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(self, *args, **kwargs):
             start = time.perf_counter_ns()
             try:
-                return func(*args, **kwargs)
+                return func(self, *args, **kwargs)
             finally:
-                elapsed = time.perf_counter_ns() - start
-                store = getattr(args[0], target) if isinstance(target, str) else target(*args, **kwargs)
-                if accumulate:
-                    store[key] = store.get(key, 0) + elapsed
-                else:
-                    store[key] = elapsed
+                getattr(self, store_attr)[key] = time.perf_counter_ns() - start
 
         return wrapper
 

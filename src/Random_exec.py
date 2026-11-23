@@ -5,31 +5,10 @@ import time
 import traceback
 import argparse
 import pandas as pd
-from Fbuilder import Fbuilder
 from TransactionsGrinder import TransactionsGrinder
 from The_Validator import The_Validator
-from MiniTimer import measure_time
 from Settings import *
 from Helpers import run_parallel_generations, write_csv
-from Z3Runner import Z3Runner
-
-
-@measure_time(lambda trGrinder, times: times, "building", accumulate=True)
-def _timed_tr_grinding(trGrinder, times):
-    """Grinds a DAFSM and accumulates the execution time in ``times``."""
-    return trGrinder.tr_grinding(False)
-
-
-@measure_time(lambda trGrinder, model_path, times: times, "f_building", accumulate=True)
-def _timed_model_building(trGrinder, model_path, times):
-    """Builds the Z3 model and accumulates the execution time in ``times``."""
-    return Fbuilder.build_z3_formulas_model_and_save(trGrinder, model_path, False)
-
-
-@measure_time(lambda trGrinder, model_path, times: times, "z3_running", accumulate=True)
-def _timed_model_execution(trGrinder, model_path, times):
-    """Runs the Z3 model and accumulates the execution time in ``times``."""
-    return Z3Runner.execute_model(trGrinder, model_path)
 
 
 def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_time_out ):
@@ -66,7 +45,7 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
             sValidator.transitions_to_json(trGrinder.get_full_txt_path(), trGrinder.get_full_json_path())
             trGrinder.get_json_from_file()
             print(f"Counting Paths-- {trGrinder.get_full_txt_path()} -----")
-            csv_data[txt_file_path][1]["num_paths"] = trGrinder.transition_processor().fsmGraph.get_number_of_paths(trGrinder.fsm['states'])
+            csv_data[txt_file_path][1]["num_paths"] = trGrinder.get_transition_processor().fsmGraph.get_number_of_paths(trGrinder.fsm['states'])
             n_csv_data.append(list(csv_data[txt_file_path][1].values()))
             print()
         except Exception as e:
@@ -99,7 +78,6 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
 
     sValidator = The_Validator()
     n_csv_data = []
-    timer = MiniTimer()
     for txt_file_path in list_:
         if txt_file_path not in list(csv_data.keys()):
             continue
@@ -139,8 +117,11 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
             verdict = ""
             for _ in range(number_runs_per_each):
                 nb_runs += 1
-                _timed_tr_grinding(trGrinder, times)
+                # Each call resets trGrinder.info, which then holds the times of this run only.
+                # The times are recorded by the measure_time decorators of TransactionsGrinder.
+                trGrinder.tr_grinding(False)
 
+                times["building"] += trGrinder.info["t_grinding"]
                 times["participants"] += trGrinder.info["t_participants"]
                 times["non_determinism"] += trGrinder.info["t_non_determinism"]
                 times["a_consistency"] += trGrinder.info["t_a_consistency"]
@@ -151,11 +132,12 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
 
                     nb_time_out += 1
                     continue
-                
-                
-                _timed_model_building(trGrinder, trGrinder.get_full_z3model_path(), times)
 
-                verdict = _timed_model_execution(trGrinder, trGrinder.get_full_z3model_path(), times)
+                trGrinder.build_z3_model()
+                times["f_building"] += trGrinder.info["t_building"]
+
+                verdict = trGrinder.run_z3_model()
+                times["z3_running"] += trGrinder.info["t_z3_running"]
             
             print(trGrinder.output)
             

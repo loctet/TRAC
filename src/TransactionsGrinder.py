@@ -62,15 +62,7 @@ class TransactionsGrinder(Logger):
         self.output = ""
         self.logTime = logTime
         self.time_out = time_out
-        self.info = {
-            "t_participants": 0,
-            "t_non_determinism": 0,
-            "t_a_consistency": 0,
-            "t_building" : 0,
-            "t_total": 0,
-            "nb_path" : 0,
-            "is_time_out": False
-        }
+        self.reset_info()
         os.makedirs(txt_path, exist_ok=True)
         os.makedirs(txt_path+"/images", exist_ok=True)
         os.makedirs(json_path, exist_ok=True)
@@ -196,6 +188,25 @@ class TransactionsGrinder(Logger):
     
         return self.transition_processor
     
+    def reset_info(self):
+        """
+        Resets the processing information, including all execution times (in nanoseconds).
+
+        Called at the start of each grinding run so that the recorded times describe a
+        single run and are not accumulated from previous runs on the same instance.
+        """
+
+        self.info = {
+            "t_participants": 0,     # caller check time, summed over all transitions
+            "t_non_determinism": 0,  # NDetCheck formula generation time, summed over all transitions
+            "t_a_consistency": 0,    # AConsistencyCheck formula generation time, summed over all transitions
+            "t_grinding": 0,         # whole tr_grinding call (set by the measure_time decorator)
+            "t_building": 0,         # Z3 model building time (set by the measure_time decorator)
+            "t_z3_running": 0,       # Z3 model execution time (set by the measure_time decorator)
+            "nb_path": 0,
+            "is_time_out": False
+        }
+
     def update_data(self):
         """
         Updates processing information with data from the transition processor.
@@ -213,18 +224,36 @@ class TransactionsGrinder(Logger):
         Builds and saves the Z3 model, recording the execution time in ``info``.
         """
         Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), False)
-    
+
+    @measure_time("info", "t_z3_running")
+    def run_z3_model(self):
+        """
+        Runs the saved Z3 model, recording the execution time in ``info``.
+
+        :return: The verdict of the Z3 model execution.
+        """
+        return Z3Runner.execute_model(self, self.get_full_z3model_path())
+
+    @measure_time("info", "t_grinding")
     def tr_grinding(self, run = True):
         """
         Main method for processing transactions, building Z3 model files, and optionally running Z3 verification.
+
+        Each call is a fresh run: the timing information and the transition processor are
+        reset, so the times recorded in ``info`` describe this run only.
 
         :param run: If True, runs Z3 verification after processing.
         :type run: bool
         """
 
         try:
+            self.reset_info()
+            # A fresh processor avoids reusing the caches, solvers and generated code of a previous run.
+            self.transition_processor = None
+            # This timer drives the timeout check in should_stop_if_time_out, not the
+            # performance measurement (which is handled by the measure_time decorator).
             self.start_time()
-            fsm = self.fsm 
+            fsm = self.fsm
             transitions = fsm['transitions']
             # Example usage
             declarations_str = fsm['statesDeclaration']
@@ -260,7 +289,7 @@ class TransactionsGrinder(Logger):
             if run and self.non_stop:
                 self.log = log
                 self.build_z3_model()
-                Z3Runner.execute_model(self,self.get_full_z3model_path())
+                self.run_z3_model()
             if not self.non_stop: 
                 print(s_well_formed_message)
             
