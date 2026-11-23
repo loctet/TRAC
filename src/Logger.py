@@ -13,9 +13,9 @@ class Logger(MiniTimer):
         :param non_stop: If True, execution will not stop even if conditions to stop are met.
         :type non_stop: bool
         """
+        super().__init__()
         self.log = log
         self.non_stop = non_stop
-        pass
 
     def logIt(self, message):
         """
@@ -43,7 +43,7 @@ class Logger(MiniTimer):
         if o.transition_processor.infos["is_time_out"] :
             self.info["is_time_out"] = True
             return True
-        if self.get_ellapsed_time() > self.time_out:
+        if self.get_elapsed_time() > self.time_out:
             self.info["is_time_out"] = True
             return True
         

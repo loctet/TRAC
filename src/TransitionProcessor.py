@@ -6,7 +6,7 @@ from Extension import replace_assertion
 from SafeVariableAssignment import SafeVariableAssignment as SafeVars
 from VariableDeclarationConverter import VariableDeclarationConverter as VarDefConv
 from FSMGraph import FSMGraph
-from MiniTimer import *
+from MiniTimer import MiniTimer, measure_time
   
   
 class TransitionProcessor(MiniTimer):
@@ -31,6 +31,7 @@ class TransitionProcessor(MiniTimer):
         :type time_out: int
         """
 
+        super().__init__()
         self.str_code = f"non_stop = {non_stop}\n"
         self.solvers = {}
         self.deploy_init_var_val = {}
@@ -106,6 +107,7 @@ class TransitionProcessor(MiniTimer):
         return inputs
 
     # AConsistencyCheck formula gen
+    @measure_time("infos", "a_consistency")
     def a_consistency_check(self, preC, _postC_A, otherPrecs, inputs):
         """
         Generates a formula for action consistency check (AConsistencyCheck formula generation).
@@ -129,6 +131,7 @@ class TransitionProcessor(MiniTimer):
         return f'Not(Implies({hypothesis}, {thesis}))'
     
     #NDetCheck formula gen
+    @measure_time("infos", "non_determinism")
     def n_det_check(self, curent_transition, other_transitions, processed_data):
         """
         Generates a formula to check for determinism at a specific stage (NDetCheck formula generation).
@@ -214,6 +217,18 @@ class TransitionProcessor(MiniTimer):
                 exit()
     
    
+    @measure_time("infos", "participants")
+    def _caller_check(self, transition):
+        """
+        Runs the caller check and records its execution time in ``infos``.
+
+        :param transition: The current transition data.
+        :type transition: dict
+        :return: Whether the caller is correctly introduced.
+        :rtype: bool
+        """
+        return self.fsmGraph.caller_check(transition)
+
     def process(self, transition, outgoingTransitions):
         """
         Processes a transition and outgoing transitions for solver compatibility.
@@ -231,12 +246,9 @@ class TransitionProcessor(MiniTimer):
         inputs = [transition["input"], [item['input'] for item in outgoingTransitions]]
         postC = transition['postCondition']
         
-        # Start timing for performance metrics.
-        self.start_time()
-        
         # Perform a check to ensure the caller of the transition is allowed, #CALLERCHECK
-        formula_for_participant_check = self.fsmGraph.caller_check(transition)
-        self.infos["participants"] = self.get_ellapsed_time()
+        # Execution time is recorded by the measure_time decorator.
+        formula_for_participant_check = self._caller_check(transition)
         self.infos['nb_path'] = self.fsmGraph.nb_path
         self.infos["is_time_out"] = self.fsmGraph.timed_out
         # Decision point to potentially halt execution based on participant verification.
@@ -275,15 +287,13 @@ class TransitionProcessor(MiniTimer):
         # Convert variable declarations to Z3-compatible format.
         converted_declarations = VarDefConv.convert_to_z3_declarations(";".join([x for x in (inputs[1]+[inputs[0]]) if x != ""]))
 
-        # Timing and checking for non-determinism within the transitions. # NDETCHECK
-        self.start_time()
+        # Checking for non-determinism within the transitions. # NDETCHECK
+        # Execution time is recorded by the measure_time decorator on n_det_check.
         thesis_non_eps = self.n_det_check(transition, outgoingTransitions, [otherPrecs, inputs[1]])
-        self.infos["non_determinism"] = self.get_ellapsed_time()
 
-        # Timing and checking for action consistency within the transitions.  # AConsistencyCheck
-        self.start_time()
+        # Checking for action consistency within the transitions.  # AConsistencyCheck
+        # Execution time is recorded by the measure_time decorator on a_consistency_check.
         sformula = self.a_consistency_check(preC, _postC_A, otherPrecs, inputs)
-        self.infos["a_consistency"] = self.get_ellapsed_time()
 
         # Generate a unique identifier for the function related to the current action and solver iteration.
         name_func = f'_{action}_{len(self.solvers[action])}'

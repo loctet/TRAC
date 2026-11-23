@@ -20,6 +20,7 @@ class FSMGraph(MiniTimer):
         """
         Initializes the DAFSMGraph with given data, logging preference, and timeout value.
         """
+        super().__init__()
         self.data = data
         self.graph = nx.MultiDiGraph()  # Using MultiDiGraph to support multiple edges between the same nodes
         self._construct_graph()
@@ -94,6 +95,8 @@ class FSMGraph(MiniTimer):
         :return: Whether the caller is correctly introduced.
         :rtype: bool
         """
+        # This timer drives the timeout check in is_in_all_paths, not the
+        # performance measurement (which is handled by the measure_time decorator).
         self.start_time()
         self.nb_path = 1
         from_state = transition['from']
@@ -136,7 +139,7 @@ class FSMGraph(MiniTimer):
             self.nb_path += 1
             # Collect all transitions for each step in the path
             
-            if  self.time_out > 0 and ((self.get_ellapsed_time() > self.time_out) or   self.timed_out):
+            if  self.time_out > 0 and ((self.get_elapsed_time() > self.time_out) or   self.timed_out):
                 self.timed_out = True
                 return False
             

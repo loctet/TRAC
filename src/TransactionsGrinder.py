@@ -5,6 +5,7 @@ from PathGenerator import PathGenerator
 from TransitionProcessor import TransitionProcessor
 from VariableDeclarationConverter import VariableDeclarationConverter 
 from Logger import Logger
+from MiniTimer import measure_time
 from Z3Runner import Z3Runner
 from Fbuilder import Fbuilder
 from Settings import s_json_path, s_txt_path, s_z3model_path, s_well_formed_message
@@ -195,19 +196,23 @@ class TransactionsGrinder(Logger):
     
         return self.transition_processor
     
-    def update_data(self, data):
+    def update_data(self):
         """
         Updates processing information with data from the transition processor.
-
-        :param data: Data to update the processing information with.
         """
 
         self.info["t_participants"] += self.transition_processor.infos["participants"] 
         self.info["t_non_determinism"] += self.transition_processor.infos["non_determinism"] 
         self.info["t_a_consistency"] += self.transition_processor.infos["a_consistency"] 
-        self.info["t_building"] += self.get_time() - data[0]
         self.info["nb_path"] += self.transition_processor.infos["nb_path"] 
         self.info["is_time_out"] = self.transition_processor.infos["is_time_out"]
+
+    @measure_time("info", "t_building")
+    def build_z3_model(self):
+        """
+        Builds and saves the Z3 model, recording the execution time in ``info``.
+        """
+        Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), False)
     
     def tr_grinding(self, run = True):
         """
@@ -243,7 +248,7 @@ class TransactionsGrinder(Logger):
                 for transition in data:
                     outgoingTransitions = grouped_transitions.get(transition['to'], [])
                     self.transition_processor.process(transition, outgoingTransitions)
-                    self.update_data([0])
+                    self.update_data()
                     if not self.non_stop and (self.should_stop_if_time_out(self) or self.should_stop(self.get_full_z3model_path(), transition, self)):  
                         return
                     
@@ -254,9 +259,7 @@ class TransactionsGrinder(Logger):
 
             if run and self.non_stop:
                 self.log = log
-                s_t = self.get_time()
-                Fbuilder.build_z3_formulas_model_and_save(self, self.get_full_z3model_path(), False)
-                self.info["t_building"] += self.get_time() - s_t
+                self.build_z3_model()
                 Z3Runner.execute_model(self,self.get_full_z3model_path())
             if not self.non_stop: 
                 print(s_well_formed_message)

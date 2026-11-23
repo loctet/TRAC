@@ -8,10 +8,28 @@ import pandas as pd
 from Fbuilder import Fbuilder
 from TransactionsGrinder import TransactionsGrinder
 from The_Validator import The_Validator
-from MiniTimer import MiniTimer
+from MiniTimer import measure_time
 from Settings import *
 from Helpers import run_parallel_generations, write_csv
 from Z3Runner import Z3Runner
+
+
+@measure_time(lambda trGrinder, times: times, "building", accumulate=True)
+def _timed_tr_grinding(trGrinder, times):
+    """Grinds a DAFSM and accumulates the execution time in ``times``."""
+    return trGrinder.tr_grinding(False)
+
+
+@measure_time(lambda trGrinder, model_path, times: times, "f_building", accumulate=True)
+def _timed_model_building(trGrinder, model_path, times):
+    """Builds the Z3 model and accumulates the execution time in ``times``."""
+    return Fbuilder.build_z3_formulas_model_and_save(trGrinder, model_path, False)
+
+
+@measure_time(lambda trGrinder, model_path, times: times, "z3_running", accumulate=True)
+def _timed_model_execution(trGrinder, model_path, times):
+    """Runs the Z3 model and accumulates the execution time in ``times``."""
+    return Z3Runner.execute_model(trGrinder, model_path)
 
 
 def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_time_out ):
@@ -35,7 +53,6 @@ def function_to_count_num_path(list_, csv_data, index, directory, time_out = s_t
     """
     sValidator = The_Validator()
     n_csv_data = []
-    timer = MiniTimer()
     for txt_file_path in list_:
         if txt_file_path not in list(csv_data.keys()):
             continue
@@ -109,16 +126,20 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
             if txt_file_path not in list(csv_data.keys()):
                 exit()
 
-            buidingTime = runningTime = nb_time_out = 0
-            times = {}
-            times["participants"] = times["non_determinism"] = times["a_consistency"] = times["f_building"] = 0
+            nb_time_out = 0
+            times = {
+                "participants": 0,
+                "non_determinism": 0,
+                "a_consistency": 0,
+                "building": 0,
+                "f_building": 0,
+                "z3_running": 0,
+            }
             nb_runs = 0
             verdict = ""
             for _ in range(number_runs_per_each):
                 nb_runs += 1
-                timer.start_time()
-                trGrinder.tr_grinding(False)
-                buidingTime += timer.get_ellapsed_time()
+                _timed_tr_grinding(trGrinder, times)
 
                 times["participants"] += trGrinder.info["t_participants"]
                 times["non_determinism"] += trGrinder.info["t_non_determinism"]
@@ -132,13 +153,9 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
                     continue
                 
                 
-                timer.start_time()
-                Fbuilder.build_z3_formulas_model_and_save(trGrinder, trGrinder.get_full_z3model_path(), False)
-                times["f_building"] += timer.get_ellapsed_time()
+                _timed_model_building(trGrinder, trGrinder.get_full_z3model_path(), times)
 
-                timer.start_time()
-                verdict = Z3Runner.execute_model(trGrinder,trGrinder.get_full_z3model_path())
-                runningTime += timer.get_ellapsed_time()
+                verdict = _timed_model_execution(trGrinder, trGrinder.get_full_z3model_path(), times)
             
             print(trGrinder.output)
             
@@ -149,9 +166,9 @@ def function_to_run(list_, csv_data, index, directory, number_runs_per_each, tim
                 csv_data[txt_file_path][1]["non_determinism_time"] = times["non_determinism"] / nb_runs
                 csv_data[txt_file_path][1]["a_consistency_time"] = times["a_consistency"] / nb_runs
                 csv_data[txt_file_path][1]["f_building_time"] = times["f_building"] / nb_runs
-                csv_data[txt_file_path][1]["building_time"] = buidingTime / nb_runs
-                csv_data[txt_file_path][1]["z3_running_time"] = runningTime /nb_runs
-                csv_data[txt_file_path][1]["total"] = (buidingTime + runningTime) / nb_runs
+                csv_data[txt_file_path][1]["building_time"] = times["building"] / nb_runs
+                csv_data[txt_file_path][1]["z3_running_time"] = times["z3_running"] / nb_runs
+                csv_data[txt_file_path][1]["total"] = (times["building"] + times["z3_running"]) / nb_runs
                 csv_data[txt_file_path][1]["is_time_out"] = trGrinder.info["is_time_out"]
                 n_csv_data.append(list(csv_data[txt_file_path][1].values()))
 
@@ -194,7 +211,6 @@ class RandomTransitionsExecuter:
         self.csv_merged_file_path = os.path.join('./Examples/random_txt/', self.directory, 'merged_list_of_files_info.csv')
         self.csv_data = self.read_csv_data(self.csv_file_path)
         self.base_dir =  os.path.join('./Examples/random_txt/', self.directory)
-        self.timer = MiniTimer()
         self.time_out = time_out
         print("Init Done")
 
